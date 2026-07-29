@@ -1,4 +1,4 @@
-package com.therealpercival.avalon.ui.theme
+package com.therealpercival.avalon.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
