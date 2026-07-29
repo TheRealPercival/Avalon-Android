@@ -16,17 +16,36 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
 @Composable
-fun SetupScreen() {
+fun SetupScreen(
+    viewModel: SetupViewModel = viewModel()
+) {
+    val state by viewModel.uiState.collectAsState()
+    SetupContent(
+        state = state,
+        onServerUrlChange = viewModel::setServerUrl,
+        onConnectClicked = viewModel::connectToServer
+    )
+}
+
+@Composable
+fun SetupContent(
+    state: SetupViewModel.UiState,
+    onServerUrlChange: (String) -> Unit = { },
+    onConnectClicked: () -> Unit = { }
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,8 +89,8 @@ fun SetupScreen() {
         }
 
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = state.serverUrl,
+            onValueChange = { onServerUrlChange(it) },
             modifier = Modifier.padding(12.dp),
             label = { Text("Server URL") }
         )
@@ -79,19 +98,20 @@ fun SetupScreen() {
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            onClick = { },
+            onClick = onConnectClicked,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Connect")
         }
     }
-
 }
 
 @DayNightDevicePreviews
 @Composable
 fun SetupScreenPreview() {
     DeviceThemePreview {
-        SetupScreen()
+        SetupContent(
+            state = SetupViewModel.UiState()
+        )
     }
 }
