@@ -109,7 +109,9 @@ fun SetupContent(
         } else {
             ServerUrlSection(
                 serverUrl = state.serverUrl,
-                onServerUrlChange = onServerUrlChange
+                isInputEnabled = state.serverUrlState is SetupViewModel.ServerUrlState.Unvalidated,
+                onServerUrlChange = onServerUrlChange,
+                onDone = onConnectClicked
             )
         }
 
