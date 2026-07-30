@@ -18,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,13 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.NoRippleInteractionSource
+import com.therealpercival.avalon.presentation.setup.components.DiscordSignInSection
+import com.therealpercival.avalon.presentation.setup.components.ServerUrlSection
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
@@ -103,30 +102,16 @@ fun SetupContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = spacedBy(12.dp)
-        ) {
-            Text(
-                text = "You've arrived in Avalon!",
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                textAlign = TextAlign.Center
+        if (state.serverUrlState is SetupViewModel.ServerUrlState.Valid) {
+            DiscordSignInSection(
+                serverUrl = state.serverUrl
             )
-            Text(
-                text = "Welcome to an online adaptation of Don Eskridge's Avalon: Big Box Edition. Please enter your group's server URL below to begin.",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+        } else {
+            ServerUrlSection(
+                serverUrl = state.serverUrl,
+                onServerUrlChange = onServerUrlChange
             )
         }
-
-        OutlinedTextField(
-            value = state.serverUrl,
-            onValueChange = { onServerUrlChange(it) },
-            modifier = Modifier.padding(12.dp),
-            label = { Text("Server URL") }
-        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -155,7 +140,7 @@ fun SetupContent(
                 }
             }
 
-            else -> {}
+            else -> { }
         }
     }
 }
@@ -177,6 +162,19 @@ fun SetupScreenFetchingPreview() {
         SetupContent(
             state = SetupViewModel.UiState(
                 serverUrlState = SetupViewModel.ServerUrlState.Fetching
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+fun SetupScreenDiscordPreview() {
+    DeviceThemePreview {
+        SetupContent(
+            state = SetupViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                serverUrlState = SetupViewModel.ServerUrlState.Valid
             )
         )
     }
