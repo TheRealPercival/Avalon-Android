@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -56,7 +58,7 @@ fun SetupContent(
 ) {
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +66,7 @@ fun SetupContent(
             .verticalScroll(state = scrollState)
             .imePadding()
             .navigationBarsPadding()
-            .clickable (
+            .clickable(
                 interactionSource = NoRippleInteractionSource()
             ) {
                 focusManager.clearFocus()
@@ -128,11 +130,32 @@ fun SetupContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            onClick = onConnectClicked,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Connect")
+        when (state.serverUrlState) {
+            is SetupViewModel.ServerUrlState.Unvalidated -> {
+                Button(
+                    onClick = onConnectClicked,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Connect")
+                }
+            }
+
+            is SetupViewModel.ServerUrlState.Fetching -> {
+                Button(
+                    onClick = onConnectClicked,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = false
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .height(16.dp)
+                            .width(16.dp),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                }
+            }
+
+            else -> {}
         }
     }
 }
@@ -143,6 +166,18 @@ fun SetupScreenPreview() {
     DeviceThemePreview {
         SetupContent(
             state = SetupViewModel.UiState()
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+fun SetupScreenFetchingPreview() {
+    DeviceThemePreview {
+        SetupContent(
+            state = SetupViewModel.UiState(
+                serverUrlState = SetupViewModel.ServerUrlState.Fetching
+            )
         )
     }
 }
