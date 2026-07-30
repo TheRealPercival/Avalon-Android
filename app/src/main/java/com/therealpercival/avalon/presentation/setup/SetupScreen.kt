@@ -1,9 +1,8 @@
 package com.therealpercival.avalon.presentation.setup
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,11 +24,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.NoRippleInteractionSource
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
@@ -72,17 +73,29 @@ fun SetupContent(
     ) {
         Row(
             horizontalArrangement = spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.merlin_logo),
+                contentDescription = "Avalon logo",
                 modifier = Modifier
-                    .width(81.dp)
-                    .height(60.dp)
-                    .background(MaterialTheme.colorScheme.onBackground)
+                    .height(84.dp)
+                    .align(Alignment.Bottom)
+                    .padding(bottom = 6.dp)
             )
-            Column {
-                Text(text = "Avalon", fontSize = 50.sp)
-                Text(text = "The Real Percival", fontSize = 16.sp)
+            Column(
+                verticalArrangement = spacedBy((-10).dp)
+            ) {
+                Text(
+                    text = "Avalon",
+                    fontSize = 50.sp
+                )
+                Text(
+                    text = "The Real Percival",
+                    fontSize = 16.sp,
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
 
