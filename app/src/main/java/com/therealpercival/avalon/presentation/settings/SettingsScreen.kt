@@ -157,9 +157,14 @@ private fun SettingsScreenAdminPreview() {
                 ),
                 allowedProfiles = listOf(
                     SettingsViewModel.AllowedProfile(
-                        displayName = "Drew",
-                        accountName = "@drew654",
-                        avatarModel = R.drawable.x
+                        displayName = "Landon",
+                        accountName = "@landon248",
+                        avatarModel = R.drawable.landon248
+                    ),
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Izzy",
+                        accountName = "@izzyderose",
+                        avatarModel = R.drawable.izzyderose
                     )
                 )
             )

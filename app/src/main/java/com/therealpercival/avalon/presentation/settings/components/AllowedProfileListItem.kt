@@ -40,7 +40,7 @@ fun AllowedProfileListItem(
             contentDescription = "Avatar",
             modifier = Modifier
                 .padding(horizontal = 12.dp)
-                .size(24.dp)
+                .size(32.dp)
                 .clip(CircleShape)
         )
         Text(

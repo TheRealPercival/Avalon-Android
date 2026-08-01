@@ -52,6 +52,7 @@ fun AdminSection(
         allowedProfiles.forEach { profile ->
             AllowedProfileListItem(
                 profile = profile,
+                modifier = Modifier.padding(bottom = 8.dp),
                 onRemoveClicked = onRemoveClicked
             )
         }
