@@ -36,7 +36,7 @@ fun JoinButton(
 
 @DayNightPreviews
 @Composable
-fun JoinButtonPreview() {
+private fun JoinButtonPreview() {
     ThemePreview {
         JoinButton(
             text = "Join game (5 in lobby)",

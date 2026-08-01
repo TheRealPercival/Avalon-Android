@@ -76,7 +76,7 @@ fun AvatarStack(
 
 @DayNightPreviews
 @Composable
-fun AvatarStackPreview() {
+private fun AvatarStackPreview() {
     ThemePreview {
         AvatarStack(
             models = listOf(

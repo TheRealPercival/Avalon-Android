@@ -32,7 +32,7 @@ fun JoinScreen(
 }
 
 @Composable
-fun JoinContent(
+private fun JoinContent(
     state: JoinViewModel.UiState,
     onJoinClicked: () -> Unit = { },
     placeholder: Painter = ColorPainter(Color.LightGray)
