@@ -1,6 +1,5 @@
 package com.therealpercival.avalon.presentation.join.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -18,23 +17,20 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun JoinButton(
     text: String,
     imageModels: List<Any>,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     placeholder: Painter = ColorPainter(Color.LightGray)
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
+    Button(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth()
     ) {
-        Button(
-            onClick = onClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = text)
-            Spacer(modifier = Modifier.weight(1f))
-            AvatarStack(
-                models = imageModels,
-                placeholder = placeholder
-            )
-        }
+        Text(text = text)
+        Spacer(modifier = Modifier.weight(1f))
+        AvatarStack(
+            models = imageModels,
+            placeholder = placeholder
+        )
     }
 }
 

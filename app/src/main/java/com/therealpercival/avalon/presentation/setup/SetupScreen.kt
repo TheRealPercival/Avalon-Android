@@ -1,10 +1,7 @@
 package com.therealpercival.avalon.presentation.setup
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,13 +22,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.NoRippleInteractionSource
+import com.therealpercival.avalon.presentation.components.AvalonLogo
 import com.therealpercival.avalon.presentation.setup.components.DiscordSignInSection
 import com.therealpercival.avalon.presentation.setup.components.ServerUrlSection
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
@@ -72,33 +66,7 @@ fun SetupContent(
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            horizontalArrangement = spacedBy(12.dp),
-            verticalAlignment = Alignment.Bottom
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.merlin_logo),
-                contentDescription = "Avalon logo",
-                modifier = Modifier
-                    .height(84.dp)
-                    .align(Alignment.Bottom)
-                    .padding(bottom = 6.dp)
-            )
-            Column(
-                verticalArrangement = spacedBy((-10).dp)
-            ) {
-                Text(
-                    text = "Avalon",
-                    fontSize = 50.sp
-                )
-                Text(
-                    text = "The Real Percival",
-                    fontSize = 16.sp,
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
+        AvalonLogo()
 
         Spacer(modifier = Modifier.weight(1f))
 
