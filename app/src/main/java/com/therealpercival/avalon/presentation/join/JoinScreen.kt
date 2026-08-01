@@ -14,10 +14,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.therealpercival.avalon.R
+import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.components.AvalonLogo
 import com.therealpercival.avalon.presentation.join.components.JoinButton
+import com.therealpercival.avalon.presentation.ui.theme.AvalonNavBarThemePreview
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
-import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
 @Composable
 fun JoinScreen(
@@ -58,7 +59,7 @@ fun JoinContent(
 @DayNightDevicePreviews
 @Composable
 private fun JoinScreenPreview1() {
-    DeviceThemePreview {
+    AvalonNavBarThemePreview(currentRoute = Screen.Join.route) {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Join game (5 in lobby)",
@@ -71,7 +72,7 @@ private fun JoinScreenPreview1() {
 @DayNightDevicePreviews
 @Composable
 private fun JoinScreenPreview2() {
-    DeviceThemePreview {
+    AvalonNavBarThemePreview(currentRoute = Screen.Join.route) {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Spectate (5 in game)",
@@ -84,7 +85,7 @@ private fun JoinScreenPreview2() {
 @DayNightDevicePreviews
 @Composable
 private fun JoinScreenPreview3() {
-    DeviceThemePreview {
+    AvalonNavBarThemePreview(currentRoute = Screen.Join.route) {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Spectate (lobby full)",

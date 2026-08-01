@@ -6,8 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.therealpercival.avalon.presentation.Screen
+import com.therealpercival.avalon.presentation.ui.theme.AvalonNavBarThemePreview
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
-import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
 @Composable
 fun SettingsScreen() {
@@ -29,7 +30,7 @@ private fun SettingsContent() {
 @DayNightDevicePreviews
 @Composable
 private fun SettingsScreenPreview() {
-    DeviceThemePreview {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
         SettingsContent()
     }
 }
