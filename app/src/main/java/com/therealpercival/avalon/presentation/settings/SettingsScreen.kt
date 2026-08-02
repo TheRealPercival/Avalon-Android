@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.settings.components.AdminSection
+import com.therealpercival.avalon.presentation.settings.components.BasicDialog
 import com.therealpercival.avalon.presentation.ui.theme.AvalonNavBarThemePreview
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 
@@ -31,7 +32,16 @@ fun SettingsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     SettingsContent(
-        state = state
+        state = state,
+        onChangeServerClicked = {
+            viewModel.setIsShowingDialog(SettingsViewModel.DialogType.Server)
+        },
+        onSignOutClicked = {
+            viewModel.setIsShowingDialog(SettingsViewModel.DialogType.SignOut)
+        },
+        onDismissDialog = {
+            viewModel.setIsShowingDialog(null)
+        }
     )
 }
 
@@ -39,7 +49,12 @@ fun SettingsScreen(
 private fun SettingsContent(
     state: SettingsViewModel.UiState,
     onChangeServerClicked: () -> Unit = { },
-    onSignOutClicked: () -> Unit = { }
+    onSignOutClicked: () -> Unit = { },
+    onDismissDialog: () -> Unit = { },
+    onConfirmChangeServerClicked: () -> Unit = { },
+    onConfirmSignOutClicked: () -> Unit = { },
+    onConfirmRejectProfileClicked: () -> Unit = { },
+    onConfirmRemoveProfileClicked: () -> Unit = { }
 ) {
     val disabledColors = OutlinedTextFieldDefaults.colors(
         disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -119,6 +134,73 @@ private fun SettingsContent(
             Text(text = "Sign Out")
         }
     }
+
+    when (state.dialogType) {
+        is SettingsViewModel.DialogType.Server -> {
+            BasicDialog(
+                title = "Are you sure?",
+                body = "Changing your current server will also sign you out.",
+                confirmText = "Yes",
+                dismissText = "Cancel",
+                onConfirm = {
+                    onConfirmChangeServerClicked()
+                    onDismissDialog()
+                },
+                onDismiss = {
+                    onDismissDialog()
+                }
+            )
+        }
+        is SettingsViewModel.DialogType.SignOut -> {
+            BasicDialog(
+                title = "Are you sure?",
+                body = "Do you really want to sign out?",
+                confirmText = "Yes",
+                dismissText = "Cancel",
+                onConfirm = {
+                    onConfirmSignOutClicked()
+                    onDismissDialog()
+                },
+                onDismiss = {
+                    onDismissDialog()
+                }
+            )
+        }
+        is SettingsViewModel.DialogType.AssignNickname -> {
+
+        }
+        is SettingsViewModel.DialogType.RejectProfile -> {
+            BasicDialog(
+                title = "Are you sure?",
+                body = "Do you want to reject ${state.selectedRequestingProfile?.accountName} from joining the server?",
+                confirmText = "Reject",
+                dismissText = "Cancel",
+                onConfirm = {
+                    onConfirmRejectProfileClicked()
+                    onDismissDialog()
+                },
+                onDismiss = {
+                    onDismissDialog()
+                }
+            )
+        }
+        is SettingsViewModel.DialogType.RemoveProfile -> {
+            BasicDialog(
+                title = "Are you sure?",
+                body = "Doy you want to remove ${state.selectedAllowedProfile?.displayName} (${state.selectedAllowedProfile?.accountName}) from the server?",
+                confirmText = "Remove",
+                dismissText = "Cancel",
+                onConfirm = {
+                    onConfirmRemoveProfileClicked()
+                    onDismissDialog()
+                },
+                onDismiss = {
+                    onDismissDialog()
+                }
+            )
+        }
+        null -> { }
+    }
 }
 
 @DayNightDevicePreviews
@@ -166,6 +248,99 @@ private fun SettingsScreenAdminPreview() {
                         accountName = "@izzyderose",
                         avatarModel = R.drawable.izzyderose
                     )
+                )
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+private fun SettingsScreenServerDialogPreview() {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
+        SettingsContent(
+            state = SettingsViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                displayName = "Drew",
+                accountName = "@drew654",
+                dialogType = SettingsViewModel.DialogType.Server
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+private fun SettingsScreenSignOutDialogPreview() {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
+        SettingsContent(
+            state = SettingsViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                displayName = "Drew",
+                accountName = "@drew654",
+                dialogType = SettingsViewModel.DialogType.SignOut
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+private fun SettingsScreenRejectProfileDialogPreview() {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
+        SettingsContent(
+            state = SettingsViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                displayName = "Drew",
+                accountName = "@drew654",
+                isAdmin = true,
+                requestingProfiles = listOf(
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@_shoe_",
+                        avatarModel = R.drawable._shoe_
+                    )
+                ),
+                dialogType = SettingsViewModel.DialogType.RejectProfile,
+                selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                    accountName = "@ben.json",
+                    avatarModel = R.drawable.benjson
+                )
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+private fun SettingsScreenRemoveProfilePreview() {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
+        SettingsContent(
+            state = SettingsViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                displayName = "Drew",
+                accountName = "@drew654",
+                isAdmin = true,
+                allowedProfiles = listOf(
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Landon",
+                        accountName = "@landon248",
+                        avatarModel = R.drawable.landon248
+                    ),
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Izzy",
+                        accountName = "@izzyderose",
+                        avatarModel = R.drawable.izzyderose
+                    )
+                ),
+                dialogType = SettingsViewModel.DialogType.RemoveProfile,
+                selectedAllowedProfile = SettingsViewModel.AllowedProfile(
+                    displayName = "Landon",
+                    accountName = "@landon248",
+                    avatarModel = R.drawable.landon248
                 )
             )
         )
