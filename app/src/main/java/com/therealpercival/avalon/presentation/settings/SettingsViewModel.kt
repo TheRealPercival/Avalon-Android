@@ -20,7 +20,7 @@ class SettingsViewModel : ViewModel() {
         object Server : DialogType()
         object SignOut : DialogType()
         object AssignNickname : DialogType()
-        object RejectProfile : DialogType()
+        object DenyProfile : DialogType()
         object RemoveProfile : DialogType()
     }
 
@@ -39,9 +39,30 @@ class SettingsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
-    fun setIsShowingDialog(dialogType: DialogType?) {
+    fun dismissDialog() {
         _uiState.value = _uiState.value.copy(
-            dialogType = dialogType
+            dialogType = null,
+            selectedAllowedProfile = null,
+            selectedRequestingProfile = null
+        )
+    }
+
+    fun showChangeServerDialog() {
+        _uiState.value = _uiState.value.copy(
+            dialogType = DialogType.Server
+        )
+    }
+
+    fun showSignOutDialog() {
+        _uiState.value = _uiState.value.copy(
+            dialogType = DialogType.SignOut
+        )
+    }
+
+    fun showAssignNicknameDialog(profile: RequestingProfile) {
+        _uiState.value = _uiState.value.copy(
+            dialogType = DialogType.AssignNickname,
+            selectedRequestingProfile = profile
         )
     }
 
@@ -49,8 +70,22 @@ class SettingsViewModel : ViewModel() {
         // TODO: Implement allow profile logic
     }
 
+    fun showDenyProfileDialog(profile: RequestingProfile) {
+        _uiState.value = _uiState.value.copy(
+            dialogType = DialogType.DenyProfile,
+            selectedRequestingProfile = profile
+        )
+    }
+
     fun denyProfile(profile: RequestingProfile) {
         // TODO: Implement deny profile logic
+    }
+
+    fun showRemoveProfileDialog(profile: AllowedProfile) {
+        _uiState.value = _uiState.value.copy(
+            dialogType = DialogType.RemoveProfile,
+            selectedAllowedProfile = profile
+        )
     }
 
     fun removeProfile(profile: AllowedProfile) {

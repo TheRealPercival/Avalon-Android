@@ -34,22 +34,22 @@ fun SettingsScreen(
     SettingsContent(
         state = state,
         onChangeServerClicked = {
-            viewModel.setIsShowingDialog(SettingsViewModel.DialogType.Server)
+            viewModel.showChangeServerDialog()
         },
         onSignOutClicked = {
-            viewModel.setIsShowingDialog(SettingsViewModel.DialogType.SignOut)
+            viewModel.showSignOutDialog()
         },
         onDismissDialog = {
-            viewModel.setIsShowingDialog(null)
+            viewModel.dismissDialog()
         },
         onAllowClicked = {
-            viewModel.allowProfile(it)
+            viewModel.showAssignNicknameDialog(it)
         },
         onDenyClicked = {
-            viewModel.denyProfile(it)
+            viewModel.showDenyProfileDialog(it)
         },
         onRemoveClicked = {
-            viewModel.removeProfile(it)
+            viewModel.showRemoveProfileDialog(it)
         }
     )
 }
@@ -184,7 +184,7 @@ internal fun SettingsContent(
         is SettingsViewModel.DialogType.AssignNickname -> {
 
         }
-        is SettingsViewModel.DialogType.RejectProfile -> {
+        is SettingsViewModel.DialogType.DenyProfile -> {
             BasicDialog(
                 title = "Are you sure?",
                 body = "Do you want to reject ${state.selectedRequestingProfile?.accountName} from joining the server?",
@@ -319,7 +319,7 @@ private fun SettingsScreenRejectProfileDialogPreview() {
                         avatarModel = R.drawable._shoe_
                     )
                 ),
-                dialogType = SettingsViewModel.DialogType.RejectProfile,
+                dialogType = SettingsViewModel.DialogType.DenyProfile,
                 selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                     accountName = "@ben.json",
                     avatarModel = R.drawable.benjson
