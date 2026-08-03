@@ -1,12 +1,15 @@
 package com.therealpercival.avalon.presentation.settings.components
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnySibling
+import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.settings.SettingsViewModel
-import org.jetbrains.annotations.TestOnly
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -163,5 +166,88 @@ class AdminSectionTest {
 
         composeTestRule.onNodeWithText("Drew").assertIsDisplayed()
         composeTestRule.onNodeWithText("@drew654").assertIsDisplayed()
+    }
+
+    @Test
+    fun clickAllow_triggersCallback() {
+        var clickedProfile: SettingsViewModel.RequestingProfile? = null
+        val targetProfile = SettingsViewModel.RequestingProfile(
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            AdminSection(
+                requestingProfiles = listOf(
+                    targetProfile,
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@_shoe_",
+                        avatarModel = R.drawable._shoe_
+                    )
+                ),
+                onAllowClicked = { clickedProfile = it }
+            )
+        }
+
+        composeTestRule.onNode(
+            hasContentDescription("Allow") and hasAnySibling(hasText("@ben.json"))
+        ).performClick()
+
+        assertEquals(targetProfile, clickedProfile)
+    }
+
+    @Test
+    fun clickDeny_triggersCallback() {
+        var clickedProfile: SettingsViewModel.RequestingProfile? = null
+        val targetProfile = SettingsViewModel.RequestingProfile(
+            accountName = "@_shoe_",
+            avatarModel = R.drawable._shoe_
+        )
+        composeTestRule.setContent {
+            AdminSection(
+                requestingProfiles = listOf(
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    targetProfile
+                ),
+                onDenyClicked = { clickedProfile = it }
+            )
+        }
+
+        composeTestRule.onNode(
+            hasContentDescription("Deny") and hasAnySibling(hasText("@_shoe_"))
+        ).performClick()
+
+        assertEquals(targetProfile, clickedProfile)
+    }
+
+    @Test
+    fun clickRemove_triggersCallback() {
+        var clickedProfile: SettingsViewModel.AllowedProfile? = null
+        val targetProfile = SettingsViewModel.AllowedProfile(
+            displayName = "Ben",
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            AdminSection(
+                allowedProfiles = listOf(
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Drew",
+                        accountName = "@drew654",
+                        avatarModel = R.drawable.x
+                    ),
+                    targetProfile
+                ),
+                onRemoveClicked = { clickedProfile = it }
+            )
+        }
+
+        composeTestRule.onNode(
+            hasContentDescription("Remove") and hasAnySibling(hasText("Ben"))
+        ).performClick()
+
+        assertEquals(targetProfile, clickedProfile)
     }
 }

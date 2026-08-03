@@ -26,12 +26,14 @@ fun AdminSection(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(
-            text = "Requests",
-            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
-            maxLines = 1,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        if (requestingProfiles.isNotEmpty()) {
+            Text(
+                text = "Requests",
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         requestingProfiles.forEach { profile ->
             RequestingProfileListItem(
                 profile = profile,
@@ -43,12 +45,14 @@ fun AdminSection(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            text = "Accepted",
-            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
-            maxLines = 1,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        if (allowedProfiles.isNotEmpty()) {
+            Text(
+                text = "Accepted",
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         allowedProfiles.forEach { profile ->
             AllowedProfileListItem(
                 profile = profile,
