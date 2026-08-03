@@ -41,6 +41,15 @@ fun SettingsScreen(
         },
         onDismissDialog = {
             viewModel.setIsShowingDialog(null)
+        },
+        onAllowClicked = {
+            viewModel.allowProfile(it)
+        },
+        onDenyClicked = {
+            viewModel.denyProfile(it)
+        },
+        onRemoveClicked = {
+            viewModel.removeProfile(it)
         }
     )
 }
@@ -54,7 +63,10 @@ internal fun SettingsContent(
     onConfirmChangeServerClicked: () -> Unit = { },
     onConfirmSignOutClicked: () -> Unit = { },
     onConfirmRejectProfileClicked: () -> Unit = { },
-    onConfirmRemoveProfileClicked: () -> Unit = { }
+    onConfirmRemoveProfileClicked: () -> Unit = { },
+    onAllowClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
+    onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
+    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { }
 ) {
     val disabledColors = OutlinedTextFieldDefaults.colors(
         disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -73,7 +85,10 @@ internal fun SettingsContent(
         if (state.isAdmin) {
             AdminSection(
                 requestingProfiles = state.requestingProfiles,
-                allowedProfiles = state.allowedProfiles
+                allowedProfiles = state.allowedProfiles,
+                onAllowClicked = onAllowClicked,
+                onDenyClicked = onDenyClicked,
+                onRemoveClicked = onRemoveClicked
             )
             HorizontalDivider(
                 modifier = Modifier

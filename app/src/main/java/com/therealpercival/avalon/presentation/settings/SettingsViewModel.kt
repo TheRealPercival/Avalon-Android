@@ -44,4 +44,16 @@ class SettingsViewModel : ViewModel() {
             dialogType = dialogType
         )
     }
+
+    fun allowProfile(profile: RequestingProfile) {
+        // TODO: Implement allow profile logic
+    }
+
+    fun denyProfile(profile: RequestingProfile) {
+        // TODO: Implement deny profile logic
+    }
+
+    fun removeProfile(profile: AllowedProfile) {
+        // TODO: Implement remove profile logic
+    }
 }
