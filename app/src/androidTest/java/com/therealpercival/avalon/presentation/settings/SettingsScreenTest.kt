@@ -91,7 +91,7 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun settingsScreen_clickAllow_triggersCallback() {
+    fun clickAllow_triggersCallback() {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
@@ -100,6 +100,9 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             SettingsContent(
                 state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
                     isAdmin = true,
                     requestingProfiles = listOf(targetProfile)
                 ),
@@ -115,7 +118,7 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun settingsScreen_clickDeny_triggersCallback() {
+    fun clickDeny_triggersCallback() {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
@@ -124,6 +127,9 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             SettingsContent(
                 state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
                     isAdmin = true,
                     requestingProfiles = listOf(targetProfile)
                 ),
@@ -139,7 +145,7 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun settingsScreen_clickRemove_triggersCallback() {
+    fun clickRemove_triggersCallback() {
         var clickedProfile: SettingsViewModel.AllowedProfile? = null
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
@@ -149,6 +155,9 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             SettingsContent(
                 state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
                     isAdmin = true,
                     allowedProfiles = listOf(targetProfile)
                 ),
@@ -162,4 +171,196 @@ class SettingsScreenTest {
 
         assertEquals(targetProfile, clickedProfile)
     }
+
+    @Test
+    fun clickServerDialogYes_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    dialogType = SettingsViewModel.DialogType.Server
+                ),
+                onConfirmChangeServerClicked = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Yes").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickServerDialogCancel_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    dialogType = SettingsViewModel.DialogType.Server
+                ),
+                onDismissDialog = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickSignOutDialogYes_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    dialogType = SettingsViewModel.DialogType.SignOut
+                ),
+                onConfirmSignOutClicked = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Yes").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickSignOutDialogCancel_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    dialogType = SettingsViewModel.DialogType.SignOut
+                ),
+                onDismissDialog = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickDenyProfileDialogYes_triggersCallback() {
+        var clicked = false
+        val targetProfile = SettingsViewModel.RequestingProfile(
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.DenyProfile,
+                    selectedRequestingProfile = targetProfile
+                ),
+                onConfirmDenyProfileClicked = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Reject").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickDenyProfileDialogCancel_triggersCallback() {
+        var clicked = false
+        val targetProfile = SettingsViewModel.RequestingProfile(
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.DenyProfile,
+                    selectedRequestingProfile = targetProfile
+                ),
+                onDismissDialog = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickRemoveProfileRemove_triggersCallback() {
+        var clicked = false
+        val targetProfile = SettingsViewModel.AllowedProfile(
+            displayName = "Ben",
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    allowedProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.RemoveProfile,
+                    selectedAllowedProfile = targetProfile
+                ),
+                onConfirmRemoveProfileClicked = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Remove").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickRemoveProfileCancel_triggersCallback() {
+        var clicked = false
+        val targetProfile = SettingsViewModel.AllowedProfile(
+            displayName = "Ben",
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    allowedProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.RemoveProfile,
+                    selectedAllowedProfile = targetProfile
+                ),
+                onDismissDialog = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue(clicked)
+    }
+
+    // TODO: Add tests for dialog contents (accountName, displayName)
 }

@@ -36,11 +36,14 @@ fun SettingsScreen(
         onChangeServerClicked = {
             viewModel.showChangeServerDialog()
         },
+        onConfirmChangeServerClicked = {
+            viewModel.changeServer()
+        },
         onSignOutClicked = {
             viewModel.showSignOutDialog()
         },
-        onDismissDialog = {
-            viewModel.dismissDialog()
+        onConfirmSignOutClicked = {
+            viewModel.signOut()
         },
         onAllowClicked = {
             viewModel.showAssignNicknameDialog(it)
@@ -48,8 +51,17 @@ fun SettingsScreen(
         onDenyClicked = {
             viewModel.showDenyProfileDialog(it)
         },
+        onConfirmDenyProfileClicked = {
+            viewModel.denyProfile(state.selectedRequestingProfile!!)
+        },
         onRemoveClicked = {
             viewModel.showRemoveProfileDialog(it)
+        },
+        onConfirmRemoveProfileClicked = {
+            viewModel.removeProfile(state.selectedAllowedProfile!!)
+        },
+        onDismissDialog = {
+            viewModel.dismissDialog()
         }
     )
 }
@@ -58,15 +70,15 @@ fun SettingsScreen(
 internal fun SettingsContent(
     state: SettingsViewModel.UiState,
     onChangeServerClicked: () -> Unit = { },
-    onSignOutClicked: () -> Unit = { },
-    onDismissDialog: () -> Unit = { },
     onConfirmChangeServerClicked: () -> Unit = { },
+    onSignOutClicked: () -> Unit = { },
     onConfirmSignOutClicked: () -> Unit = { },
-    onConfirmRejectProfileClicked: () -> Unit = { },
-    onConfirmRemoveProfileClicked: () -> Unit = { },
     onAllowClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
     onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
-    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { }
+    onConfirmDenyProfileClicked: () -> Unit = { },
+    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { },
+    onConfirmRemoveProfileClicked: () -> Unit = { },
+    onDismissDialog: () -> Unit = { }
 ) {
     val disabledColors = OutlinedTextFieldDefaults.colors(
         disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -159,7 +171,6 @@ internal fun SettingsContent(
                 dismissText = "Cancel",
                 onConfirm = {
                     onConfirmChangeServerClicked()
-                    onDismissDialog()
                 },
                 onDismiss = {
                     onDismissDialog()
@@ -174,7 +185,6 @@ internal fun SettingsContent(
                 dismissText = "Cancel",
                 onConfirm = {
                     onConfirmSignOutClicked()
-                    onDismissDialog()
                 },
                 onDismiss = {
                     onDismissDialog()
@@ -191,8 +201,7 @@ internal fun SettingsContent(
                 confirmText = "Reject",
                 dismissText = "Cancel",
                 onConfirm = {
-                    onConfirmRejectProfileClicked()
-                    onDismissDialog()
+                    onConfirmDenyProfileClicked()
                 },
                 onDismiss = {
                     onDismissDialog()
@@ -207,7 +216,6 @@ internal fun SettingsContent(
                 dismissText = "Cancel",
                 onConfirm = {
                     onConfirmRemoveProfileClicked()
-                    onDismissDialog()
                 },
                 onDismiss = {
                     onDismissDialog()

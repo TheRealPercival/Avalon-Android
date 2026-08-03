@@ -3,6 +3,7 @@ package com.therealpercival.avalon.presentation.settings
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class SettingsViewModel : ViewModel() {
     data class RequestingProfile(
@@ -19,7 +20,7 @@ class SettingsViewModel : ViewModel() {
     sealed class DialogType {
         object Server : DialogType()
         object SignOut : DialogType()
-        object AssignNickname : DialogType()
+        object AssignNickname : DialogType() // TODO: Add dialog and test
         object DenyProfile : DialogType()
         object RemoveProfile : DialogType()
     }
@@ -53,10 +54,20 @@ class SettingsViewModel : ViewModel() {
         )
     }
 
+    fun changeServer() {
+        // TODO: Implement change server logic
+        _uiState.update { it.copy(dialogType = null) }
+    }
+
     fun showSignOutDialog() {
         _uiState.value = _uiState.value.copy(
             dialogType = DialogType.SignOut
         )
+    }
+
+    fun signOut() {
+        // TODO: Implement sign out logic
+        _uiState.update { it.copy(dialogType = null) }
     }
 
     fun showAssignNicknameDialog(profile: RequestingProfile) {
@@ -68,6 +79,7 @@ class SettingsViewModel : ViewModel() {
 
     fun allowProfile(profile: RequestingProfile) {
         // TODO: Implement allow profile logic
+        _uiState.update { it.copy(dialogType = null) }
     }
 
     fun showDenyProfileDialog(profile: RequestingProfile) {
@@ -79,6 +91,7 @@ class SettingsViewModel : ViewModel() {
 
     fun denyProfile(profile: RequestingProfile) {
         // TODO: Implement deny profile logic
+        _uiState.update { it.copy(dialogType = null) }
     }
 
     fun showRemoveProfileDialog(profile: AllowedProfile) {
@@ -90,5 +103,6 @@ class SettingsViewModel : ViewModel() {
 
     fun removeProfile(profile: AllowedProfile) {
         // TODO: Implement remove profile logic
+        _uiState.update { it.copy(dialogType = null) }
     }
 }
