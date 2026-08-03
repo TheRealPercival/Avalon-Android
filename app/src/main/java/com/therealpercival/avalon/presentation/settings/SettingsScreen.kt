@@ -46,7 +46,7 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun SettingsContent(
+internal fun SettingsContent(
     state: SettingsViewModel.UiState,
     onChangeServerClicked: () -> Unit = { },
     onSignOutClicked: () -> Unit = { },
