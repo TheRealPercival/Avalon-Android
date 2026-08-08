@@ -27,4 +27,8 @@ class RealServerRepository @Inject constructor(
             preferences[PreferencesKeys.SERVER_URL] = url
         }
     }
+
+    override suspend fun validateServerUrl(url: String): Boolean {
+        return false
+    }
 }

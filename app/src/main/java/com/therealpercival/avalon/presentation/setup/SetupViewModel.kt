@@ -26,6 +26,7 @@ class SetupViewModel @Inject constructor(
         object Unvalidated : ServerUrlState()
         object Fetching : ServerUrlState()
         object Valid : ServerUrlState()
+        object Error : ServerUrlState()
     }
     data class UiState(
         val serverUrl: String = "",
@@ -47,15 +48,25 @@ class SetupViewModel @Inject constructor(
     }
 
     fun setServerUrl(url: String) {
-        _uiState.update { it.copy(serverUrl = url) }
+        _uiState.update { 
+            it.copy(
+                serverUrl = url,
+                serverUrlState = ServerUrlState.Unvalidated
+            ) 
+        }
     }
 
     fun connectToServer() {
         viewModelScope.launch {
             _uiState.update { it.copy(serverUrlState = ServerUrlState.Fetching) }
-            serverRepository.saveServerUrl(_uiState.value.serverUrl)
+            val isValid = serverRepository.validateServerUrl(_uiState.value.serverUrl)
             delay(1.seconds)
-            _uiState.update { it.copy(serverUrlState = ServerUrlState.Valid) }
+            if (isValid) {
+                serverRepository.saveServerUrl(_uiState.value.serverUrl)
+                _uiState.update { it.copy(serverUrlState = ServerUrlState.Valid) }
+            } else {
+                _uiState.update { it.copy(serverUrlState = ServerUrlState.Error) }
+            }
         }
     }
 

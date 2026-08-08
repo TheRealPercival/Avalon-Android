@@ -16,4 +16,8 @@ class FakeServerRepository @Inject constructor() : ServerRepository {
     override suspend fun saveServerUrl(url: String) {
         _serverUrl.value = url
     }
+
+    override suspend fun validateServerUrl(url: String): Boolean {
+        return true
+    }
 }

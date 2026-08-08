@@ -24,6 +24,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun ServerUrlSection(
     serverUrl: String = "",
     isInputEnabled: Boolean = true,
+    isError: Boolean = false,
     onServerUrlChange: (String) -> Unit = { },
     onDone: () -> Unit = { }
 ) {
@@ -49,7 +50,13 @@ fun ServerUrlSection(
             value = serverUrl,
             onValueChange = { onServerUrlChange(it) },
             enabled = isInputEnabled,
+            isError = isError,
             label = { Text("Server URL") },
+            supportingText = {
+                if (isError) {
+                    Text(text = "Invalid server URL")
+                }
+            },
             singleLine = true,
             maxLines = 1,
             keyboardOptions = KeyboardOptions(

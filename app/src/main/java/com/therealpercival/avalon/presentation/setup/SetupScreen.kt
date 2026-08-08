@@ -90,7 +90,8 @@ fun SetupContent(
         } else {
             ServerUrlSection(
                 serverUrl = state.serverUrl,
-                isInputEnabled = state.serverUrlState is SetupViewModel.ServerUrlState.Unvalidated,
+                isInputEnabled = state.serverUrlState !is SetupViewModel.ServerUrlState.Fetching,
+                isError = state.serverUrlState is SetupViewModel.ServerUrlState.Error,
                 onServerUrlChange = onServerUrlChange,
                 onDone = onConnectClicked
             )
@@ -99,7 +100,8 @@ fun SetupContent(
         Spacer(modifier = Modifier.weight(1f))
 
         when (state.serverUrlState) {
-            is SetupViewModel.ServerUrlState.Unvalidated -> {
+            is SetupViewModel.ServerUrlState.Unvalidated,
+            is SetupViewModel.ServerUrlState.Error -> {
                 Button(
                     onClick = onConnectClicked,
                     modifier = Modifier.fillMaxWidth(),
