@@ -51,7 +51,15 @@ fun AvalonNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Setup.route) {
-                SetupScreen()
+                SetupScreen(
+                    onSignInSuccess = {
+                        navController.navigate(Screen.Join.route) {
+                            popUpTo(Screen.Setup.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
             composable(Screen.Join.route) {
                 JoinScreen()
