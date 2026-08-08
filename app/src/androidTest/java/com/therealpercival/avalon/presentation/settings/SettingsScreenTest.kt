@@ -18,6 +18,8 @@ class SettingsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    // Base settings section -----------------------------------------------------------------------
+
     @Test
     fun settingsScreen_displaysServerUrl() {
         composeTestRule.setContent {
@@ -90,6 +92,8 @@ class SettingsScreenTest {
         assertTrue(clicked)
     }
 
+    // Admin section - Requests --------------------------------------------------------------------
+
     @Test
     fun clickAllow_triggersCallback() {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
@@ -144,6 +148,8 @@ class SettingsScreenTest {
         assertEquals(targetProfile, clickedProfile)
     }
 
+    // Admin section - Accepted --------------------------------------------------------------------
+
     @Test
     fun clickRemove_triggersCallback() {
         var clickedProfile: SettingsViewModel.AllowedProfile? = null
@@ -171,6 +177,8 @@ class SettingsScreenTest {
 
         assertEquals(targetProfile, clickedProfile)
     }
+
+    // Admin section - Server dialog ---------------------------------------------------------------
 
     @Test
     fun clickServerDialogYes_triggersCallback() {
@@ -212,6 +220,8 @@ class SettingsScreenTest {
         assertTrue(clicked)
     }
 
+    // Admin section - Sign out dialog -------------------------------------------------------------
+
     @Test
     fun clickSignOutDialogYes_triggersCallback() {
         var clicked = false
@@ -251,6 +261,8 @@ class SettingsScreenTest {
 
         assertTrue(clicked)
     }
+
+    // Admin section - Assign nickname dialog ------------------------------------------------------
 
     @Test
     fun assignNicknameDialog_displaysAccountName() {
@@ -371,8 +383,33 @@ class SettingsScreenTest {
         assertTrue(clicked)
     }
 
+    // Admin section - Deny profile dialog ---------------------------------------------------------
+
     @Test
-    fun clickDenyProfileDialogYes_triggersCallback() {
+    fun denyProfileDialog_displaysAccountName() {
+        val targetProfile = SettingsViewModel.RequestingProfile(
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.DenyProfile,
+                    selectedRequestingProfile = targetProfile
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
+    }
+
+    @Test
+    fun clickDenyProfileDialogReject_triggersCallback() {
         var clicked = false
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
@@ -425,8 +462,35 @@ class SettingsScreenTest {
         assertTrue(clicked)
     }
 
+    // Admin section - Remove profile dialog -------------------------------------------------------
+
     @Test
-    fun clickRemoveProfileRemove_triggersCallback() {
+    fun removeProfileDialog_displaysDisplayNameAndAccountName() {
+        val targetProfile = SettingsViewModel.AllowedProfile(
+            displayName = "Ben",
+            accountName = "@ben.json",
+            avatarModel = R.drawable.benjson
+        )
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    allowedProfiles = listOf(targetProfile),
+                    dialogType = SettingsViewModel.DialogType.RemoveProfile,
+                    selectedAllowedProfile = targetProfile
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("Ben").assertIsDisplayed()
+        composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
+    }
+
+    @Test
+    fun clickRemoveProfileDialogRemove_triggersCallback() {
         var clicked = false
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
@@ -454,7 +518,7 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun clickRemoveProfileCancel_triggersCallback() {
+    fun clickRemoveProfileDialogCancel_triggersCallback() {
         var clicked = false
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
@@ -480,6 +544,4 @@ class SettingsScreenTest {
 
         assertTrue(clicked)
     }
-
-    // TODO: Add tests for dialog contents (accountName, displayName)
 }

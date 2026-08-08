@@ -330,6 +330,32 @@ private fun SettingsScreenSignOutDialogPreview() {
 
 @DayNightDevicePreviews
 @Composable
+private fun SettingsScreenAssignNicknameDialogPreview() {
+    AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
+        SettingsContent(
+            state = SettingsViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                displayName = "Drew",
+                accountName = "@drew654",
+                isAdmin = true,
+                requestingProfiles = listOf(
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    )
+                ),
+                dialogType = SettingsViewModel.DialogType.AssignNickname,
+                selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                    accountName = "@ben.json",
+                    avatarModel = R.drawable.benjson
+                )
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
 private fun SettingsScreenRejectProfileDialogPreview() {
     AvalonNavBarThemePreview(currentRoute = Screen.Settings.route) {
         SettingsContent(
