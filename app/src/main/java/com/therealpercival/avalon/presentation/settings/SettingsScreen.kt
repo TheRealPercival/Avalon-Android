@@ -29,7 +29,8 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
+    onSignOutSuccess: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
     SettingsContent(
@@ -39,12 +40,14 @@ fun SettingsScreen(
         },
         onConfirmChangeServerClicked = {
             viewModel.changeServer()
+            onSignOutSuccess()
         },
         onSignOutClicked = {
             viewModel.showSignOutDialog()
         },
         onConfirmSignOutClicked = {
             viewModel.signOut()
+            onSignOutSuccess()
         },
         onAllowClicked = {
             viewModel.showAssignNicknameDialog(it)

@@ -68,7 +68,15 @@ fun AvalonNavigation() {
                 StatsScreen()
             }
             composable(Screen.Settings.route) {
-                SettingsScreen()
+                SettingsScreen(
+                    onSignOutSuccess = {
+                        navController.navigate(Screen.Setup.route) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
         }
     }
