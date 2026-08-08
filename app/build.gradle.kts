@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
+base {
+    archivesName.set("avalon")
+}
+
 android {
     namespace = "com.therealpercival.avalon"
     compileSdk = 36
@@ -14,7 +18,7 @@ android {
         minSdk = 29
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,6 +27,7 @@ android {
     productFlavors {
         create("full") {
             dimension = "version"
+            isDefault = true
         }
         create("demo") {
             dimension = "version"
