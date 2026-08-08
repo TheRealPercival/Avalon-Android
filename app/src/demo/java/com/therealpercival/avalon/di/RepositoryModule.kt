@@ -1,9 +1,11 @@
 package com.therealpercival.avalon.di
 
 import com.therealpercival.avalon.data.repository.FakeAdminRepository
+import com.therealpercival.avalon.data.repository.FakeGameRepository
 import com.therealpercival.avalon.data.repository.FakeServerRepository
 import com.therealpercival.avalon.data.repository.FakeUserRepository
 import com.therealpercival.avalon.domain.repository.AdminRepository
+import com.therealpercival.avalon.domain.repository.GameRepository
 import com.therealpercival.avalon.domain.repository.ServerRepository
 import com.therealpercival.avalon.domain.repository.UserRepository
 import dagger.Binds
@@ -15,6 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
     @Binds
     @Singleton
     abstract fun bindServerRepository(
@@ -32,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindAdminRepository(
         fakeAdminRepository: FakeAdminRepository
     ): AdminRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindGameRepository(
+        fakeGameRepository: FakeGameRepository
+    ): GameRepository
 }
