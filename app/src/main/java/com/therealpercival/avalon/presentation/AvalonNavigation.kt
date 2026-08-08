@@ -34,7 +34,7 @@ fun AvalonNavigation() {
                     currentRoute = currentRoute,
                     onNavBarItemClicked = { screen ->
                         navController.navigate(screen.route) {
-                            popUpTo(navController.graph.startDestinationId) {
+                            popUpTo(Screen.Join.route) {
                                 saveState = true
                             }
                             launchSingleTop = true
