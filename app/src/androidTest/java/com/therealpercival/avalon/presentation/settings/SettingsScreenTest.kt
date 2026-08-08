@@ -253,6 +253,125 @@ class SettingsScreenTest {
     }
 
     @Test
+    fun assignNicknameDialog_displaysAccountName() {
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(
+                        SettingsViewModel.RequestingProfile(
+                            accountName = "@ben.json",
+                            avatarModel = R.drawable.benjson
+                        )
+                    ),
+                    dialogType = SettingsViewModel.DialogType.AssignNickname,
+                    selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    )
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
+    }
+
+    @Test
+    fun assignNicknameDialog_displaysNickname() {
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(
+                        SettingsViewModel.RequestingProfile(
+                            accountName = "@ben.json",
+                            avatarModel = R.drawable.benjson
+                        )
+                    ),
+                    dialogType = SettingsViewModel.DialogType.AssignNickname,
+                    selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    nickname = "Ben"
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("Ben").assertIsDisplayed()
+    }
+
+    @Test
+    fun clickAssignNicknameDialogAccept_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(
+                        SettingsViewModel.RequestingProfile(
+                            accountName = "@ben.json",
+                            avatarModel = R.drawable.benjson
+                        )
+                    ),
+                    dialogType = SettingsViewModel.DialogType.AssignNickname,
+                    selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    nickname = "Ben"
+                ),
+                onConfirmAllowClicked = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Accept").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
+    fun clickAssignNicknameDialogCancel_triggersCallback() {
+        var clicked = false
+        composeTestRule.setContent {
+            SettingsContent(
+                state = SettingsViewModel.UiState(
+                    serverUrl = "server.therealpercival.com",
+                    displayName = "Drew",
+                    accountName = "@drew654",
+                    isAdmin = true,
+                    requestingProfiles = listOf(
+                        SettingsViewModel.RequestingProfile(
+                            accountName = "@ben.json",
+                            avatarModel = R.drawable.benjson
+                        )
+                    ),
+                    dialogType = SettingsViewModel.DialogType.AssignNickname,
+                    selectedRequestingProfile = SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    nickname = "Ben"
+                ),
+                onDismissDialog = { clicked = true }
+            )
+        }
+
+        composeTestRule.onNodeWithText("Cancel").performClick()
+
+        assertTrue(clicked)
+    }
+
+    @Test
     fun clickDenyProfileDialogYes_triggersCallback() {
         var clicked = false
         val targetProfile = SettingsViewModel.RequestingProfile(

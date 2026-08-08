@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.settings.components.AdminSection
+import com.therealpercival.avalon.presentation.settings.components.AssignNicknameDialog
 import com.therealpercival.avalon.presentation.settings.components.BasicDialog
 import com.therealpercival.avalon.presentation.ui.theme.AvalonNavBarThemePreview
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
@@ -48,17 +49,23 @@ fun SettingsScreen(
         onAllowClicked = {
             viewModel.showAssignNicknameDialog(it)
         },
+        onConfirmAllowClicked = {
+            viewModel.allowProfile()
+        },
+        onNicknameChange = {
+            viewModel.setNickname(it)
+        },
         onDenyClicked = {
             viewModel.showDenyProfileDialog(it)
         },
         onConfirmDenyProfileClicked = {
-            viewModel.denyProfile(state.selectedRequestingProfile!!)
+            viewModel.denyProfile()
         },
         onRemoveClicked = {
             viewModel.showRemoveProfileDialog(it)
         },
         onConfirmRemoveProfileClicked = {
-            viewModel.removeProfile(state.selectedAllowedProfile!!)
+            viewModel.removeProfile()
         },
         onDismissDialog = {
             viewModel.dismissDialog()
@@ -74,6 +81,8 @@ internal fun SettingsContent(
     onSignOutClicked: () -> Unit = { },
     onConfirmSignOutClicked: () -> Unit = { },
     onAllowClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
+    onConfirmAllowClicked: () -> Unit = { },
+    onNicknameChange: (String) -> Unit = { },
     onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
     onConfirmDenyProfileClicked: () -> Unit = { },
     onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { },
@@ -192,7 +201,19 @@ internal fun SettingsContent(
             )
         }
         is SettingsViewModel.DialogType.AssignNickname -> {
-
+            AssignNicknameDialog(
+                accountName = state.selectedRequestingProfile!!.accountName,
+                nickname = state.nickname,
+                onNicknameChange = {
+                    onNicknameChange(it)
+                },
+                onConfirm = {
+                    onConfirmAllowClicked()
+                },
+                onDismiss = {
+                    onDismissDialog()
+                }
+            )
         }
         is SettingsViewModel.DialogType.DenyProfile -> {
             BasicDialog(

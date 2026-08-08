@@ -20,7 +20,7 @@ class SettingsViewModel : ViewModel() {
     sealed class DialogType {
         object Server : DialogType()
         object SignOut : DialogType()
-        object AssignNickname : DialogType() // TODO: Add dialog and test
+        object AssignNickname : DialogType()
         object DenyProfile : DialogType()
         object RemoveProfile : DialogType()
     }
@@ -34,7 +34,8 @@ class SettingsViewModel : ViewModel() {
         val requestingProfiles: List<RequestingProfile> = emptyList(),
         val allowedProfiles: List<AllowedProfile> = emptyList(),
         val selectedAllowedProfile: AllowedProfile? = null,
-        val selectedRequestingProfile: RequestingProfile? = null
+        val selectedRequestingProfile: RequestingProfile? = null,
+        val nickname: String = ""
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -44,7 +45,8 @@ class SettingsViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(
             dialogType = null,
             selectedAllowedProfile = null,
-            selectedRequestingProfile = null
+            selectedRequestingProfile = null,
+            nickname = ""
         )
     }
 
@@ -77,7 +79,11 @@ class SettingsViewModel : ViewModel() {
         )
     }
 
-    fun allowProfile(profile: RequestingProfile) {
+    fun setNickname(nickname: String) {
+        _uiState.update { it.copy(nickname = nickname) }
+    }
+
+    fun allowProfile() {
         // TODO: Implement allow profile logic
         _uiState.update { it.copy(dialogType = null) }
     }
@@ -89,7 +95,7 @@ class SettingsViewModel : ViewModel() {
         )
     }
 
-    fun denyProfile(profile: RequestingProfile) {
+    fun denyProfile() {
         // TODO: Implement deny profile logic
         _uiState.update { it.copy(dialogType = null) }
     }
@@ -101,7 +107,7 @@ class SettingsViewModel : ViewModel() {
         )
     }
 
-    fun removeProfile(profile: AllowedProfile) {
+    fun removeProfile() {
         // TODO: Implement remove profile logic
         _uiState.update { it.copy(dialogType = null) }
     }

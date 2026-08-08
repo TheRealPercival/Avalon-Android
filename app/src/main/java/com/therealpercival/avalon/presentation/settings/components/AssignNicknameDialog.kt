@@ -13,6 +13,7 @@ import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -24,13 +25,12 @@ import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicDialog(
-    title: String,
-    body: String,
-    confirmText: String,
-    dismissText: String,
-    onConfirm: () -> Unit = { },
-    onDismiss: () -> Unit = { }
+fun AssignNicknameDialog(
+    accountName: String,
+    nickname: String = "",
+    onNicknameChange: (String) -> Unit = { },
+    onDismiss: () -> Unit = { },
+    onConfirm: () -> Unit = { }
 ) {
     BasicAlertDialog(
         onDismissRequest = {
@@ -46,12 +46,20 @@ fun BasicDialog(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = title,
+                    text = "Nickname",
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = body
+                    text = "Assign $accountName a nickname:"
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextField(
+                    value = nickname,
+                    onValueChange = { onNicknameChange(it) },
+                    placeholder = {
+                        Text(text = "Nickname")
+                    }
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Row(
@@ -63,14 +71,15 @@ fun BasicDialog(
                             onDismiss()
                         },
                     ) {
-                        Text(dismissText)
+                        Text(text = "Cancel")
                     }
                     TextButton(
                         onClick = {
                             onConfirm()
                         },
+                        enabled = nickname.trim().isNotBlank()
                     ) {
-                        Text(confirmText)
+                        Text(text = "Accept")
                     }
                 }
             }
@@ -80,13 +89,8 @@ fun BasicDialog(
 
 @DayNightDevicePreviews
 @Composable
-private fun BasicDialogPreview() {
+fun AssignNicknameDialogPreview() {
     DeviceThemePreview {
-        BasicDialog(
-            title = "Are you sure?",
-            body = "Changing your current server will also sign you out.",
-            confirmText = "Yes",
-            dismissText = "Cancel"
-        )
+        AssignNicknameDialog(accountName = "@drew654")
     }
 }
