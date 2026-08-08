@@ -23,8 +23,6 @@ android {
     productFlavors {
         create("full") {
             dimension = "version"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
         }
         create("demo") {
             dimension = "version"
