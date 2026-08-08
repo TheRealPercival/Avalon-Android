@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import com.therealpercival.avalon.presentation.components.AvalonBottomNavigation
 
 @Preview(
     name = "Light Mode",
@@ -68,6 +69,28 @@ fun ThemePreview(content: @Composable () -> Unit) {
 fun DeviceThemePreview(content: @Composable () -> Unit) {
     AvalonTheme {
         Scaffold { paddingValues ->
+            Box(
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun AvalonNavBarThemePreview(
+    currentRoute: String,
+    content: @Composable () -> Unit
+) {
+    AvalonTheme {
+        Scaffold(
+            bottomBar = {
+                AvalonBottomNavigation(
+                    currentRoute = currentRoute
+                )
+            }
+        ) { paddingValues ->
             Box(
                 modifier = Modifier.padding(paddingValues)
             ) {
