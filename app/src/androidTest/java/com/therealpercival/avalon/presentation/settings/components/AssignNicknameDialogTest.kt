@@ -38,6 +38,16 @@ class AssignNicknameDialogTest {
     }
 
     @Test
+    fun inputText_displaysCorrectPlaceholder() {
+        val accountName = "@drew654"
+        composeTestRule.setContent {
+            AssignNicknameDialog(accountName = accountName)
+        }
+
+        composeTestRule.onNode(hasSetTextAction()).assertTextContains("Nickname")
+    }
+
+    @Test
     fun inputText_triggersCallback() {
         val accountName = "@drew654"
         var text = ""
@@ -48,7 +58,6 @@ class AssignNicknameDialogTest {
             )
         }
 
-        composeTestRule.onNode(hasSetTextAction()).assertTextContains("Nickname")
         composeTestRule.onNode(hasSetTextAction()).performClick()
         composeTestRule.onNode(hasSetTextAction()).performTextInput("Drew")
 

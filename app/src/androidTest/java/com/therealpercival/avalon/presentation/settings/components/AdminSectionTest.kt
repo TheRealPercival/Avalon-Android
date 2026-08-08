@@ -17,6 +17,8 @@ class AdminSectionTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    // Requests ------------------------------------------------------------------------------------
+
     @Test
     fun adminSection_displaysRequestsText_whenRequestingProfilesIsNotEmpty() {
         composeTestRule.setContent {
@@ -62,53 +64,6 @@ class AdminSectionTest {
     }
 
     @Test
-    fun adminSection_displaysAcceptedText_whenAllowedProfilesIsNotEmpty() {
-        composeTestRule.setContent {
-            AdminSection(
-                requestingProfiles = listOf(
-                    SettingsViewModel.RequestingProfile(
-                        accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
-                    ),
-                    SettingsViewModel.RequestingProfile(
-                        accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
-                ),
-                allowedProfiles = listOf(
-                    SettingsViewModel.AllowedProfile(
-                        displayName = "Drew",
-                        accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
-            )
-        }
-
-        composeTestRule.onNodeWithText("Accepted").assertIsDisplayed()
-    }
-
-    @Test
-    fun adminSection_doesNotDisplayAcceptedText_whenAllowedProfilesIsEmpty() {
-        composeTestRule.setContent {
-            AdminSection(
-                requestingProfiles = listOf(
-                    SettingsViewModel.RequestingProfile(
-                        accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
-                    ),
-                    SettingsViewModel.RequestingProfile(
-                        accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
-                )
-            )
-        }
-
-        composeTestRule.onNodeWithText("Accepted").assertDoesNotExist()
-    }
-
-    @Test
     fun adminSection_showsAllRequestingProfiles() {
         composeTestRule.setContent {
             AdminSection(
@@ -134,38 +89,6 @@ class AdminSectionTest {
 
         composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
         composeTestRule.onNodeWithText("@_shoe_").assertIsDisplayed()
-    }
-
-    @Test
-    fun adminSection_showsAllAllowedProfiles() {
-        composeTestRule.setContent {
-            AdminSection(
-                requestingProfiles = listOf(
-                    SettingsViewModel.RequestingProfile(
-                        accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
-                ),
-                allowedProfiles = listOf(
-                    SettingsViewModel.AllowedProfile(
-                        displayName = "Ben",
-                        accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
-                    ),
-                    SettingsViewModel.AllowedProfile(
-                        displayName = "Drew",
-                        accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
-            )
-        }
-
-        composeTestRule.onNodeWithText("Ben").assertIsDisplayed()
-        composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
-
-        composeTestRule.onNodeWithText("Drew").assertIsDisplayed()
-        composeTestRule.onNodeWithText("@drew654").assertIsDisplayed()
     }
 
     @Test
@@ -220,6 +143,77 @@ class AdminSectionTest {
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
+    }
+
+    // Accepted ------------------------------------------------------------------------------------
+
+    @Test
+    fun adminSection_displaysAcceptedText_whenAllowedProfilesIsNotEmpty() {
+        composeTestRule.setContent {
+            AdminSection(
+                allowedProfiles = listOf(
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Drew",
+                        accountName = "@drew654",
+                        avatarModel = R.drawable.x
+                    )
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("Accepted").assertIsDisplayed()
+    }
+
+    @Test
+    fun adminSection_doesNotDisplayAcceptedText_whenAllowedProfilesIsEmpty() {
+        composeTestRule.setContent {
+            AdminSection(
+                requestingProfiles = listOf(
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@_shoe_",
+                        avatarModel = R.drawable._shoe_
+                    )
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("Accepted").assertDoesNotExist()
+    }
+
+    @Test
+    fun adminSection_showsAllAllowedProfiles() {
+        composeTestRule.setContent {
+            AdminSection(
+                requestingProfiles = listOf(
+                    SettingsViewModel.RequestingProfile(
+                        accountName = "@_shoe_",
+                        avatarModel = R.drawable._shoe_
+                    )
+                ),
+                allowedProfiles = listOf(
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Ben",
+                        accountName = "@ben.json",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    SettingsViewModel.AllowedProfile(
+                        displayName = "Drew",
+                        accountName = "@drew654",
+                        avatarModel = R.drawable.x
+                    )
+                )
+            )
+        }
+
+        composeTestRule.onNodeWithText("Ben").assertIsDisplayed()
+        composeTestRule.onNodeWithText("@ben.json").assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Drew").assertIsDisplayed()
+        composeTestRule.onNodeWithText("@drew654").assertIsDisplayed()
     }
 
     @Test
