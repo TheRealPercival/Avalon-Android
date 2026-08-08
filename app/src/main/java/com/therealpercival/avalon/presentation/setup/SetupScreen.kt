@@ -102,7 +102,8 @@ fun SetupContent(
             is SetupViewModel.ServerUrlState.Unvalidated -> {
                 Button(
                     onClick = onConnectClicked,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = state.serverUrl.isNotBlank()
                 ) {
                     Text(text = "Connect")
                 }
