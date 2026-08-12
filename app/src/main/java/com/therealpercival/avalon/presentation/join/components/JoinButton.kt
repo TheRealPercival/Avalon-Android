@@ -48,3 +48,30 @@ private fun JoinButtonPreview() {
         )
     }
 }
+
+@DayNightPreviews
+@Composable
+private fun JoinButtonPreview2() {
+    ThemePreview {
+        JoinButton(
+            text = "Join game (1 in lobby)",
+            imageModels = listOf(
+                R.drawable.x
+            )
+        )
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun JoinButtonPreview3() {
+    ThemePreview {
+        JoinButton(
+            text = "Join game (2 in lobby)",
+            imageModels = listOf(
+                R.drawable.x,
+                R.drawable.benjson
+            )
+        )
+    }
+}
