@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.R
@@ -32,10 +31,9 @@ fun JoinScreen(
 }
 
 @Composable
-private fun JoinContent(
+internal fun JoinContent(
     state: JoinViewModel.UiState,
-    onJoinClicked: () -> Unit = { },
-    placeholder: Painter = ColorPainter(Color.LightGray)
+    onJoinClicked: () -> Unit = { }
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -51,7 +49,7 @@ private fun JoinContent(
                 .align(Alignment.Center)
                 .padding(16.dp),
             onClick = onJoinClicked,
-            placeholder = placeholder
+            placeholder = ColorPainter(Color.LightGray)
         )
     }
 }

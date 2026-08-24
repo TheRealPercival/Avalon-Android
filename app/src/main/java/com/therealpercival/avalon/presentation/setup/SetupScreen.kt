@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.presentation.NoRippleInteractionSource
@@ -55,7 +56,7 @@ fun SetupScreen(
 }
 
 @Composable
-fun SetupContent(
+internal fun SetupContent(
     state: SetupViewModel.UiState,
     onServerUrlChange: (String) -> Unit = { },
     onConnectClicked: () -> Unit = { },
@@ -99,24 +100,20 @@ fun SetupContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        when (state.serverUrlState) {
-            is SetupViewModel.ServerUrlState.Unvalidated,
-            is SetupViewModel.ServerUrlState.Error -> {
-                Button(
-                    onClick = onConnectClicked,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = state.serverUrl.isNotBlank()
+        if (state.serverUrlState !is SetupViewModel.ServerUrlState.Valid) {
+            Button(
+                onClick = onConnectClicked,
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("SetupScreen_ConnectButton"),
+                enabled = state.serverUrl.isNotBlank() && state.serverUrlState is SetupViewModel.ServerUrlState.Unvalidated,
+            ) {
+                if (state.serverUrlState in listOf(
+                        SetupViewModel.ServerUrlState.Unvalidated,
+                        SetupViewModel.ServerUrlState.Error
+                    )
                 ) {
                     Text(text = "Connect")
-                }
-            }
-
-            is SetupViewModel.ServerUrlState.Fetching -> {
-                Button(
-                    onClick = onConnectClicked,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = false
-                ) {
+                } else if (state.serverUrlState is SetupViewModel.ServerUrlState.Fetching) {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .height(16.dp)
@@ -125,15 +122,13 @@ fun SetupContent(
                     )
                 }
             }
-
-            else -> { }
         }
     }
 }
 
 @DayNightDevicePreviews
 @Composable
-fun SetupScreenPreview() {
+private fun SetupScreenPreview() {
     DeviceThemePreview {
         SetupContent(
             state = SetupViewModel.UiState()
@@ -143,10 +138,11 @@ fun SetupScreenPreview() {
 
 @DayNightDevicePreviews
 @Composable
-fun SetupScreenFetchingPreview() {
+private fun SetupScreenFetchingPreview() {
     DeviceThemePreview {
         SetupContent(
             state = SetupViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
                 serverUrlState = SetupViewModel.ServerUrlState.Fetching
             )
         )
@@ -155,7 +151,20 @@ fun SetupScreenFetchingPreview() {
 
 @DayNightDevicePreviews
 @Composable
-fun SetupScreenDiscordPreview() {
+private fun SetupScreenErrorPreview() {
+    DeviceThemePreview {
+        SetupContent(
+            state = SetupViewModel.UiState(
+                serverUrl = "server.therealpercival.com",
+                serverUrlState = SetupViewModel.ServerUrlState.Error
+            )
+        )
+    }
+}
+
+@DayNightDevicePreviews
+@Composable
+private fun SetupScreenDiscordPreview() {
     DeviceThemePreview {
         SetupContent(
             state = SetupViewModel.UiState(
