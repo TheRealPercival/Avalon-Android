@@ -17,8 +17,7 @@ fun AvalonBottomNavigation(
 ) {
     val items = listOf(
         Screen.Settings,
-        Screen.Join,
-        Screen.Stats
+        Screen.Join
     )
 
     NavigationBar {
