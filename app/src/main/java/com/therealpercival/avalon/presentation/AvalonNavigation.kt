@@ -34,7 +34,7 @@ fun AvalonNavigation() {
                     currentRoute = currentRoute,
                     onNavBarItemClicked = { screen ->
                         navController.navigate(screen.route) {
-                            popUpTo(navController.graph.startDestinationId) {
+                            popUpTo(Screen.Join.route) {
                                 saveState = true
                             }
                             launchSingleTop = true
@@ -51,7 +51,15 @@ fun AvalonNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Setup.route) {
-                SetupScreen()
+                SetupScreen(
+                    onSignInSuccess = {
+                        navController.navigate(Screen.Join.route) {
+                            popUpTo(Screen.Setup.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
             composable(Screen.Join.route) {
                 JoinScreen()
@@ -60,7 +68,15 @@ fun AvalonNavigation() {
                 StatsScreen()
             }
             composable(Screen.Settings.route) {
-                SettingsScreen()
+                SettingsScreen(
+                    onSignOutSuccess = {
+                        navController.navigate(Screen.Setup.route) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
         }
     }

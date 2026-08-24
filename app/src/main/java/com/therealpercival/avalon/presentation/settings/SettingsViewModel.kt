@@ -1,11 +1,25 @@
 package com.therealpercival.avalon.presentation.settings
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.therealpercival.avalon.domain.repository.AdminRepository
+import com.therealpercival.avalon.domain.repository.ServerRepository
+import com.therealpercival.avalon.domain.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingsViewModel : ViewModel() {
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val serverRepository: ServerRepository,
+    private val adminRepository: AdminRepository
+) : ViewModel() {
     data class RequestingProfile(
         val accountName: String,
         val avatarModel: Any
@@ -41,42 +55,74 @@ class SettingsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        combine(
+            userRepository.getCurrentUser(),
+            serverRepository.getServerUrl(),
+            adminRepository.getRequestingProfiles(),
+            adminRepository.getAllowedProfiles()
+        ) { user, serverUrl, requesting, allowed ->
+            _uiState.update { state ->
+                state.copy(
+                    displayName = user?.displayName ?: "",
+                    accountName = user?.accountName ?: "",
+                    isAdmin = user?.isAdmin ?: false,
+                    serverUrl = serverUrl,
+                    requestingProfiles = requesting.map { 
+                        RequestingProfile(it.accountName, it.avatarModel) 
+                    },
+                    allowedProfiles = allowed.map { 
+                        AllowedProfile(it.displayName, it.accountName, it.avatarModel) 
+                    }
+                )
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun dismissDialog() {
-        _uiState.value = _uiState.value.copy(
-            dialogType = null,
-            selectedAllowedProfile = null,
-            selectedRequestingProfile = null,
-            nickname = ""
-        )
+        _uiState.update {
+            it.copy(
+                dialogType = null,
+                selectedAllowedProfile = null,
+                selectedRequestingProfile = null,
+                nickname = ""
+            )
+        }
     }
 
     fun showChangeServerDialog() {
-        _uiState.value = _uiState.value.copy(
-            dialogType = DialogType.Server
-        )
+        _uiState.update {
+            it.copy(dialogType = DialogType.Server)
+        }
     }
 
     fun changeServer() {
-        // TODO: Implement change server logic
-        _uiState.update { it.copy(dialogType = null) }
+        viewModelScope.launch {
+            userRepository.signOut()
+            _uiState.update { it.copy(dialogType = null) }
+        }
     }
 
     fun showSignOutDialog() {
-        _uiState.value = _uiState.value.copy(
-            dialogType = DialogType.SignOut
-        )
+        _uiState.update {
+            it.copy(dialogType = DialogType.SignOut)
+        }
     }
 
     fun signOut() {
-        // TODO: Implement sign out logic
-        _uiState.update { it.copy(dialogType = null) }
+        viewModelScope.launch {
+            userRepository.signOut()
+            _uiState.update { it.copy(dialogType = null) }
+        }
     }
 
     fun showAssignNicknameDialog(profile: RequestingProfile) {
-        _uiState.value = _uiState.value.copy(
-            dialogType = DialogType.AssignNickname,
-            selectedRequestingProfile = profile
-        )
+        _uiState.update {
+            it.copy(
+                dialogType = DialogType.AssignNickname,
+                selectedRequestingProfile = profile
+            )
+        }
     }
 
     fun setNickname(nickname: String) {
@@ -84,31 +130,45 @@ class SettingsViewModel : ViewModel() {
     }
 
     fun allowProfile() {
-        // TODO: Implement allow profile logic
-        _uiState.update { it.copy(dialogType = null) }
+        val selectedProfile = _uiState.value.selectedRequestingProfile ?: return
+        val nickname = _uiState.value.nickname
+        viewModelScope.launch {
+            adminRepository.allowProfile(selectedProfile.accountName, nickname)
+            dismissDialog()
+        }
     }
 
     fun showDenyProfileDialog(profile: RequestingProfile) {
-        _uiState.value = _uiState.value.copy(
-            dialogType = DialogType.DenyProfile,
-            selectedRequestingProfile = profile
-        )
+        _uiState.update {
+            it.copy(
+                dialogType = DialogType.DenyProfile,
+                selectedRequestingProfile = profile
+            )
+        }
     }
 
     fun denyProfile() {
-        // TODO: Implement deny profile logic
-        _uiState.update { it.copy(dialogType = null) }
+        val selectedProfile = _uiState.value.selectedRequestingProfile ?: return
+        viewModelScope.launch {
+            adminRepository.denyProfile(selectedProfile.accountName)
+            dismissDialog()
+        }
     }
 
     fun showRemoveProfileDialog(profile: AllowedProfile) {
-        _uiState.value = _uiState.value.copy(
-            dialogType = DialogType.RemoveProfile,
-            selectedAllowedProfile = profile
-        )
+        _uiState.update {
+            it.copy(
+                dialogType = DialogType.RemoveProfile,
+                selectedAllowedProfile = profile
+            )
+        }
     }
 
     fun removeProfile() {
-        // TODO: Implement remove profile logic
-        _uiState.update { it.copy(dialogType = null) }
+        val selectedProfile = _uiState.value.selectedAllowedProfile ?: return
+        viewModelScope.launch {
+            adminRepository.removeProfile(selectedProfile.accountName)
+            dismissDialog()
+        }
     }
 }

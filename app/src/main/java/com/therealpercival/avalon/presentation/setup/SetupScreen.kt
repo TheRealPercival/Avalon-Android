@@ -17,29 +17,40 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.presentation.NoRippleInteractionSource
 import com.therealpercival.avalon.presentation.components.AvalonLogo
 import com.therealpercival.avalon.presentation.setup.components.DiscordSignInSection
 import com.therealpercival.avalon.presentation.setup.components.ServerUrlSection
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SetupScreen(
-    viewModel: SetupViewModel = viewModel()
+    viewModel: SetupViewModel = hiltViewModel(),
+    onSignInSuccess: () -> Unit = { }
 ) {
     val state by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigateToJoin.collectLatest {
+            onSignInSuccess()
+        }
+    }
+
     SetupContent(
         state = state,
         onServerUrlChange = viewModel::setServerUrl,
-        onConnectClicked = viewModel::connectToServer
+        onConnectClicked = viewModel::connectToServer,
+        onSignInClicked = viewModel::signIn
     )
 }
 
@@ -47,7 +58,8 @@ fun SetupScreen(
 fun SetupContent(
     state: SetupViewModel.UiState,
     onServerUrlChange: (String) -> Unit = { },
-    onConnectClicked: () -> Unit = { }
+    onConnectClicked: () -> Unit = { },
+    onSignInClicked: () -> Unit = { }
 ) {
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
@@ -72,12 +84,14 @@ fun SetupContent(
 
         if (state.serverUrlState is SetupViewModel.ServerUrlState.Valid) {
             DiscordSignInSection(
-                serverUrl = state.serverUrl
+                serverUrl = state.serverUrl,
+                onSignInClicked = onSignInClicked
             )
         } else {
             ServerUrlSection(
                 serverUrl = state.serverUrl,
-                isInputEnabled = state.serverUrlState is SetupViewModel.ServerUrlState.Unvalidated,
+                isInputEnabled = state.serverUrlState !is SetupViewModel.ServerUrlState.Fetching,
+                isError = state.serverUrlState is SetupViewModel.ServerUrlState.Error,
                 onServerUrlChange = onServerUrlChange,
                 onDone = onConnectClicked
             )
@@ -86,10 +100,12 @@ fun SetupContent(
         Spacer(modifier = Modifier.weight(1f))
 
         when (state.serverUrlState) {
-            is SetupViewModel.ServerUrlState.Unvalidated -> {
+            is SetupViewModel.ServerUrlState.Unvalidated,
+            is SetupViewModel.ServerUrlState.Error -> {
                 Button(
                     onClick = onConnectClicked,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = state.serverUrl.isNotBlank()
                 ) {
                     Text(text = "Connect")
                 }

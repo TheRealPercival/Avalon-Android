@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.components.AvalonLogo
@@ -22,7 +22,7 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 
 @Composable
 fun JoinScreen(
-    viewModel: JoinViewModel = viewModel()
+    viewModel: JoinViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 

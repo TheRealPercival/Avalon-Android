@@ -18,7 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.settings.components.AdminSection
@@ -29,7 +29,8 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = viewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
+    onSignOutSuccess: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
     SettingsContent(
@@ -39,12 +40,14 @@ fun SettingsScreen(
         },
         onConfirmChangeServerClicked = {
             viewModel.changeServer()
+            onSignOutSuccess()
         },
         onSignOutClicked = {
             viewModel.showSignOutDialog()
         },
         onConfirmSignOutClicked = {
             viewModel.signOut()
+            onSignOutSuccess()
         },
         onAllowClicked = {
             viewModel.showAssignNicknameDialog(it)
