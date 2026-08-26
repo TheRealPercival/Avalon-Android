@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.components.DropdownInputField
 import com.therealpercival.avalon.presentation.lobby.components.LadyOfTheLakeButton
+import com.therealpercival.avalon.presentation.lobby.components.PlayersSection
 import com.therealpercival.avalon.presentation.lobby.components.TrapperButton
 import com.therealpercival.avalon.presentation.lobby.components.VoteResetButton
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
@@ -85,6 +86,9 @@ private fun LobbyContent(
                     VoteResetButton()
                 }
             }
+            PlayersSection(
+                players = state.players
+            )
         }
     }
 }
@@ -96,7 +100,29 @@ private fun LobbyScreenPreview() {
         LobbyContent(
             state = LobbyViewModel.UiState(
                 selectedPreset = "Classic",
-                presetOptions = listOf("Classic")
+                presetOptions = listOf("Classic"),
+                players = listOf(
+                    LobbyViewModel.Player(
+                        displayName = "Drew",
+                        avatarModel = R.drawable.x
+                    ),
+                    LobbyViewModel.Player(
+                        displayName = "Ben",
+                        avatarModel = R.drawable.benjson
+                    ),
+                    LobbyViewModel.Player(
+                        displayName = "Izzy",
+                        avatarModel = R.drawable.izzyderose
+                    ),
+                    LobbyViewModel.Player(
+                        displayName = "Thomas",
+                        avatarModel = R.drawable._shoe_
+                    ),
+                    LobbyViewModel.Player(
+                        displayName = "Landon",
+                        avatarModel = R.drawable.landon248
+                    )
+                )
             )
         )
     }
