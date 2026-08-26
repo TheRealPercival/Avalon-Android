@@ -2,6 +2,7 @@ package com.therealpercival.avalon.presentation.lobby
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -19,6 +20,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.components.DropdownInputField
+import com.therealpercival.avalon.presentation.lobby.components.LadyOfTheLakeButton
+import com.therealpercival.avalon.presentation.lobby.components.TrapperButton
+import com.therealpercival.avalon.presentation.lobby.components.VoteResetButton
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
@@ -58,10 +62,6 @@ private fun LobbyContent(
                 .padding(all = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                text = "Lobby",
-                style = MaterialTheme.typography.headlineSmall
-            )
             DropdownInputField(
                 value = state.selectedPreset,
                 onValueChange = { },
@@ -70,6 +70,21 @@ private fun LobbyContent(
                 isExpanded = state.isPresetDropdownExpanded,
                 onExpandedChange = { }
             )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "Settings",
+                    style = MaterialTheme.typography.labelSmall
+                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    TrapperButton()
+                    LadyOfTheLakeButton()
+                    VoteResetButton()
+                }
+            }
         }
     }
 }
