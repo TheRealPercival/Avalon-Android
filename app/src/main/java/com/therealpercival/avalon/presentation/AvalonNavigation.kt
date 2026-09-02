@@ -13,6 +13,7 @@ import com.therealpercival.avalon.presentation.components.AvalonBottomNavigation
 import com.therealpercival.avalon.presentation.join.JoinScreen
 import com.therealpercival.avalon.presentation.settings.SettingsScreen
 import com.therealpercival.avalon.presentation.setup.SetupScreen
+import com.therealpercival.avalon.presentation.splash.SplashScreen
 import com.therealpercival.avalon.presentation.stats.StatsScreen
 
 @Composable
@@ -47,9 +48,27 @@ fun AvalonNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Setup.route,
+            startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(Screen.Splash.route) {
+                SplashScreen(
+                    onNavigateToSetup = {
+                        navController.navigate(Screen.Setup.route) {
+                            popUpTo(Screen.Splash.route) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onNavigateToJoin = {
+                        navController.navigate(Screen.Join.route) {
+                            popUpTo(Screen.Splash.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
             composable(Screen.Setup.route) {
                 SetupScreen(
                     onSignInSuccess = {
