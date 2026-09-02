@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.therealpercival.avalon.domain.model.ConnectionStatus
 import com.therealpercival.avalon.domain.model.ServerInfo
 import com.therealpercival.avalon.domain.repository.ServerRepository
+import com.therealpercival.avalon.domain.repository.UserRepository
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -30,13 +32,13 @@ import kotlin.time.Duration.Companion.seconds
 @Singleton
 class RealServerRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>,
-    private val json: Json
+    private val json: Json,
+    private val userRepositoryProvider: Provider<UserRepository>
 ) : ServerRepository {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var socket: Socket? = null
 
     private val _connectionStatus = MutableStateFlow(ConnectionStatus.DISCONNECTED)
-    private val _serverInfo = MutableStateFlow<ServerInfo?>(null)
 
     init {
         scope.launch {
@@ -56,6 +58,7 @@ class RealServerRepository @Inject constructor(
 
     private object PreferencesKeys {
         val SERVER_URL = stringPreferencesKey("server_url")
+        val SERVER_INFO = stringPreferencesKey("server_info")
     }
 
     override fun getServerUrl(): Flow<String> {
@@ -67,6 +70,12 @@ class RealServerRepository @Inject constructor(
     override suspend fun saveServerUrl(url: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.SERVER_URL] = url
+        }
+    }
+
+    private suspend fun saveServerInfo(info: ServerInfo) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SERVER_INFO] = json.encodeToString(info)
         }
     }
 
@@ -116,7 +125,20 @@ class RealServerRepository @Inject constructor(
 
     override fun getConnectionStatus(): Flow<ConnectionStatus> = _connectionStatus.asStateFlow()
 
-    override fun getServerInfo(): Flow<ServerInfo?> = _serverInfo.asStateFlow()
+    override fun getServerInfo(): Flow<ServerInfo?> {
+        return dataStore.data.map { preferences ->
+            val infoJson = preferences[PreferencesKeys.SERVER_INFO]
+            if (infoJson != null) {
+                try {
+                    json.decodeFromString<ServerInfo>(infoJson)
+                } catch (_: Exception) {
+                    null
+                }
+            } else {
+                null
+            }
+        }
+    }
 
     override fun connect() {
         if (socket?.connected() == true) return
@@ -137,7 +159,20 @@ class RealServerRepository @Inject constructor(
             Log.d(TAG, "Connecting to socket at $formattedUrl")
             _connectionStatus.value = ConnectionStatus.CONNECTING
 
+            val tokens = userRepositoryProvider.get().getSessionTokens()
+            val authPayload = tokens?.let {
+                mapOf(
+                    "access_token" to it.accessToken,
+                    "refresh_token" to it.refreshToken
+                )
+            }
+
             val opts = IO.Options.builder()
+                .apply {
+                    if (authPayload != null) {
+                        setAuth(authPayload)
+                    }
+                }
                 .build()
 
             socket?.disconnect()
@@ -149,7 +184,6 @@ class RealServerRepository @Inject constructor(
                 on(Socket.EVENT_DISCONNECT) {
                     Log.d(TAG, "Socket disconnected")
                     _connectionStatus.value = ConnectionStatus.DISCONNECTED
-                    _serverInfo.value = null
                 }
                 on(Socket.EVENT_CONNECT_ERROR) { args ->
                     Log.e(TAG, "Socket connect error: ${args.firstOrNull()}")
@@ -161,7 +195,9 @@ class RealServerRepository @Inject constructor(
                     try {
                         val info = json.decodeFromString<ServerInfo>(data)
                         Log.d(TAG, "Server info parsed: $info")
-                        _serverInfo.value = info
+                        scope.launch {
+                            saveServerInfo(info)
+                        }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error parsing server info", e)
                     }
@@ -175,6 +211,10 @@ class RealServerRepository @Inject constructor(
         socket?.disconnect()
         socket = null
         _connectionStatus.value = ConnectionStatus.DISCONNECTED
-        _serverInfo.value = null
+        scope.launch {
+            dataStore.edit { preferences ->
+                preferences.remove(PreferencesKeys.SERVER_INFO)
+            }
+        }
     }
 }

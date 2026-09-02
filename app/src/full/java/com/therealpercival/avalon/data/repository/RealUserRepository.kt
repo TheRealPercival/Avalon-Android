@@ -2,6 +2,7 @@ package com.therealpercival.avalon.data.repository
 
 import android.content.Intent
 import android.util.Log
+import com.therealpercival.avalon.domain.model.AuthSession
 import com.therealpercival.avalon.domain.model.User
 import com.therealpercival.avalon.domain.repository.ServerRepository
 import com.therealpercival.avalon.domain.repository.UserRepository
@@ -28,7 +29,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RealUserRepository @Inject constructor(
-    private val serverRepository: ServerRepository
+    serverRepository: ServerRepository
 ) : UserRepository {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var supabaseClient: SupabaseClient? = null
@@ -117,6 +118,18 @@ class RealUserRepository @Inject constructor(
     override fun getCurrentUser(): Flow<User?> = _currentUser.asStateFlow()
 
     override fun isAuthenticating(): Flow<Boolean> = _isAuthenticating.asStateFlow()
+
+    override fun getSessionTokens(): AuthSession? {
+        val status = supabaseClient?.auth?.sessionStatus?.value
+        return if (status is SessionStatus.Authenticated) {
+            AuthSession(
+                accessToken = status.session.accessToken,
+                refreshToken = status.session.refreshToken
+            )
+        } else {
+            null
+        }
+    }
 
     override suspend fun signIn() {
         Log.d(TAG, "signIn called")

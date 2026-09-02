@@ -1,6 +1,7 @@
 package com.therealpercival.avalon.data.repository
 
 import android.content.Intent
+import com.therealpercival.avalon.domain.model.AuthSession
 import com.therealpercival.avalon.domain.model.User
 import com.therealpercival.avalon.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,8 @@ class FakeUserRepository @Inject constructor() : UserRepository {
     override fun getCurrentUser(): Flow<User?> = currentUser
 
     override fun isAuthenticating(): Flow<Boolean> = flowOf(false)
+
+    override fun getSessionTokens(): AuthSession? = null
 
     override suspend fun signIn() {
         currentUser.value = User(
