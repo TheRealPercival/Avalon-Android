@@ -1,21 +1,24 @@
 package com.therealpercival.avalon.presentation.setup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.therealpercival.avalon.domain.model.ConnectionStatus
 import com.therealpercival.avalon.domain.repository.ServerRepository
 import com.therealpercival.avalon.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class SetupViewModel @Inject constructor(
@@ -30,7 +33,10 @@ class SetupViewModel @Inject constructor(
     }
     data class UiState(
         val serverUrl: String = "",
-        val serverUrlState: ServerUrlState = ServerUrlState.Unvalidated
+        val serverUrlState: ServerUrlState = ServerUrlState.Unvalidated,
+        val connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED,
+        val isServerInfoLoaded: Boolean = false,
+        val isAuthenticating: Boolean = false
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -40,11 +46,37 @@ class SetupViewModel @Inject constructor(
     val navigateToJoin: SharedFlow<Unit> = _navigateToJoin.asSharedFlow()
 
     init {
-        viewModelScope.launch {
-            serverRepository.getServerUrl().collect { url ->
-                _uiState.update { it.copy(serverUrl = url) }
+        serverRepository.getServerUrl()
+            .onEach { url -> _uiState.update { it.copy(serverUrl = url) } }
+            .launchIn(viewModelScope)
+        
+        combine(
+            serverRepository.getConnectionStatus(),
+            serverRepository.getServerInfo()
+        ) { status, info ->
+            _uiState.update { it.copy(
+                connectionStatus = status,
+                isServerInfoLoaded = info != null
+            ) }
+        }.launchIn(viewModelScope)
+
+        userRepository.isAuthenticating()
+            .onEach { authenticating ->
+                _uiState.update { it.copy(isAuthenticating = authenticating) }
             }
-        }
+            .launchIn(viewModelScope)
+
+        userRepository.getCurrentUser()
+            .onEach { user ->
+                if (user != null) {
+                    _navigateToJoin.emit(Unit)
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+    
+    companion object {
+        const val TAG = "SetupViewModel"
     }
 
     fun setServerUrl(url: String) {
@@ -57,13 +89,16 @@ class SetupViewModel @Inject constructor(
     }
 
     fun connectToServer() {
+        Log.d(TAG, "Connect to server clicked: ${uiState.value.serverUrl}")
         viewModelScope.launch {
             _uiState.update { it.copy(serverUrlState = ServerUrlState.Fetching) }
             val isValid = serverRepository.validateServerUrl(_uiState.value.serverUrl)
-            delay(1.seconds)
+            Log.d(TAG, "Server URL validation result: $isValid")
             if (isValid) {
                 serverRepository.saveServerUrl(_uiState.value.serverUrl)
                 _uiState.update { it.copy(serverUrlState = ServerUrlState.Valid) }
+                Log.d(TAG, "Connecting to server...")
+                serverRepository.connect()
             } else {
                 _uiState.update { it.copy(serverUrlState = ServerUrlState.Error) }
             }
@@ -73,7 +108,6 @@ class SetupViewModel @Inject constructor(
     fun signIn() {
         viewModelScope.launch {
             userRepository.signIn()
-            _navigateToJoin.emit(Unit)
         }
     }
 }

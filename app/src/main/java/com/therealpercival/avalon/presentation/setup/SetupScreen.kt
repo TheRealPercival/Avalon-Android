@@ -83,11 +83,26 @@ internal fun SetupContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        if (state.serverUrlState is SetupViewModel.ServerUrlState.Valid) {
-            DiscordSignInSection(
-                serverUrl = state.serverUrl,
-                onSignInClicked = onSignInClicked
-            )
+        if (state.isServerInfoLoaded) {
+            if (state.isAuthenticating) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Signing in...",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                DiscordSignInSection(
+                    serverUrl = state.serverUrl,
+                    onSignInClicked = onSignInClicked
+                )
+            }
         } else {
             ServerUrlSection(
                 serverUrl = state.serverUrl,
@@ -100,26 +115,25 @@ internal fun SetupContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        if (state.serverUrlState !is SetupViewModel.ServerUrlState.Valid) {
+        if (!state.isServerInfoLoaded) {
             Button(
                 onClick = onConnectClicked,
                 modifier = Modifier.fillMaxWidth()
                     .testTag("SetupScreen_ConnectButton"),
-                enabled = state.serverUrl.isNotBlank() && state.serverUrlState is SetupViewModel.ServerUrlState.Unvalidated,
+                enabled = state.serverUrl.isNotBlank() && state.serverUrlState !is SetupViewModel.ServerUrlState.Fetching,
             ) {
-                if (state.serverUrlState in listOf(
-                        SetupViewModel.ServerUrlState.Unvalidated,
-                        SetupViewModel.ServerUrlState.Error
-                    )
-                ) {
-                    Text(text = "Connect")
-                } else if (state.serverUrlState is SetupViewModel.ServerUrlState.Fetching) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .height(16.dp)
-                            .width(16.dp),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                    )
+                when (state.serverUrlState) {
+                    SetupViewModel.ServerUrlState.Fetching -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .height(16.dp)
+                                .width(16.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                        )
+                    }
+                    else -> {
+                        Text(text = "Connect")
+                    }
                 }
             }
         }

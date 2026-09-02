@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.therealpercival.avalon.R
+import com.therealpercival.avalon.domain.model.ConnectionStatus
 import com.therealpercival.avalon.presentation.Screen
 import com.therealpercival.avalon.presentation.settings.components.AdminSection
 import com.therealpercival.avalon.presentation.settings.components.AssignNicknameDialog
@@ -127,9 +128,18 @@ internal fun SettingsContent(
             enabled = false,
             label = { Text("Server URL") },
             trailingIcon = {
+                val icon = if (state.connectionStatus == ConnectionStatus.CONNECTED) {
+                    R.drawable.baseline_check_24
+                } else {
+                    R.drawable.outline_cancel_24
+                }
                 Icon(
-                    painter = painterResource(id = R.drawable.baseline_check_24),
-                    contentDescription = "Server URL is valid"
+                    painter = painterResource(id = icon),
+                    contentDescription = if (state.connectionStatus == ConnectionStatus.CONNECTED) "Connected" else "Disconnected",
+                    tint = if (state.connectionStatus == ConnectionStatus.CONNECTED) 
+                        MaterialTheme.colorScheme.primary 
+                    else 
+                        MaterialTheme.colorScheme.error
                 )
             },
             singleLine = true,
