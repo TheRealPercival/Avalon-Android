@@ -2,6 +2,7 @@ package com.therealpercival.avalon.presentation.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.therealpercival.avalon.domain.model.ConnectionStatus
 import com.therealpercival.avalon.domain.repository.AdminRepository
 import com.therealpercival.avalon.domain.repository.ServerRepository
 import com.therealpercival.avalon.domain.repository.UserRepository
@@ -49,7 +50,8 @@ class SettingsViewModel @Inject constructor(
         val allowedProfiles: List<AllowedProfile> = emptyList(),
         val selectedAllowedProfile: AllowedProfile? = null,
         val selectedRequestingProfile: RequestingProfile? = null,
-        val nickname: String = ""
+        val nickname: String = "",
+        val connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -59,15 +61,17 @@ class SettingsViewModel @Inject constructor(
         combine(
             userRepository.getCurrentUser(),
             serverRepository.getServerUrl(),
+            serverRepository.getConnectionStatus(),
             adminRepository.getRequestingProfiles(),
             adminRepository.getAllowedProfiles()
-        ) { user, serverUrl, requesting, allowed ->
+        ) { user, serverUrl, status, requesting, allowed ->
             _uiState.update { state ->
                 state.copy(
                     displayName = user?.displayName ?: "",
                     accountName = user?.accountName ?: "",
                     isAdmin = user?.isAdmin ?: false,
                     serverUrl = serverUrl,
+                    connectionStatus = status,
                     requestingProfiles = requesting.map { 
                         RequestingProfile(it.accountName, it.avatarModel) 
                     },
@@ -99,6 +103,8 @@ class SettingsViewModel @Inject constructor(
     fun changeServer() {
         viewModelScope.launch {
             userRepository.signOut()
+            serverRepository.disconnect()
+            serverRepository.saveServerUrl("")
             _uiState.update { it.copy(dialogType = null) }
         }
     }
