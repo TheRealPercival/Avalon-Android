@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.therealpercival.avalon.domain.repository.ServerRepository
 import com.therealpercival.avalon.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
@@ -26,14 +26,14 @@ class SplashViewModel @Inject constructor(
         object NavigateToJoin : SplashEvent()
     }
 
-    private val _events = MutableSharedFlow<SplashEvent>()
-    val events = _events.asSharedFlow()
+    private val _events = Channel<SplashEvent>(Channel.CONFLATED)
+    val events = _events.receiveAsFlow()
 
     init {
         viewModelScope.launch {
             val url = serverRepository.getServerUrl().first()
             if (url.isBlank()) {
-                _events.emit(SplashEvent.NavigateToSetup)
+                _events.send(SplashEvent.NavigateToSetup)
                 return@launch
             }
 
@@ -42,7 +42,7 @@ class SplashViewModel @Inject constructor(
             }
 
             if (serverInfo == null) {
-                _events.emit(SplashEvent.NavigateToSetup)
+                _events.send(SplashEvent.NavigateToSetup)
                 return@launch
             }
 
@@ -55,9 +55,9 @@ class SplashViewModel @Inject constructor(
 
             val user = userRepository.getCurrentUser().first()
             if (user != null) {
-                _events.emit(SplashEvent.NavigateToJoin)
+                _events.send(SplashEvent.NavigateToJoin)
             } else {
-                _events.emit(SplashEvent.NavigateToSetup)
+                _events.send(SplashEvent.NavigateToSetup)
             }
         }
     }

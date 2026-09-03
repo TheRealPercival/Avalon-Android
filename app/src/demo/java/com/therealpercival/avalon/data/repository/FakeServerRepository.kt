@@ -13,6 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeServerRepository @Inject constructor() : ServerRepository {
     private val _serverUrl = MutableStateFlow("")
+    private val _serverInfo = MutableStateFlow<ServerInfo?>(null)
     
     override fun getServerUrl(): Flow<String> = _serverUrl.asStateFlow()
 
@@ -26,15 +27,17 @@ class FakeServerRepository @Inject constructor() : ServerRepository {
 
     override fun getConnectionStatus(): Flow<ConnectionStatus> = flowOf(ConnectionStatus.CONNECTED)
 
-    override fun getServerInfo(): Flow<ServerInfo?> = flowOf(
-        ServerInfo(
+    override fun getServerInfo(): Flow<ServerInfo?> = _serverInfo.asStateFlow()
+
+    override fun connect() {
+        _serverInfo.value = ServerInfo(
             version = "1.0.0",
             supabaseURL = "https://fake.supabase.co",
             supabaseAnonKey = "fake_key"
         )
-    )
+    }
 
-    override fun connect() {}
-
-    override fun disconnect() {}
+    override fun disconnect() {
+        _serverInfo.value = null
+    }
 }
