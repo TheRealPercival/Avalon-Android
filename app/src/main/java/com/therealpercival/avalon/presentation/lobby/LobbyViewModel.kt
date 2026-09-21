@@ -1,6 +1,7 @@
 package com.therealpercival.avalon.presentation.lobby
 
 import androidx.lifecycle.ViewModel
+import com.therealpercival.avalon.domain.model.AvalonCharacter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
@@ -15,6 +16,7 @@ class LobbyViewModel @Inject constructor() : ViewModel() {
         val selectedPreset: String = "",
         val presetOptions: List<String> = emptyList(),
         val isPresetDropdownExpanded: Boolean = false,
+        val selectedCharacters: List<AvalonCharacter> = emptyList(),
         val players: List<Player> = emptyList()
     )
 

@@ -19,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.therealpercival.avalon.R
+import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.presentation.components.DropdownInputField
 import com.therealpercival.avalon.presentation.lobby.components.LadyOfTheLakeButton
 import com.therealpercival.avalon.presentation.lobby.components.PlayersSection
+import com.therealpercival.avalon.presentation.lobby.components.RolesSection
 import com.therealpercival.avalon.presentation.lobby.components.TrapperButton
 import com.therealpercival.avalon.presentation.lobby.components.VoteResetButton
 import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
@@ -71,6 +73,9 @@ private fun LobbyContent(
                 isExpanded = state.isPresetDropdownExpanded,
                 onExpandedChange = { }
             )
+            RolesSection(
+                selectedCharacters = state.selectedCharacters,
+            )
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -100,6 +105,16 @@ private fun LobbyScreenPreview() {
         LobbyContent(
             state = LobbyViewModel.UiState(
                 selectedPreset = "Classic",
+                selectedCharacters = listOf(
+                    AvalonCharacter.Merlin,
+                    AvalonCharacter.Percival,
+                    AvalonCharacter.LoyalServantOfArthur1,
+                    AvalonCharacter.LoyalServantOfArthur2,
+                    AvalonCharacter.LoyalServantOfArthur3,
+                    AvalonCharacter.Morgana,
+                    AvalonCharacter.Mordred,
+                    AvalonCharacter.MinionOfMordred1
+                ),
                 presetOptions = listOf("Classic"),
                 players = listOf(
                     LobbyViewModel.Player(
