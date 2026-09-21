@@ -89,7 +89,11 @@ fun AvalonNavigation() {
                 )
             }
             composable(Screen.Lobby.route) {
-                LobbyScreen()
+                LobbyScreen(
+                    onBackClicked = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,18 +32,21 @@ import com.therealpercival.avalon.presentation.ui.theme.DeviceThemePreview
 
 @Composable
 fun LobbyScreen(
-    viewModel: LobbyViewModel = hiltViewModel()
+    viewModel: LobbyViewModel = hiltViewModel(),
+    onBackClicked: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     LobbyContent(
-        state = uiState
+        state = uiState,
+        onBackClicked = onBackClicked
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LobbyContent(
-    state: LobbyViewModel.UiState
+    state: LobbyViewModel.UiState,
+    onBackClicked: () -> Unit = { }
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -50,10 +54,14 @@ private fun LobbyContent(
             CenterAlignedTopAppBar(
                 title = { Text(text = "Lobby") },
                 navigationIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                        contentDescription = "Back"
-                    )
+                    IconButton(
+                        onClick = onBackClicked
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_arrow_back_24),
+                            contentDescription = "Back"
+                        )
+                    }
                 }
             )
         }
