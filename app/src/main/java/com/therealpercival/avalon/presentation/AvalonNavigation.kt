@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.therealpercival.avalon.presentation.components.AvalonBottomNavigation
 import com.therealpercival.avalon.presentation.join.JoinScreen
+import com.therealpercival.avalon.presentation.lobby.LobbyScreen
 import com.therealpercival.avalon.presentation.settings.SettingsScreen
 import com.therealpercival.avalon.presentation.setup.SetupScreen
 import com.therealpercival.avalon.presentation.stats.StatsScreen
@@ -62,7 +63,11 @@ fun AvalonNavigation() {
                 )
             }
             composable(Screen.Join.route) {
-                JoinScreen()
+                JoinScreen(
+                    onJoinSuccess = {
+                        navController.navigate(Screen.Lobby.route)
+                    }
+                )
             }
             composable(Screen.Stats.route) {
                 StatsScreen()
@@ -77,6 +82,9 @@ fun AvalonNavigation() {
                         }
                     }
                 )
+            }
+            composable(Screen.Lobby.route) {
+                LobbyScreen()
             }
         }
     }

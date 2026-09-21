@@ -21,12 +21,16 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 
 @Composable
 fun JoinScreen(
+    onJoinSuccess: () -> Unit = { },
     viewModel: JoinViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 
     JoinContent(
-        state = state
+        state = state,
+        onJoinClicked = {
+            viewModel.onJoinClicked(onJoinSuccess)
+        }
     )
 }
 

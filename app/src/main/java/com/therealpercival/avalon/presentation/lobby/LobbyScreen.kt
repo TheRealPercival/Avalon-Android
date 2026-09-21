@@ -48,7 +48,7 @@ private fun LobbyContent(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Game") },
+                title = { Text(text = "Lobby") },
                 navigationIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_arrow_back_24),
