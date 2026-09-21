@@ -1,5 +1,7 @@
 package com.therealpercival.avalon.presentation
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -49,7 +51,10 @@ fun AvalonNavigation() {
         NavHost(
             navController = navController,
             startDestination = Screen.Setup.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .consumeWindowInsets(innerPadding)
         ) {
             composable(Screen.Setup.route) {
                 SetupScreen(
