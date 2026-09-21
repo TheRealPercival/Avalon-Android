@@ -51,4 +51,12 @@ class LobbyViewModel @Inject constructor(
             }
         }
     }
+
+    fun onRolesSectionClicked() {
+        _uiState.update { it.copy(isShowingCharacterSheet = true) }
+    }
+
+    fun onCharacterSheetDismissed() {
+        _uiState.update { it.copy(isShowingCharacterSheet = false) }
+    }
 }

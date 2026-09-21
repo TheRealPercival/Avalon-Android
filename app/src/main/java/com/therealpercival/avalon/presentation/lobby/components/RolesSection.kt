@@ -1,5 +1,6 @@
 package com.therealpercival.avalon.presentation.lobby.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +16,14 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun RolesSection(
-    selectedCharacters: List<AvalonCharacter>
+    selectedCharacters: List<AvalonCharacter>,
+    onClick: () -> Unit = { }
 ) {
     Column(
+        modifier = Modifier.clickable(
+            interactionSource = null,
+            indication = null
+        ) { onClick() },
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
