@@ -13,13 +13,13 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun CharacterTile(
-    character: AvalonCharacter
+    character: AvalonCharacter,
+    modifier: Modifier = Modifier
 ) {
     AsyncImage(
         model = character.tileImage,
         contentDescription = character.name,
-        modifier = Modifier
-            .size(64.dp)
+        modifier = modifier
             .clip(shape = MaterialTheme.shapes.medium)
     )
 }
@@ -29,7 +29,8 @@ fun CharacterTile(
 private fun CharacterTilePreview() {
     ThemePreview {
         CharacterTile(
-            character = AvalonCharacter.Percival
+            character = AvalonCharacter.Percival,
+            modifier = Modifier.size(64.dp)
         )
     }
 }

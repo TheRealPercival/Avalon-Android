@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,10 +21,12 @@ fun RolesSection(
     onClick: () -> Unit = { }
 ) {
     Column(
-        modifier = Modifier.clickable(
-            interactionSource = null,
-            indication = null
-        ) { onClick() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = null,
+                indication = null
+            ) { onClick() },
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
@@ -36,16 +39,22 @@ fun RolesSection(
         (0 until totalSlots).chunked(rowSize).forEach { rowIndices ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowIndices.forEach { index ->
                     val character = selectedCharacters.getOrNull(index)
+                    val tileModifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
                     if (character != null) {
                         CharacterTile(
-                            character = character
+                            character = character,
+                            modifier = tileModifier
                         )
                     } else {
-                        AddRoleTile()
+                        AddRoleTile(
+                            modifier = tileModifier
+                        )
                     }
                 }
             }

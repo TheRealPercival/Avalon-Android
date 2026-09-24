@@ -18,11 +18,12 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
-fun AddRoleTile() {
+fun AddRoleTile(
+    modifier: Modifier = Modifier
+) {
     val outlineColor = MaterialTheme.colorScheme.outline
     Box(
-        modifier = Modifier
-            .size(64.dp)
+        modifier = modifier
             .drawBehind {
                 drawRoundRect(
                     color = outlineColor,
@@ -48,6 +49,8 @@ fun AddRoleTile() {
 @DayNightPreviews
 private fun AddRoleTilePreview() {
     ThemePreview {
-        AddRoleTile()
+        AddRoleTile(
+            modifier = Modifier.size(64.dp)
+        )
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,16 +29,17 @@ fun PlayersSection(
         players.chunked(5).forEach { rowPlayers ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowPlayers.forEach { player ->
                     PlayerIcon(
                         avatarModel = player.avatarModel,
-                        displayName = player.displayName
+                        displayName = player.displayName,
+                        modifier = Modifier.weight(1f)
                     )
                 }
                 repeat(5 - rowPlayers.size) {
-                    Spacer(modifier = Modifier.width(64.dp))
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }

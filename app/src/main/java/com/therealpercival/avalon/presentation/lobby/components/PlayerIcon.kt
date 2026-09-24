@@ -1,7 +1,8 @@
 package com.therealpercival.avalon.presentation.lobby.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -21,10 +22,11 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun PlayerIcon(
     avatarModel: Any,
-    displayName: String
+    displayName: String,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier.width(64.dp),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
@@ -33,7 +35,8 @@ fun PlayerIcon(
             placeholder = ColorPainter(Color.LightGray),
             error = ColorPainter(Color.LightGray),
             modifier = Modifier
-                .size(64.dp)
+                .fillMaxWidth()
+                .aspectRatio(1f)
                 .clip(CircleShape)
         )
         Text(
@@ -50,7 +53,8 @@ private fun PlayerIconPreview() {
     ThemePreview {
         PlayerIcon(
             avatarModel = R.drawable.x,
-            displayName = "Drew"
+            displayName = "Drew",
+            modifier = Modifier.width(64.dp)
         )
     }
 }

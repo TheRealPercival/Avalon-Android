@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.presentation.components.DropdownInputField
+import com.therealpercival.avalon.presentation.lobby.components.EditRolesSheetBody
 import com.therealpercival.avalon.presentation.lobby.components.LadyOfTheLakeButton
 import com.therealpercival.avalon.presentation.lobby.components.PlayersSection
 import com.therealpercival.avalon.presentation.lobby.components.RolesSection
@@ -121,10 +122,8 @@ private fun LobbyContent(
             onDismissRequest = onCharacterSheetDismissed,
             sheetState = characterSheetState
         ) {
-            Text(
-                text = "Edit Roles",
-                modifier = Modifier.padding(all = 16.dp),
-                style = MaterialTheme.typography.titleLarge
+            EditRolesSheetBody(
+                selectedCharacters = state.selectedCharacters
             )
         }
     }
