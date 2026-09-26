@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
@@ -41,6 +43,10 @@ fun PlayerIcon(
         )
         Text(
             text = displayName,
+            autoSize = TextAutoSize.StepBased(
+                minFontSize = 8.sp,
+                maxFontSize = 16.sp
+            ),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
