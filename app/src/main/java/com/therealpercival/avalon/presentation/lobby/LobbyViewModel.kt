@@ -25,6 +25,8 @@ class LobbyViewModel @Inject constructor(
         val presetOptions: List<String> = emptyList(),
         val isPresetDropdownExpanded: Boolean = false,
         val selectedCharacters: List<AvalonCharacter> = emptyList(),
+        val selectedAssassin: AvalonCharacter? = null,
+        val isAssassinDropdownExpanded: Boolean = false,
         val isShowingCharacterSheet: Boolean = false,
         val isTrapperEnabled: Boolean = false,
         val isLadyOfTheLakeEnabled: Boolean = false,
@@ -55,6 +57,36 @@ class LobbyViewModel @Inject constructor(
         }
     }
 
+    fun onPresetSelected(preset: String) {
+        _uiState.update {
+            it.copy(
+                selectedPreset = preset,
+                isPresetDropdownExpanded = false
+            )
+        }
+    }
+
+    fun onPresetExpandedChange(isExpanded: Boolean) {
+        _uiState.update {
+            it.copy(isPresetDropdownExpanded = isExpanded)
+        }
+    }
+
+    fun onAssassinSelected(character: AvalonCharacter) {
+        _uiState.update {
+            it.copy(
+                selectedAssassin = character,
+                isAssassinDropdownExpanded = false
+            )
+        }
+    }
+
+    fun onAssassinDropdownExpandedChange(isExpanded: Boolean) {
+        _uiState.update {
+            it.copy(isAssassinDropdownExpanded = isExpanded)
+        }
+    }
+
     fun onRolesSectionClicked() {
         _uiState.update { it.copy(isShowingCharacterSheet = true) }
     }
@@ -64,15 +96,25 @@ class LobbyViewModel @Inject constructor(
     }
 
     fun onCharacterCardClicked(character: AvalonCharacter) {
-        _uiState.update {
-            val newSelectedCharacters = it.selectedCharacters.toMutableList()
+        _uiState.update { state ->
+            val newSelectedCharacters = state.selectedCharacters.toMutableList()
             if (newSelectedCharacters.contains(character)) {
                 newSelectedCharacters.remove(character)
             } else {
                 newSelectedCharacters.add(character)
             }
-            it.copy(
-                selectedCharacters = newSelectedCharacters.sortedBy { character -> character.order }
+            val sortedCharacters = newSelectedCharacters.sortedBy { it.order }
+            val newSelectedAssassin = if (
+                (sortedCharacters.contains(AvalonCharacter.Assassin)) ||
+                (state.selectedAssassin != null && !sortedCharacters.contains(state.selectedAssassin))
+            ) {
+                null
+            } else {
+                state.selectedAssassin
+            }
+            state.copy(
+                selectedCharacters = sortedCharacters,
+                selectedAssassin = newSelectedAssassin
             )
         }
     }

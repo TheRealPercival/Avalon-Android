@@ -24,6 +24,7 @@ fun DropdownInputField(
     value: String,
     onValueChange: (String) -> Unit,
     options: List<String>,
+    modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     onExpandedChange: (Boolean) -> Unit = { },
     label: String? = null
@@ -32,7 +33,8 @@ fun DropdownInputField(
 
     ExposedDropdownMenuBox(
         expanded = isExpanded,
-        onExpandedChange = onExpandedChange
+        onExpandedChange = onExpandedChange,
+        modifier = modifier
     ) {
         OutlinedTextField(
             value = value,

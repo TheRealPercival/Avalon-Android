@@ -42,9 +42,13 @@ fun LobbyScreen(
     LobbyContent(
         state = uiState,
         onBackClicked = onBackClicked,
+        onPresetSelected = viewModel::onPresetSelected,
+        onPresetExpandedChange = viewModel::onPresetExpandedChange,
         onRolesSectionClicked = viewModel::onRolesSectionClicked,
         onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed,
         onCharacterCardClicked = viewModel::onCharacterCardClicked,
+        onAssassinSelected = viewModel::onAssassinSelected,
+        onAssassinDropdownExpandedChange = viewModel::onAssassinDropdownExpandedChange,
         onTrapperClicked = viewModel::onTrapperClicked,
         onLadyOfTheLakeClicked = viewModel::onLadyOfTheLakeClicked,
         onVoteResetClicked = viewModel::onVoteResetClicked
@@ -56,9 +60,13 @@ fun LobbyScreen(
 private fun LobbyContent(
     state: LobbyViewModel.UiState,
     onBackClicked: () -> Unit = { },
+    onPresetSelected: (String) -> Unit = { },
+    onPresetExpandedChange: (Boolean) -> Unit = { },
     onRolesSectionClicked: () -> Unit = { },
     onCharacterSheetDismissed: () -> Unit = { },
     onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onAssassinSelected: (AvalonCharacter) -> Unit = { },
+    onAssassinDropdownExpandedChange: (Boolean) -> Unit = { },
     onTrapperClicked: () -> Unit = { },
     onLadyOfTheLakeClicked: () -> Unit = { },
     onVoteResetClicked: () -> Unit = { }
@@ -94,11 +102,11 @@ private fun LobbyContent(
         ) {
             DropdownInputField(
                 value = state.selectedPreset,
-                onValueChange = { },
+                onValueChange = onPresetSelected,
                 options = state.presetOptions,
                 label = "Preset",
                 isExpanded = state.isPresetDropdownExpanded,
-                onExpandedChange = { }
+                onExpandedChange = onPresetExpandedChange
             )
             RolesSection(
                 selectedCharacters = state.selectedCharacters,
@@ -141,7 +149,11 @@ private fun LobbyContent(
         ) {
             EditRolesSheetBody(
                 selectedCharacters = state.selectedCharacters,
-                onCharacterCardClicked = onCharacterCardClicked
+                selectedAssassin = state.selectedAssassin,
+                isAssassinDropdownExpanded = state.isAssassinDropdownExpanded,
+                onCharacterCardClicked = onCharacterCardClicked,
+                onAssassinSelected = onAssassinSelected,
+                onAssassinDropdownExpandedChange = onAssassinDropdownExpandedChange
             )
         }
     }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,16 +21,21 @@ import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.domain.model.allCharacters
 import com.therealpercival.avalon.presentation.components.CharacterCard
 import com.therealpercival.avalon.presentation.components.CharacterTile
+import com.therealpercival.avalon.presentation.components.DropdownInputField
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun EditRolesSheetBody(
     selectedCharacters: List<AvalonCharacter>,
-    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
+    selectedAssassin: AvalonCharacter? = null,
+    isAssassinDropdownExpanded: Boolean = false,
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onAssassinSelected: (AvalonCharacter) -> Unit = { },
+    onAssassinDropdownExpandedChange: (Boolean) -> Unit = { }
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
@@ -49,6 +55,23 @@ fun EditRolesSheetBody(
             selectedCharacters = selectedCharacters,
             onCharacterCardClicked = onCharacterCardClicked
         )
+
+        if (!selectedCharacters.contains(AvalonCharacter.Assassin)) {
+            val evilCharacters = selectedCharacters.filter { !it.isGood }
+            DropdownInputField(
+                value = selectedAssassin?.name ?: "None",
+                onValueChange = { selectedName ->
+                    evilCharacters.find { it.name == selectedName }?.let { character ->
+                        onAssassinSelected(character)
+                    }
+                },
+                options = evilCharacters.map { it.name },
+                modifier = Modifier.padding(horizontal = 16.dp),
+                label = "Assassin",
+                isExpanded = isAssassinDropdownExpanded,
+                onExpandedChange = onAssassinDropdownExpandedChange
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
     }
