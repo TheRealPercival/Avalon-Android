@@ -43,7 +43,8 @@ fun LobbyScreen(
         state = uiState,
         onBackClicked = onBackClicked,
         onRolesSectionClicked = viewModel::onRolesSectionClicked,
-        onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed
+        onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed,
+        onCharacterCardClicked = viewModel::onCharacterCardClicked
     )
 }
 
@@ -53,7 +54,8 @@ private fun LobbyContent(
     state: LobbyViewModel.UiState,
     onBackClicked: () -> Unit = { },
     onRolesSectionClicked: () -> Unit = { },
-    onCharacterSheetDismissed: () -> Unit = { }
+    onCharacterSheetDismissed: () -> Unit = { },
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
 ) {
     val characterSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -123,7 +125,8 @@ private fun LobbyContent(
             sheetState = characterSheetState
         ) {
             EditRolesSheetBody(
-                selectedCharacters = state.selectedCharacters
+                selectedCharacters = state.selectedCharacters,
+                onCharacterCardClicked = onCharacterCardClicked
             )
         }
     }

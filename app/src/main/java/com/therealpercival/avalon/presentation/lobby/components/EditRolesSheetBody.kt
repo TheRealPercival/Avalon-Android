@@ -25,7 +25,8 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun EditRolesSheetBody(
-    selectedCharacters: List<AvalonCharacter>
+    selectedCharacters: List<AvalonCharacter>,
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -39,12 +40,14 @@ fun EditRolesSheetBody(
 
         TeamSection(
             isGood = true,
-            selectedCharacters = selectedCharacters
+            selectedCharacters = selectedCharacters,
+            onCharacterCardClicked = onCharacterCardClicked
         )
 
         TeamSection(
             isGood = false,
-            selectedCharacters = selectedCharacters
+            selectedCharacters = selectedCharacters,
+            onCharacterCardClicked = onCharacterCardClicked
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -54,7 +57,8 @@ fun EditRolesSheetBody(
 @Composable
 private fun TeamSection(
     isGood: Boolean,
-    selectedCharacters: List<AvalonCharacter>
+    selectedCharacters: List<AvalonCharacter>,
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
 ) {
     val sectionAvailableCharacters = allCharacters.filter { it.isGood == isGood }
     val sectionSelectedCharacters = selectedCharacters.filter { it.isGood == isGood }
@@ -104,6 +108,9 @@ private fun TeamSection(
             CharacterCard(
                 character = character,
                 modifier = Modifier.width(128.dp),
+                onClick = {
+                    onCharacterCardClicked(character)
+                },
                 isFaded = character in sectionSelectedCharacters
             )
         }

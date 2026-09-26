@@ -1,5 +1,6 @@
 package com.therealpercival.avalon.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun CharacterCard(
     character: AvalonCharacter,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = { },
     isFaded: Boolean = false
 ) {
     AsyncImage(
@@ -22,6 +24,9 @@ fun CharacterCard(
         contentDescription = character.name,
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.medium)
+            .clickable {
+                onClick()
+            }
             .conditional(isFaded) {
                 alpha(0.5f)
             }

@@ -59,4 +59,18 @@ class LobbyViewModel @Inject constructor(
     fun onCharacterSheetDismissed() {
         _uiState.update { it.copy(isShowingCharacterSheet = false) }
     }
+
+    fun onCharacterCardClicked(character: AvalonCharacter) {
+        _uiState.update {
+            val newSelectedCharacters = it.selectedCharacters.toMutableList()
+            if (newSelectedCharacters.contains(character)) {
+                newSelectedCharacters.remove(character)
+            } else {
+                newSelectedCharacters.add(character)
+            }
+            it.copy(
+                selectedCharacters = newSelectedCharacters.sortedBy { character -> character.order }
+            )
+        }
+    }
 }
