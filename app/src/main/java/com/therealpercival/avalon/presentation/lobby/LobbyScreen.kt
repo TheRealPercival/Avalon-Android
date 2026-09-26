@@ -44,7 +44,10 @@ fun LobbyScreen(
         onBackClicked = onBackClicked,
         onRolesSectionClicked = viewModel::onRolesSectionClicked,
         onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed,
-        onCharacterCardClicked = viewModel::onCharacterCardClicked
+        onCharacterCardClicked = viewModel::onCharacterCardClicked,
+        onTrapperClicked = viewModel::onTrapperClicked,
+        onLadyOfTheLakeClicked = viewModel::onLadyOfTheLakeClicked,
+        onVoteResetClicked = viewModel::onVoteResetClicked
     )
 }
 
@@ -55,7 +58,10 @@ private fun LobbyContent(
     onBackClicked: () -> Unit = { },
     onRolesSectionClicked: () -> Unit = { },
     onCharacterSheetDismissed: () -> Unit = { },
-    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onTrapperClicked: () -> Unit = { },
+    onLadyOfTheLakeClicked: () -> Unit = { },
+    onVoteResetClicked: () -> Unit = { }
 ) {
     val characterSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -108,9 +114,18 @@ private fun LobbyContent(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    TrapperButton()
-                    LadyOfTheLakeButton()
-                    VoteResetButton()
+                    TrapperButton(
+                        onClick = onTrapperClicked,
+                        isSelected = state.isTrapperEnabled
+                    )
+                    LadyOfTheLakeButton(
+                        onClick = onLadyOfTheLakeClicked,
+                        isSelected = state.isLadyOfTheLakeEnabled
+                    )
+                    VoteResetButton(
+                        onClick = onVoteResetClicked,
+                        isSelected = state.isVoteResetEnabled
+                    )
                 }
             }
             PlayersSection(

@@ -1,6 +1,7 @@
 package com.therealpercival.avalon.presentation.lobby.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,6 +17,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun LadyOfTheLakeButton(
+    onClick: () -> Unit = { },
     isSelected: Boolean = false
 ) {
     val backgroundColor =
@@ -26,7 +28,10 @@ fun LadyOfTheLakeButton(
     Box(
         modifier = Modifier
             .background(color = backgroundColor, shape = MaterialTheme.shapes.medium)
-            .size(64.dp),
+            .size(64.dp)
+            .clickable {
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         Icon(

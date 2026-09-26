@@ -26,6 +26,9 @@ class LobbyViewModel @Inject constructor(
         val isPresetDropdownExpanded: Boolean = false,
         val selectedCharacters: List<AvalonCharacter> = emptyList(),
         val isShowingCharacterSheet: Boolean = false,
+        val isTrapperEnabled: Boolean = false,
+        val isLadyOfTheLakeEnabled: Boolean = false,
+        val isVoteResetEnabled: Boolean = false,
         val players: List<Player> = emptyList()
     )
 
@@ -72,5 +75,17 @@ class LobbyViewModel @Inject constructor(
                 selectedCharacters = newSelectedCharacters.sortedBy { character -> character.order }
             )
         }
+    }
+
+    fun onTrapperClicked() {
+        _uiState.update { it.copy(isTrapperEnabled = !it.isTrapperEnabled) }
+    }
+
+    fun onLadyOfTheLakeClicked() {
+        _uiState.update { it.copy(isLadyOfTheLakeEnabled = !it.isLadyOfTheLakeEnabled) }
+    }
+
+    fun onVoteResetClicked() {
+        _uiState.update { it.copy(isVoteResetEnabled = !it.isVoteResetEnabled) }
     }
 }
