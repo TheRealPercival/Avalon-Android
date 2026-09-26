@@ -62,6 +62,7 @@ private fun TeamSection(
 ) {
     val sectionAvailableCharacters = allCharacters.filter { it.isGood == isGood }
     val sectionSelectedCharacters = selectedCharacters.filter { it.isGood == isGood }
+    val maxCharacters = if (isGood) 6 else 4
 
     Column(
         modifier = Modifier
@@ -73,7 +74,6 @@ private fun TeamSection(
             text = if (isGood) "Good Team" else "Evil Team",
             style = MaterialTheme.typography.labelSmall
         )
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -82,16 +82,20 @@ private fun TeamSection(
                 val tileModifier = Modifier
                     .weight(1f)
                     .aspectRatio(1f)
-                val character = sectionSelectedCharacters.getOrNull(index)
-                if (character != null) {
-                    CharacterTile(
-                        character = character,
-                        modifier = tileModifier
-                    )
+                if (index < maxCharacters) {
+                    val character = sectionSelectedCharacters.getOrNull(index)
+                    if (character != null) {
+                        CharacterTile(
+                            character = character,
+                            modifier = tileModifier
+                        )
+                    } else {
+                        AddRoleTile(
+                            modifier = tileModifier
+                        )
+                    }
                 } else {
-                    AddRoleTile(
-                        modifier = tileModifier
-                    )
+                    Spacer(modifier = tileModifier)
                 }
             }
         }
@@ -109,7 +113,12 @@ private fun TeamSection(
                 character = character,
                 modifier = Modifier.width(128.dp),
                 onClick = {
-                    onCharacterCardClicked(character)
+                    if (
+                        (sectionSelectedCharacters.size < maxCharacters && character !in sectionSelectedCharacters)
+                        || character in sectionSelectedCharacters
+                    ) {
+                        onCharacterCardClicked(character)
+                    }
                 },
                 isFaded = character in sectionSelectedCharacters
             )
