@@ -28,6 +28,7 @@ class LobbyViewModel @Inject constructor(
         val selectedAssassin: AvalonCharacter? = null,
         val isAssassinDropdownExpanded: Boolean = false,
         val isShowingCharacterSheet: Boolean = false,
+        val focusedCharacter: AvalonCharacter? = null,
         val isTrapperEnabled: Boolean = false,
         val isLadyOfTheLakeEnabled: Boolean = false,
         val isVoteResetEnabled: Boolean = false,
@@ -92,7 +93,7 @@ class LobbyViewModel @Inject constructor(
     }
 
     fun onCharacterSheetDismissed() {
-        _uiState.update { it.copy(isShowingCharacterSheet = false) }
+        _uiState.update { it.copy(isShowingCharacterSheet = false, focusedCharacter = null) }
     }
 
     fun onCharacterCardClicked(character: AvalonCharacter) {
@@ -117,6 +118,14 @@ class LobbyViewModel @Inject constructor(
                 selectedAssassin = newSelectedAssassin
             )
         }
+    }
+
+    fun onCharacterCardLongClicked(character: AvalonCharacter) {
+        _uiState.update { it.copy(focusedCharacter = character) }
+    }
+
+    fun onFocusedCharacterDismissed() {
+        _uiState.update { it.copy(focusedCharacter = null) }
     }
 
     fun onTrapperClicked() {

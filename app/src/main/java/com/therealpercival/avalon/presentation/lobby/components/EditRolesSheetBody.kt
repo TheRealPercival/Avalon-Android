@@ -1,6 +1,9 @@
 package com.therealpercival.avalon.presentation.lobby.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,8 +20,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import coil3.compose.AsyncImage
 import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.domain.model.allCharacters
 import com.therealpercival.avalon.presentation.components.CharacterCard
@@ -32,7 +42,10 @@ fun EditRolesSheetBody(
     selectedCharacters: List<AvalonCharacter>,
     selectedAssassin: AvalonCharacter? = null,
     isAssassinDropdownExpanded: Boolean = false,
+    focusedCharacter: AvalonCharacter? = null,
     onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { },
+    onFocusedCharacterDismissed: () -> Unit = { },
     onAssassinSelected: (AvalonCharacter) -> Unit = { },
     onAssassinDropdownExpandedChange: (Boolean) -> Unit = { }
 ) {
@@ -51,13 +64,15 @@ fun EditRolesSheetBody(
         TeamSection(
             isGood = true,
             selectedCharacters = selectedCharacters,
-            onCharacterCardClicked = onCharacterCardClicked
+            onCharacterCardClicked = onCharacterCardClicked,
+            onCharacterCardLongClicked = onCharacterCardLongClicked
         )
 
         TeamSection(
             isGood = false,
             selectedCharacters = selectedCharacters,
-            onCharacterCardClicked = onCharacterCardClicked
+            onCharacterCardClicked = onCharacterCardClicked,
+            onCharacterCardLongClicked = onCharacterCardLongClicked
         )
 
         if (!selectedCharacters.contains(AvalonCharacter.Assassin)) {
@@ -73,11 +88,40 @@ fun EditRolesSheetBody(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 label = "Assassin",
                 isExpanded = isAssassinDropdownExpanded,
-                onExpandedChange = onAssassinDropdownExpandedChange
+                onExpandedChange = onAssassinDropdownExpandedChange,
             )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
+    }
+
+    focusedCharacter?.let { character ->
+        Dialog(
+            onDismissRequest = onFocusedCharacterDismissed,
+            properties = DialogProperties(usePlatformDefaultWidth = false),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.7f))
+                    .clickable(
+                        interactionSource = null,
+                        indication = null
+                    ) {
+                        onFocusedCharacterDismissed()
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                AsyncImage(
+                    model = character.cardImage,
+                    contentDescription = character.name,
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .shadow(elevation = 16.dp, shape = MaterialTheme.shapes.large)
+                        .clip(shape = MaterialTheme.shapes.large)
+                )
+            }
+        }
     }
 }
 
@@ -85,7 +129,8 @@ fun EditRolesSheetBody(
 private fun TeamSection(
     isGood: Boolean,
     selectedCharacters: List<AvalonCharacter>,
-    onCharacterCardClicked: (AvalonCharacter) -> Unit = { }
+    onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { }
 ) {
     val sectionAvailableCharacters = allCharacters.filter { it.isGood == isGood }
     val sectionSelectedCharacters = selectedCharacters.filter { it.isGood == isGood }
@@ -147,6 +192,9 @@ private fun TeamSection(
                         onCharacterCardClicked(character)
                     }
                 },
+                onLongClick = {
+                    onCharacterCardLongClicked(character)
+                },
                 isFaded = character in sectionSelectedCharacters
             )
         }
@@ -191,6 +239,28 @@ private fun EditRolesSheetBodyPreview2() {
                 AvalonCharacter.MinionOfMordred1,
                 AvalonCharacter.MinionOfMordred2
             )
+        )
+    }
+}
+
+@Composable
+@DayNightPreviews
+private fun EditRolesSheetBodyPreview3() {
+    ThemePreview {
+        EditRolesSheetBody(
+            selectedCharacters = listOf(
+                AvalonCharacter.Merlin,
+                AvalonCharacter.Percival,
+                AvalonCharacter.LoyalServantOfArthur1,
+                AvalonCharacter.LoyalServantOfArthur2,
+                AvalonCharacter.LoyalServantOfArthur3,
+                AvalonCharacter.LoyalServantOfArthur4,
+                AvalonCharacter.Morgana,
+                AvalonCharacter.Mordred,
+                AvalonCharacter.MinionOfMordred1,
+                AvalonCharacter.MinionOfMordred2,
+            ),
+            focusedCharacter = AvalonCharacter.Merlin
         )
     }
 }

@@ -52,6 +52,8 @@ fun LobbyScreen(
         onRolesSectionClicked = viewModel::onRolesSectionClicked,
         onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed,
         onCharacterCardClicked = viewModel::onCharacterCardClicked,
+        onCharacterCardLongClicked = viewModel::onCharacterCardLongClicked,
+        onFocusedCharacterDismissed = viewModel::onFocusedCharacterDismissed,
         onAssassinSelected = viewModel::onAssassinSelected,
         onAssassinDropdownExpandedChange = viewModel::onAssassinDropdownExpandedChange,
         onTrapperClicked = viewModel::onTrapperClicked,
@@ -70,6 +72,8 @@ private fun LobbyContent(
     onRolesSectionClicked: () -> Unit = { },
     onCharacterSheetDismissed: () -> Unit = { },
     onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
+    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { },
+    onFocusedCharacterDismissed: () -> Unit = { },
     onAssassinSelected: (AvalonCharacter) -> Unit = { },
     onAssassinDropdownExpandedChange: (Boolean) -> Unit = { },
     onTrapperClicked: () -> Unit = { },
@@ -190,7 +194,10 @@ private fun LobbyContent(
                 selectedCharacters = state.selectedCharacters,
                 selectedAssassin = state.selectedAssassin,
                 isAssassinDropdownExpanded = state.isAssassinDropdownExpanded,
+                focusedCharacter = state.focusedCharacter,
                 onCharacterCardClicked = onCharacterCardClicked,
+                onCharacterCardLongClicked = onCharacterCardLongClicked,
+                onFocusedCharacterDismissed = onFocusedCharacterDismissed,
                 onAssassinSelected = onAssassinSelected,
                 onAssassinDropdownExpandedChange = onAssassinDropdownExpandedChange
             )
