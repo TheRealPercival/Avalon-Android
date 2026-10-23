@@ -19,6 +19,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun RolesSection(
     selectedCharacters: List<AvalonCharacter>,
+    selectedAssassin: AvalonCharacter? = null,
     onClick: () -> Unit = { }
 ) {
     Column(
@@ -48,9 +49,15 @@ fun RolesSection(
                         .weight(1f)
                         .aspectRatio(1f)
                     if (character != null) {
+                        val isAssassin = if (selectedCharacters.contains(AvalonCharacter.Assassin)) {
+                            character == AvalonCharacter.Assassin
+                        } else {
+                            character == selectedAssassin
+                        }
                         CharacterTile(
                             character = character,
-                            modifier = tileModifier
+                            modifier = tileModifier,
+                            isAssassin = isAssassin
                         )
                     } else {
                         AddRoleTile(

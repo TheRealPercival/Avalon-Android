@@ -129,6 +129,7 @@ private fun LobbyContent(
                     )
                     RolesSection(
                         selectedCharacters = state.selectedCharacters,
+                        selectedAssassin = state.selectedAssassin,
                         onClick = onRolesSectionClicked
                     )
                     SettingsSection(
@@ -168,6 +169,7 @@ private fun LobbyContent(
                 )
                 RolesSection(
                     selectedCharacters = state.selectedCharacters,
+                    selectedAssassin = state.selectedAssassin,
                     onClick = onRolesSectionClicked
                 )
                 SettingsSection(

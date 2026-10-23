@@ -64,6 +64,7 @@ fun EditRolesSheetBody(
         TeamSection(
             isGood = true,
             selectedCharacters = selectedCharacters,
+            selectedAssassin = selectedAssassin,
             onCharacterCardClicked = onCharacterCardClicked,
             onCharacterCardLongClicked = onCharacterCardLongClicked
         )
@@ -71,6 +72,7 @@ fun EditRolesSheetBody(
         TeamSection(
             isGood = false,
             selectedCharacters = selectedCharacters,
+            selectedAssassin = selectedAssassin,
             onCharacterCardClicked = onCharacterCardClicked,
             onCharacterCardLongClicked = onCharacterCardLongClicked
         )
@@ -129,6 +131,7 @@ fun EditRolesSheetBody(
 private fun TeamSection(
     isGood: Boolean,
     selectedCharacters: List<AvalonCharacter>,
+    selectedAssassin: AvalonCharacter? = null,
     onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
     onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { }
 ) {
@@ -157,9 +160,15 @@ private fun TeamSection(
                 if (index < maxCharacters) {
                     val character = sectionSelectedCharacters.getOrNull(index)
                     if (character != null) {
+                        val isAssassin = if (selectedCharacters.contains(AvalonCharacter.Assassin)) {
+                            character == AvalonCharacter.Assassin
+                        } else {
+                            character == selectedAssassin
+                        }
                         CharacterTile(
                             character = character,
-                            modifier = tileModifier
+                            modifier = tileModifier,
+                            isAssassin = isAssassin
                         )
                     } else {
                         AddRoleTile(
