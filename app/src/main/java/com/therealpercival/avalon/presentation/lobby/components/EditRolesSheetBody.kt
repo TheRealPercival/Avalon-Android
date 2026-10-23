@@ -53,7 +53,7 @@ fun EditRolesSheetBody(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
             text = "Edit Roles",
@@ -140,75 +140,81 @@ private fun TeamSection(
     val maxCharacters = if (isGood) 6 else 4
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(
-            text = if (isGood) "Good Team" else "Evil Team",
-            style = MaterialTheme.typography.labelSmall
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            repeat(6) { index ->
-                val tileModifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
-                if (index < maxCharacters) {
-                    val character = sectionSelectedCharacters.getOrNull(index)
-                    if (character != null) {
-                        val isAssassin = if (selectedCharacters.contains(AvalonCharacter.Assassin)) {
-                            character == AvalonCharacter.Assassin
+            Text(
+                text = if (isGood) "Good Team" else "Evil Team",
+                style = MaterialTheme.typography.labelSmall
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                repeat(6) { index ->
+                    val tileModifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
+                    if (index < maxCharacters) {
+                        val character = sectionSelectedCharacters.getOrNull(index)
+                        if (character != null) {
+                            val isAssassin =
+                                if (selectedCharacters.contains(AvalonCharacter.Assassin)) {
+                                    character == AvalonCharacter.Assassin
+                                } else {
+                                    character == selectedAssassin
+                                }
+                            CharacterTile(
+                                character = character,
+                                modifier = tileModifier,
+                                isAssassin = isAssassin
+                            )
                         } else {
-                            character == selectedAssassin
+                            AddRoleTile(
+                                modifier = tileModifier
+                            )
                         }
-                        CharacterTile(
-                            character = character,
-                            modifier = tileModifier,
-                            isAssassin = isAssassin
-                        )
                     } else {
-                        AddRoleTile(
-                            modifier = tileModifier
-                        )
+                        Spacer(modifier = tileModifier)
                     }
-                } else {
-                    Spacer(modifier = tileModifier)
                 }
             }
         }
-    }
 
-    LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(count = 1) {
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-        items(sectionAvailableCharacters) { character ->
-            CharacterCard(
-                character = character,
-                modifier = Modifier.width(128.dp),
-                onClick = {
-                    if (
-                        (sectionSelectedCharacters.size < maxCharacters && character !in sectionSelectedCharacters)
-                        || character in sectionSelectedCharacters
-                    ) {
-                        onCharacterCardClicked(character)
-                    }
-                },
-                onLongClick = {
-                    onCharacterCardLongClicked(character)
-                },
-                isFaded = character in sectionSelectedCharacters
-            )
-        }
-        items(count = 1) {
-            Spacer(modifier = Modifier.width(8.dp))
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(count = 1) {
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            items(sectionAvailableCharacters) { character ->
+                CharacterCard(
+                    character = character,
+                    modifier = Modifier.width(128.dp),
+                    onClick = {
+                        if (
+                            (sectionSelectedCharacters.size < maxCharacters && character !in sectionSelectedCharacters)
+                            || character in sectionSelectedCharacters
+                        ) {
+                            onCharacterCardClicked(character)
+                        }
+                    },
+                    onLongClick = {
+                        onCharacterCardLongClicked(character)
+                    },
+                    isFaded = character in sectionSelectedCharacters
+                )
+            }
+            items(count = 1) {
+                Spacer(modifier = Modifier.width(8.dp))
+            }
         }
     }
 }
