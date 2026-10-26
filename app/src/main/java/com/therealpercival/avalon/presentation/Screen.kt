@@ -7,6 +7,8 @@ sealed class Screen(
     val title: String,
     val icon: Int? = null,
 ) {
+    object Splash : Screen("splash", "Splash")
+
     object Setup : Screen("setup", "Setup")
 
     object Join : Screen("join", "Game", R.drawable.baseline_videogame_asset_24)
