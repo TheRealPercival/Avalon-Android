@@ -45,12 +45,12 @@ fun LobbyScreen(
     viewModel: LobbyViewModel = hiltViewModel(),
     onBackClicked: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
     LobbyContent(
         state = uiState,
         onAction = { action ->
             when (action) {
-                is LobbyViewModel.LobbyAction.BackClicked -> onBackClicked()
+                is LobbyAction.BackClicked -> onBackClicked()
                 else -> viewModel.onAction(action)
             }
         }
@@ -60,8 +60,8 @@ fun LobbyScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LobbyContent(
-    state: LobbyViewModel.UiState,
-    onAction: (LobbyViewModel.LobbyAction) -> Unit = {}
+    state: LobbyState,
+    onAction: (LobbyAction) -> Unit = {}
 ) {
     val characterSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -76,7 +76,7 @@ private fun LobbyContent(
                 title = { Text(text = "Lobby") },
                 navigationIcon = {
                     IconButton(
-                        onClick = { onAction(LobbyViewModel.LobbyAction.BackClicked) }
+                        onClick = { onAction(LobbyAction.BackClicked) }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_arrow_back_24),
@@ -104,16 +104,16 @@ private fun LobbyContent(
                 ) {
                     DropdownInputField(
                         value = state.selectedPreset,
-                        onValueChange = { onAction(LobbyViewModel.LobbyAction.PresetSelected(it)) },
+                        onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
                         options = state.presetOptions,
                         label = "Preset",
                         isExpanded = state.isPresetDropdownExpanded,
-                        onExpandedChange = { onAction(LobbyViewModel.LobbyAction.PresetExpandedChange(it)) }
+                        onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) }
                     )
                     RolesSection(
                         selectedCharacters = state.selectedCharacters,
                         selectedAssassin = state.selectedAssassin,
-                        onClick = { onAction(LobbyViewModel.LobbyAction.RolesSectionClicked) }
+                        onClick = { onAction(LobbyAction.RolesSectionClicked) }
                     )
                     SettingsSection(
                         isTrapperEnabled = state.isTrapperEnabled,
@@ -142,16 +142,16 @@ private fun LobbyContent(
             ) {
                 DropdownInputField(
                     value = state.selectedPreset,
-                    onValueChange = { onAction(LobbyViewModel.LobbyAction.PresetSelected(it)) },
+                    onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
                     options = state.presetOptions,
                     label = "Preset",
                     isExpanded = state.isPresetDropdownExpanded,
-                    onExpandedChange = { onAction(LobbyViewModel.LobbyAction.PresetExpandedChange(it)) }
+                    onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) }
                 )
                 RolesSection(
                     selectedCharacters = state.selectedCharacters,
                     selectedAssassin = state.selectedAssassin,
-                    onClick = { onAction(LobbyViewModel.LobbyAction.RolesSectionClicked) }
+                    onClick = { onAction(LobbyAction.RolesSectionClicked) }
                 )
                 SettingsSection(
                     isTrapperEnabled = state.isTrapperEnabled,
@@ -163,7 +163,7 @@ private fun LobbyContent(
                     players = state.players
                 )
                 Button(
-                    onClick = { onAction(LobbyViewModel.LobbyAction.StartClicked) },
+                    onClick = { onAction(LobbyAction.StartClicked) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = "Start")
@@ -174,7 +174,7 @@ private fun LobbyContent(
 
     if (state.isShowingCharacterSheet) {
         ModalBottomSheet(
-            onDismissRequest = { onAction(LobbyViewModel.LobbyAction.CharacterSheetDismissed) },
+            onDismissRequest = { onAction(LobbyAction.CharacterSheetDismissed) },
             sheetState = characterSheetState
         ) {
             EditRolesSheetBody(
@@ -193,7 +193,7 @@ private fun SettingsSection(
     isTrapperEnabled: Boolean,
     isLadyOfTheLakeEnabled: Boolean,
     isVoteResetEnabled: Boolean,
-    onAction: (LobbyViewModel.LobbyAction) -> Unit,
+    onAction: (LobbyAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -208,15 +208,15 @@ private fun SettingsSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TrapperButton(
-                onClick = { onAction(LobbyViewModel.LobbyAction.TrapperClicked) },
+                onClick = { onAction(LobbyAction.TrapperClicked) },
                 isSelected = isTrapperEnabled
             )
             LadyOfTheLakeButton(
-                onClick = { onAction(LobbyViewModel.LobbyAction.LadyOfTheLakeClicked) },
+                onClick = { onAction(LobbyAction.LadyOfTheLakeClicked) },
                 isSelected = isLadyOfTheLakeEnabled
             )
             VoteResetButton(
-                onClick = { onAction(LobbyViewModel.LobbyAction.VoteResetClicked) },
+                onClick = { onAction(LobbyAction.VoteResetClicked) },
                 isSelected = isVoteResetEnabled
             )
         }
@@ -229,7 +229,7 @@ private fun SettingsSection(
 private fun LobbyScreenPreview() {
     DeviceThemePreview {
         LobbyContent(
-            state = LobbyViewModel.UiState(
+            state = LobbyState(
                 selectedPreset = "Classic",
                 selectedCharacters = listOf(
                     AvalonCharacter.Merlin,
