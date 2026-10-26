@@ -15,6 +15,23 @@ import javax.inject.Inject
 class LobbyViewModel @Inject constructor(
     private val gameRepository: GameRepository
 ) : ViewModel() {
+    sealed interface LobbyAction {
+        data object BackClicked : LobbyAction
+        data object StartClicked : LobbyAction
+        data class PresetSelected(val preset: String) : LobbyAction
+        data class PresetExpandedChange(val isExpanded: Boolean) : LobbyAction
+        data object RolesSectionClicked : LobbyAction
+        data object CharacterSheetDismissed : LobbyAction
+        data class CharacterCardClicked(val character: AvalonCharacter) : LobbyAction
+        data class CharacterCardLongClicked(val character: AvalonCharacter) : LobbyAction
+        data object FocusedCharacterDismissed : LobbyAction
+        data class AssassinSelected(val character: AvalonCharacter) : LobbyAction
+        data class AssassinDropdownExpandedChange(val isExpanded: Boolean) : LobbyAction
+        data object TrapperClicked : LobbyAction
+        data object LadyOfTheLakeClicked : LobbyAction
+        data object VoteResetClicked : LobbyAction
+    }
+
     data class Player(
         val displayName: String,
         val avatarModel: Any
@@ -58,85 +75,96 @@ class LobbyViewModel @Inject constructor(
         }
     }
 
-    fun onPresetSelected(preset: String) {
-        _uiState.update {
-            it.copy(
-                selectedPreset = preset,
-                isPresetDropdownExpanded = false
-            )
-        }
-    }
-
-    fun onPresetExpandedChange(isExpanded: Boolean) {
-        _uiState.update {
-            it.copy(isPresetDropdownExpanded = isExpanded)
-        }
-    }
-
-    fun onAssassinSelected(character: AvalonCharacter) {
-        _uiState.update {
-            it.copy(
-                selectedAssassin = character,
-                isAssassinDropdownExpanded = false
-            )
-        }
-    }
-
-    fun onAssassinDropdownExpandedChange(isExpanded: Boolean) {
-        _uiState.update {
-            it.copy(isAssassinDropdownExpanded = isExpanded)
-        }
-    }
-
-    fun onRolesSectionClicked() {
-        _uiState.update { it.copy(isShowingCharacterSheet = true) }
-    }
-
-    fun onCharacterSheetDismissed() {
-        _uiState.update { it.copy(isShowingCharacterSheet = false, focusedCharacter = null) }
-    }
-
-    fun onCharacterCardClicked(character: AvalonCharacter) {
-        _uiState.update { state ->
-            val newSelectedCharacters = state.selectedCharacters.toMutableList()
-            if (newSelectedCharacters.contains(character)) {
-                newSelectedCharacters.remove(character)
-            } else {
-                newSelectedCharacters.add(character)
+    fun onAction(action: LobbyAction) {
+        when (action) {
+            is LobbyAction.BackClicked -> {}
+            is LobbyAction.StartClicked -> {}
+            is LobbyAction.PresetSelected -> {
+                _uiState.update {
+                    it.copy(
+                        selectedPreset = action.preset,
+                        isPresetDropdownExpanded = false
+                    )
+                }
             }
-            val sortedCharacters = newSelectedCharacters.sortedBy { it.order }
-            val newSelectedAssassin = if (
-                (sortedCharacters.contains(AvalonCharacter.Assassin)) ||
-                (state.selectedAssassin != null && !sortedCharacters.contains(state.selectedAssassin))
-            ) {
-                null
-            } else {
-                state.selectedAssassin
+
+            is LobbyAction.PresetExpandedChange -> {
+                _uiState.update {
+                    it.copy(isPresetDropdownExpanded = action.isExpanded)
+                }
             }
-            state.copy(
-                selectedCharacters = sortedCharacters,
-                selectedAssassin = newSelectedAssassin
-            )
+
+            is LobbyAction.RolesSectionClicked -> {
+                _uiState.update { it.copy(isShowingCharacterSheet = true) }
+            }
+
+            is LobbyAction.CharacterSheetDismissed -> {
+                _uiState.update {
+                    it.copy(
+                        isShowingCharacterSheet = false,
+                        focusedCharacter = null
+                    )
+                }
+            }
+
+            is LobbyAction.CharacterCardClicked -> {
+                _uiState.update { state ->
+                    val newSelectedCharacters = state.selectedCharacters.toMutableList()
+                    if (newSelectedCharacters.contains(action.character)) {
+                        newSelectedCharacters.remove(action.character)
+                    } else {
+                        newSelectedCharacters.add(action.character)
+                    }
+                    val sortedCharacters = newSelectedCharacters.sortedBy { it.order }
+                    val newSelectedAssassin = if (
+                        (sortedCharacters.contains(AvalonCharacter.Assassin)) ||
+                        (state.selectedAssassin != null && !sortedCharacters.contains(state.selectedAssassin))
+                    ) {
+                        null
+                    } else {
+                        state.selectedAssassin
+                    }
+                    state.copy(
+                        selectedCharacters = sortedCharacters,
+                        selectedAssassin = newSelectedAssassin
+                    )
+                }
+            }
+
+            is LobbyAction.CharacterCardLongClicked -> {
+                _uiState.update { it.copy(focusedCharacter = action.character) }
+            }
+
+            is LobbyAction.FocusedCharacterDismissed -> {
+                _uiState.update { it.copy(focusedCharacter = null) }
+            }
+
+            is LobbyAction.AssassinSelected -> {
+                _uiState.update {
+                    it.copy(
+                        selectedAssassin = action.character,
+                        isAssassinDropdownExpanded = false
+                    )
+                }
+            }
+
+            is LobbyAction.AssassinDropdownExpandedChange -> {
+                _uiState.update {
+                    it.copy(isAssassinDropdownExpanded = action.isExpanded)
+                }
+            }
+
+            is LobbyAction.TrapperClicked -> {
+                _uiState.update { it.copy(isTrapperEnabled = !it.isTrapperEnabled) }
+            }
+
+            is LobbyAction.LadyOfTheLakeClicked -> {
+                _uiState.update { it.copy(isLadyOfTheLakeEnabled = !it.isLadyOfTheLakeEnabled) }
+            }
+
+            is LobbyAction.VoteResetClicked -> {
+                _uiState.update { it.copy(isVoteResetEnabled = !it.isVoteResetEnabled) }
+            }
         }
-    }
-
-    fun onCharacterCardLongClicked(character: AvalonCharacter) {
-        _uiState.update { it.copy(focusedCharacter = character) }
-    }
-
-    fun onFocusedCharacterDismissed() {
-        _uiState.update { it.copy(focusedCharacter = null) }
-    }
-
-    fun onTrapperClicked() {
-        _uiState.update { it.copy(isTrapperEnabled = !it.isTrapperEnabled) }
-    }
-
-    fun onLadyOfTheLakeClicked() {
-        _uiState.update { it.copy(isLadyOfTheLakeEnabled = !it.isLadyOfTheLakeEnabled) }
-    }
-
-    fun onVoteResetClicked() {
-        _uiState.update { it.copy(isVoteResetEnabled = !it.isVoteResetEnabled) }
     }
 }

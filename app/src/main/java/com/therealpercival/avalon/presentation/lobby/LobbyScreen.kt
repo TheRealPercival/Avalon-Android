@@ -48,19 +48,12 @@ fun LobbyScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     LobbyContent(
         state = uiState,
-        onBackClicked = onBackClicked,
-        onPresetSelected = viewModel::onPresetSelected,
-        onPresetExpandedChange = viewModel::onPresetExpandedChange,
-        onRolesSectionClicked = viewModel::onRolesSectionClicked,
-        onCharacterSheetDismissed = viewModel::onCharacterSheetDismissed,
-        onCharacterCardClicked = viewModel::onCharacterCardClicked,
-        onCharacterCardLongClicked = viewModel::onCharacterCardLongClicked,
-        onFocusedCharacterDismissed = viewModel::onFocusedCharacterDismissed,
-        onAssassinSelected = viewModel::onAssassinSelected,
-        onAssassinDropdownExpandedChange = viewModel::onAssassinDropdownExpandedChange,
-        onTrapperClicked = viewModel::onTrapperClicked,
-        onLadyOfTheLakeClicked = viewModel::onLadyOfTheLakeClicked,
-        onVoteResetClicked = viewModel::onVoteResetClicked
+        onAction = { action ->
+            when (action) {
+                is LobbyViewModel.LobbyAction.BackClicked -> onBackClicked()
+                else -> viewModel.onAction(action)
+            }
+        }
     )
 }
 
@@ -68,19 +61,7 @@ fun LobbyScreen(
 @Composable
 private fun LobbyContent(
     state: LobbyViewModel.UiState,
-    onBackClicked: () -> Unit = { },
-    onPresetSelected: (String) -> Unit = { },
-    onPresetExpandedChange: (Boolean) -> Unit = { },
-    onRolesSectionClicked: () -> Unit = { },
-    onCharacterSheetDismissed: () -> Unit = { },
-    onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
-    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { },
-    onFocusedCharacterDismissed: () -> Unit = { },
-    onAssassinSelected: (AvalonCharacter) -> Unit = { },
-    onAssassinDropdownExpandedChange: (Boolean) -> Unit = { },
-    onTrapperClicked: () -> Unit = { },
-    onLadyOfTheLakeClicked: () -> Unit = { },
-    onVoteResetClicked: () -> Unit = { }
+    onAction: (LobbyViewModel.LobbyAction) -> Unit = {}
 ) {
     val characterSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -95,7 +76,7 @@ private fun LobbyContent(
                 title = { Text(text = "Lobby") },
                 navigationIcon = {
                     IconButton(
-                        onClick = onBackClicked
+                        onClick = { onAction(LobbyViewModel.LobbyAction.BackClicked) }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_arrow_back_24),
@@ -123,24 +104,22 @@ private fun LobbyContent(
                 ) {
                     DropdownInputField(
                         value = state.selectedPreset,
-                        onValueChange = onPresetSelected,
+                        onValueChange = { onAction(LobbyViewModel.LobbyAction.PresetSelected(it)) },
                         options = state.presetOptions,
                         label = "Preset",
                         isExpanded = state.isPresetDropdownExpanded,
-                        onExpandedChange = onPresetExpandedChange
+                        onExpandedChange = { onAction(LobbyViewModel.LobbyAction.PresetExpandedChange(it)) }
                     )
                     RolesSection(
                         selectedCharacters = state.selectedCharacters,
                         selectedAssassin = state.selectedAssassin,
-                        onClick = onRolesSectionClicked
+                        onClick = { onAction(LobbyViewModel.LobbyAction.RolesSectionClicked) }
                     )
                     SettingsSection(
                         isTrapperEnabled = state.isTrapperEnabled,
                         isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
                         isVoteResetEnabled = state.isVoteResetEnabled,
-                        onTrapperClicked = onTrapperClicked,
-                        onLadyOfTheLakeClicked = onLadyOfTheLakeClicked,
-                        onVoteResetClicked = onVoteResetClicked
+                        onAction = onAction
                     )
                 }
                 Column(
@@ -163,30 +142,28 @@ private fun LobbyContent(
             ) {
                 DropdownInputField(
                     value = state.selectedPreset,
-                    onValueChange = onPresetSelected,
+                    onValueChange = { onAction(LobbyViewModel.LobbyAction.PresetSelected(it)) },
                     options = state.presetOptions,
                     label = "Preset",
                     isExpanded = state.isPresetDropdownExpanded,
-                    onExpandedChange = onPresetExpandedChange
+                    onExpandedChange = { onAction(LobbyViewModel.LobbyAction.PresetExpandedChange(it)) }
                 )
                 RolesSection(
                     selectedCharacters = state.selectedCharacters,
                     selectedAssassin = state.selectedAssassin,
-                    onClick = onRolesSectionClicked
+                    onClick = { onAction(LobbyViewModel.LobbyAction.RolesSectionClicked) }
                 )
                 SettingsSection(
                     isTrapperEnabled = state.isTrapperEnabled,
                     isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
                     isVoteResetEnabled = state.isVoteResetEnabled,
-                    onTrapperClicked = onTrapperClicked,
-                    onLadyOfTheLakeClicked = onLadyOfTheLakeClicked,
-                    onVoteResetClicked = onVoteResetClicked
+                    onAction = onAction
                 )
                 PlayersSection(
                     players = state.players
                 )
                 Button(
-                    onClick = { },
+                    onClick = { onAction(LobbyViewModel.LobbyAction.StartClicked) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = "Start")
@@ -197,7 +174,7 @@ private fun LobbyContent(
 
     if (state.isShowingCharacterSheet) {
         ModalBottomSheet(
-            onDismissRequest = onCharacterSheetDismissed,
+            onDismissRequest = { onAction(LobbyViewModel.LobbyAction.CharacterSheetDismissed) },
             sheetState = characterSheetState
         ) {
             EditRolesSheetBody(
@@ -205,11 +182,7 @@ private fun LobbyContent(
                 selectedAssassin = state.selectedAssassin,
                 isAssassinDropdownExpanded = state.isAssassinDropdownExpanded,
                 focusedCharacter = state.focusedCharacter,
-                onCharacterCardClicked = onCharacterCardClicked,
-                onCharacterCardLongClicked = onCharacterCardLongClicked,
-                onFocusedCharacterDismissed = onFocusedCharacterDismissed,
-                onAssassinSelected = onAssassinSelected,
-                onAssassinDropdownExpandedChange = onAssassinDropdownExpandedChange
+                onAction = onAction
             )
         }
     }
@@ -220,9 +193,7 @@ private fun SettingsSection(
     isTrapperEnabled: Boolean,
     isLadyOfTheLakeEnabled: Boolean,
     isVoteResetEnabled: Boolean,
-    onTrapperClicked: () -> Unit,
-    onLadyOfTheLakeClicked: () -> Unit,
-    onVoteResetClicked: () -> Unit,
+    onAction: (LobbyViewModel.LobbyAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -237,15 +208,15 @@ private fun SettingsSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TrapperButton(
-                onClick = onTrapperClicked,
+                onClick = { onAction(LobbyViewModel.LobbyAction.TrapperClicked) },
                 isSelected = isTrapperEnabled
             )
             LadyOfTheLakeButton(
-                onClick = onLadyOfTheLakeClicked,
+                onClick = { onAction(LobbyViewModel.LobbyAction.LadyOfTheLakeClicked) },
                 isSelected = isLadyOfTheLakeEnabled
             )
             VoteResetButton(
-                onClick = onVoteResetClicked,
+                onClick = { onAction(LobbyViewModel.LobbyAction.VoteResetClicked) },
                 isSelected = isVoteResetEnabled
             )
         }

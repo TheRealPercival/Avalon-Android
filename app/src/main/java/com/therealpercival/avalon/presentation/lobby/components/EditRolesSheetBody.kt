@@ -34,6 +34,7 @@ import com.therealpercival.avalon.domain.model.allCharacters
 import com.therealpercival.avalon.presentation.components.CharacterCard
 import com.therealpercival.avalon.presentation.components.CharacterTile
 import com.therealpercival.avalon.presentation.components.DropdownInputField
+import com.therealpercival.avalon.presentation.lobby.LobbyViewModel
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
@@ -43,11 +44,7 @@ fun EditRolesSheetBody(
     selectedAssassin: AvalonCharacter? = null,
     isAssassinDropdownExpanded: Boolean = false,
     focusedCharacter: AvalonCharacter? = null,
-    onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
-    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { },
-    onFocusedCharacterDismissed: () -> Unit = { },
-    onAssassinSelected: (AvalonCharacter) -> Unit = { },
-    onAssassinDropdownExpandedChange: (Boolean) -> Unit = { }
+    onAction: (LobbyViewModel.LobbyAction) -> Unit = { }
 ) {
     Column(
         modifier = Modifier
@@ -65,16 +62,16 @@ fun EditRolesSheetBody(
             isGood = true,
             selectedCharacters = selectedCharacters,
             selectedAssassin = selectedAssassin,
-            onCharacterCardClicked = onCharacterCardClicked,
-            onCharacterCardLongClicked = onCharacterCardLongClicked
+            onCharacterCardLongClicked = { onAction(LobbyViewModel.LobbyAction.CharacterCardLongClicked(it)) },
+            onCharacterCardClicked = { onAction(LobbyViewModel.LobbyAction.CharacterCardClicked(it)) }
         )
 
         TeamSection(
             isGood = false,
             selectedCharacters = selectedCharacters,
             selectedAssassin = selectedAssassin,
-            onCharacterCardClicked = onCharacterCardClicked,
-            onCharacterCardLongClicked = onCharacterCardLongClicked
+            onCharacterCardClicked = { onAction(LobbyViewModel.LobbyAction.CharacterCardClicked(it)) },
+            onCharacterCardLongClicked = { onAction(LobbyViewModel.LobbyAction.CharacterCardLongClicked(it)) }
         )
 
         if (!selectedCharacters.contains(AvalonCharacter.Assassin)) {
@@ -83,14 +80,14 @@ fun EditRolesSheetBody(
                 value = selectedAssassin?.name ?: "None",
                 onValueChange = { selectedName ->
                     evilCharacters.find { it.name == selectedName }?.let { character ->
-                        onAssassinSelected(character)
+                        onAction(LobbyViewModel.LobbyAction.AssassinSelected(character))
                     }
                 },
                 options = evilCharacters.map { it.name },
                 modifier = Modifier.padding(horizontal = 16.dp),
                 label = "Assassin",
                 isExpanded = isAssassinDropdownExpanded,
-                onExpandedChange = onAssassinDropdownExpandedChange,
+                onExpandedChange = { onAction(LobbyViewModel.LobbyAction.AssassinDropdownExpandedChange(it)) }
             )
         }
 
@@ -99,7 +96,7 @@ fun EditRolesSheetBody(
 
     focusedCharacter?.let { character ->
         Dialog(
-            onDismissRequest = onFocusedCharacterDismissed,
+            onDismissRequest = { onAction(LobbyViewModel.LobbyAction.FocusedCharacterDismissed) },
             properties = DialogProperties(usePlatformDefaultWidth = false),
         ) {
             Box(
@@ -110,7 +107,7 @@ fun EditRolesSheetBody(
                         interactionSource = null,
                         indication = null
                     ) {
-                        onFocusedCharacterDismissed()
+                        onAction(LobbyViewModel.LobbyAction.FocusedCharacterDismissed)
                     },
                 contentAlignment = Alignment.Center,
             ) {
