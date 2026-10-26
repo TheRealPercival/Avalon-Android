@@ -12,7 +12,7 @@ val LivvicFontFamily = FontFamily(
     Font(resId = R.font.livvic_regular, weight = FontWeight.Normal),
     Font(resId = R.font.livvic_medium, weight = FontWeight.Medium),
     Font(resId = R.font.livvic_semibold, weight = FontWeight.SemiBold),
-    Font(resId = R.font.livvic_bold, weight = FontWeight.Bold)
+    Font(resId = R.font.livvic_bold, weight = FontWeight.Bold),
 )
 
 // Set of Material typography styles to start with
@@ -22,20 +22,20 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     titleLarge = TextStyle(
         fontFamily = LivvicFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         lineHeight = 28.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     labelSmall = TextStyle(
         fontFamily = LivvicFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
+        letterSpacing = 0.5.sp,
+    ),
 )

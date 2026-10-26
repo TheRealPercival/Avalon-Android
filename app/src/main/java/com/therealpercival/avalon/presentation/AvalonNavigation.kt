@@ -24,7 +24,7 @@ fun AvalonNavigation() {
     val isShowingBottomNavBar = currentRoute in listOf(
         Screen.Join.route,
         Screen.Stats.route,
-        Screen.Settings.route
+        Screen.Settings.route,
     )
 
     Scaffold(
@@ -40,15 +40,15 @@ fun AvalonNavigation() {
                             launchSingleTop = true
                             restoreState = true
                         }
-                    }
+                    },
                 )
             }
-        }
+        },
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Setup.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             composable(Screen.Setup.route) {
                 SetupScreen(
@@ -58,7 +58,7 @@ fun AvalonNavigation() {
                                 inclusive = true
                             }
                         }
-                    }
+                    },
                 )
             }
             composable(Screen.Join.route) {
@@ -75,7 +75,7 @@ fun AvalonNavigation() {
                                 inclusive = true
                             }
                         }
-                    }
+                    },
                 )
             }
         }

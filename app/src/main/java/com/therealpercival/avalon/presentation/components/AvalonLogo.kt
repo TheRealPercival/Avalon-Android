@@ -21,12 +21,12 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun AvalonLogo(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = spacedBy(12.dp),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.Bottom,
     ) {
         Image(
             painter = painterResource(id = R.drawable.merlin_logo),
@@ -34,20 +34,20 @@ fun AvalonLogo(
             modifier = Modifier
                 .height(84.dp)
                 .align(Alignment.Bottom)
-                .padding(bottom = 6.dp)
+                .padding(bottom = 6.dp),
         )
         Column(
-            verticalArrangement = spacedBy((-10).dp)
+            verticalArrangement = spacedBy((-10).dp),
         ) {
             Text(
                 text = "Avalon",
-                fontSize = 50.sp
+                fontSize = 50.sp,
             )
             Text(
                 text = "The Real Percival",
                 fontSize = 16.sp,
                 fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

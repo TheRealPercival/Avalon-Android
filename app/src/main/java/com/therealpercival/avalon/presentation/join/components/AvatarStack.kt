@@ -25,7 +25,7 @@ fun AvatarStack(
     models: List<Any>,
     modifier: Modifier = Modifier,
     avatarSize: Dp = 24.dp,
-    placeholder: Painter? = null
+    placeholder: Painter? = null,
 ) {
     val overlapFactor = 0.5f
 
@@ -48,17 +48,19 @@ fun AvatarStack(
                                     color = Color.Black,
                                     radius = (size.width / 2) * 1.15f,
                                     center = Offset(x = 0f, y = size.height / 2),
-                                    blendMode = BlendMode.Clear
+                                    blendMode = BlendMode.Clear,
                                 )
                             }
                         }
-                        .clip(CircleShape)
+                        .clip(CircleShape),
                 )
             }
-        }
+        },
     ) { measurables, constraints ->
         val placeables = measurables.map { it.measure(constraints) }
-        val width = if (placeables.isEmpty()) 0 else {
+        val width = if (placeables.isEmpty()) {
+            0
+        } else {
             val singleWidth = placeables.first().width
             (singleWidth + (placeables.size - 1) * singleWidth * (1f - overlapFactor)).toInt()
         }
@@ -82,9 +84,9 @@ private fun AvatarStackPreview() {
             models = listOf(
                 R.drawable.x,
                 R.drawable.benjson,
-                R.drawable._shoe_
+                R.drawable._shoe_,
             ),
-            avatarSize = 100.dp
+            avatarSize = 100.dp,
         )
     }
 }

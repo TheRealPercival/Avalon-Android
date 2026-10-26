@@ -17,28 +17,27 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Binds
     @Singleton
     abstract fun bindServerRepository(
-        fakeServerRepository: FakeServerRepository
+        fakeServerRepository: FakeServerRepository,
     ): ServerRepository
 
     @Binds
     @Singleton
     abstract fun bindUserRepository(
-        fakeUserRepository: FakeUserRepository
+        fakeUserRepository: FakeUserRepository,
     ): UserRepository
 
     @Binds
     @Singleton
     abstract fun bindAdminRepository(
-        fakeAdminRepository: FakeAdminRepository
+        fakeAdminRepository: FakeAdminRepository,
     ): AdminRepository
 
     @Binds
     @Singleton
     abstract fun bindGameRepository(
-        fakeGameRepository: FakeGameRepository
+        fakeGameRepository: FakeGameRepository,
     ): GameRepository
 }

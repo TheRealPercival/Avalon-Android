@@ -21,17 +21,17 @@ fun AdminSection(
     allowedProfiles: List<SettingsViewModel.AllowedProfile> = emptyList(),
     onAllowClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
     onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
-    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { }
+    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { },
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         if (requestingProfiles.isNotEmpty()) {
             Text(
                 text = "Requests",
                 modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
                 maxLines = 1,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         requestingProfiles.forEach { profile ->
@@ -39,7 +39,7 @@ fun AdminSection(
                 profile = profile,
                 modifier = Modifier.padding(bottom = 8.dp),
                 onAllowClicked = onAllowClicked,
-                onDenyClicked = onDenyClicked
+                onDenyClicked = onDenyClicked,
             )
         }
 
@@ -50,14 +50,14 @@ fun AdminSection(
                 text = "Accepted",
                 modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
                 maxLines = 1,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         allowedProfiles.forEach { profile ->
             AllowedProfileListItem(
                 profile = profile,
                 modifier = Modifier.padding(bottom = 8.dp),
-                onRemoveClicked = onRemoveClicked
+                onRemoveClicked = onRemoveClicked,
             )
         }
     }
@@ -71,20 +71,20 @@ private fun AdminSectionPreview() {
             requestingProfiles = listOf(
                 SettingsViewModel.RequestingProfile(
                     accountName = "@ben.json",
-                    avatarModel = R.drawable.benjson
+                    avatarModel = R.drawable.benjson,
                 ),
                 SettingsViewModel.RequestingProfile(
                     accountName = "@_shoe_",
-                    avatarModel = R.drawable._shoe_
-                )
+                    avatarModel = R.drawable._shoe_,
+                ),
             ),
             allowedProfiles = listOf(
                 SettingsViewModel.AllowedProfile(
                     displayName = "Drew",
                     accountName = "@drew654",
-                    avatarModel = R.drawable.x
-                )
-            )
+                    avatarModel = R.drawable.x,
+                ),
+            ),
         )
     }
 }
