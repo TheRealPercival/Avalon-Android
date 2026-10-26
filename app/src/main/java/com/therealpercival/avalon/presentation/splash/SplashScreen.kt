@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     onNavigateToSetup: () -> Unit,
-    onNavigateToJoin: () -> Unit
+    onNavigateToJoin: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.events.collectLatest { event ->
@@ -41,10 +41,10 @@ fun SplashScreen(
 private fun SplashContent() {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AvalonLogo()
             Spacer(modifier = Modifier.height(32.dp))
@@ -53,7 +53,7 @@ private fun SplashContent() {
             Text(
                 text = "Connecting to server...",
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

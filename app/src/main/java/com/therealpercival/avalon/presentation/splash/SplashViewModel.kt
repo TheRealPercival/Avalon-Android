@@ -18,11 +18,11 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
-
     sealed class SplashEvent {
         object NavigateToSetup : SplashEvent()
+
         object NavigateToJoin : SplashEvent()
     }
 

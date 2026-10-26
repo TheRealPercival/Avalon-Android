@@ -21,9 +21,7 @@ class FakeServerRepository @Inject constructor() : ServerRepository {
         _serverUrl.value = url
     }
 
-    override suspend fun validateServerUrl(url: String): Boolean {
-        return true
-    }
+    override suspend fun validateServerUrl(url: String): Boolean = true
 
     override fun getConnectionStatus(): Flow<ConnectionStatus> = flowOf(ConnectionStatus.CONNECTED)
 
@@ -33,7 +31,7 @@ class FakeServerRepository @Inject constructor() : ServerRepository {
         _serverInfo.value = ServerInfo(
             version = "1.0.0",
             supabaseURL = "https://fake.supabase.co",
-            supabaseAnonKey = "fake_key"
+            supabaseAnonKey = "fake_key",
         )
     }
 

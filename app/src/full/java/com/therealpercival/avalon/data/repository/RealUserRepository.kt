@@ -29,7 +29,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RealUserRepository @Inject constructor(
-    serverRepository: ServerRepository
+    serverRepository: ServerRepository,
 ) : UserRepository {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var supabaseClient: SupabaseClient? = null
@@ -48,7 +48,7 @@ class RealUserRepository @Inject constructor(
                     try {
                         supabaseClient = createSupabaseClient(
                             supabaseUrl = serverInfo.supabaseURL,
-                            supabaseKey = serverInfo.supabaseAnonKey
+                            supabaseKey = serverInfo.supabaseAnonKey,
                         ) {
                             install(Auth) {
                                 scheme = "avalontrp"
@@ -99,7 +99,7 @@ class RealUserRepository @Inject constructor(
                             _currentUser.value = User(
                                 displayName = fullName,
                                 accountName = "@${fullName.lowercase().replace(" ", ".")}",
-                                isAdmin = false
+                                isAdmin = false,
                             )
                         }
                     }
@@ -124,7 +124,7 @@ class RealUserRepository @Inject constructor(
         return if (status is SessionStatus.Authenticated) {
             AuthSession(
                 accessToken = status.session.accessToken,
-                refreshToken = status.session.refreshToken
+                refreshToken = status.session.refreshToken,
             )
         } else {
             null

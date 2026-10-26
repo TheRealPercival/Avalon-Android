@@ -66,7 +66,7 @@ fun AvalonNavigation() {
                                 inclusive = true
                             }
                         }
-                    }
+                    },
                 )
             }
             composable(Screen.Setup.route) {

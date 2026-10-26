@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class ServerInfo(
     val version: String,
     val supabaseURL: String,
-    val supabaseAnonKey: String
+    val supabaseAnonKey: String,
 )

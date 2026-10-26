@@ -136,10 +136,11 @@ internal fun SettingsContent(
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = if (state.connectionStatus == ConnectionStatus.CONNECTED) "Connected" else "Disconnected",
-                    tint = if (state.connectionStatus == ConnectionStatus.CONNECTED)
+                    tint = if (state.connectionStatus == ConnectionStatus.CONNECTED) {
                         MaterialTheme.colorScheme.primary
-                    else
+                    } else {
                         MaterialTheme.colorScheme.error
+                    },
                 )
             },
             singleLine = true,

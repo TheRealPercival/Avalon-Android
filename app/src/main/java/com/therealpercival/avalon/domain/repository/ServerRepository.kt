@@ -10,8 +10,12 @@ interface ServerRepository {
     suspend fun saveServerUrl(url: String)
 
     suspend fun validateServerUrl(url: String): Boolean
+
     fun getConnectionStatus(): Flow<ConnectionStatus>
+
     fun getServerInfo(): Flow<ServerInfo?>
+
     fun connect()
+
     fun disconnect()
 }

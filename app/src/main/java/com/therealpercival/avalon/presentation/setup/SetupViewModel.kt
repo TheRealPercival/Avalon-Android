@@ -56,12 +56,14 @@ class SetupViewModel @Inject constructor(
 
         combine(
             serverRepository.getConnectionStatus(),
-            serverRepository.getServerInfo()
+            serverRepository.getServerInfo(),
         ) { status, info ->
-            _uiState.update { it.copy(
-                connectionStatus = status,
-                isServerInfoLoaded = info != null
-            ) }
+            _uiState.update {
+                it.copy(
+                    connectionStatus = status,
+                    isServerInfoLoaded = info != null,
+                )
+            }
         }.launchIn(viewModelScope)
 
         userRepository.isAuthenticating()

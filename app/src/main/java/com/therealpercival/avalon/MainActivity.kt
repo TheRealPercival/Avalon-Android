@@ -13,16 +13,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
         intent?.let { userRepository.handleDeepLink(it) }
-        
+
         setContent {
             AvalonTheme {
                 AvalonNavigation()

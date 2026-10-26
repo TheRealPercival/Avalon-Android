@@ -77,7 +77,7 @@ class SettingsViewModel @Inject constructor(
                     serverUrl = serverUrl,
                     connectionStatus = status,
                     requestingProfiles = requesting.map {
-                        RequestingProfile(it.accountName, it.avatarModel) 
+                        RequestingProfile(it.accountName, it.avatarModel)
                     },
                     allowedProfiles = allowed.map {
                         AllowedProfile(it.displayName, it.accountName, it.avatarModel)

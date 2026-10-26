@@ -87,20 +87,20 @@ internal fun SetupContent(
             if (state.isAuthenticating) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     CircularProgressIndicator()
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Signing in...",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
                 DiscordSignInSection(
                     serverUrl = state.serverUrl,
-                    onSignInClicked = onSignInClicked
+                    onSignInClicked = onSignInClicked,
                 )
             }
         } else {
@@ -131,6 +131,7 @@ internal fun SetupContent(
                             color = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
+
                     else -> {
                         Text(text = "Connect")
                     }

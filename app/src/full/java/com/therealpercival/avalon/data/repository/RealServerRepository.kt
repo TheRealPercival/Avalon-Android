@@ -124,8 +124,8 @@ class RealServerRepository @Inject constructor(
 
     override fun getConnectionStatus(): Flow<ConnectionStatus> = _connectionStatus.asStateFlow()
 
-    override fun getServerInfo(): Flow<ServerInfo?> {
-        return dataStore.data.map { preferences ->
+    override fun getServerInfo(): Flow<ServerInfo?> =
+        dataStore.data.map { preferences ->
             val infoJson = preferences[PreferencesKeys.SERVER_INFO]
             if (infoJson != null) {
                 try {
@@ -137,7 +137,6 @@ class RealServerRepository @Inject constructor(
                 null
             }
         }
-    }
 
     override fun connect() {
         if (socket?.connected() == true) return
@@ -162,7 +161,7 @@ class RealServerRepository @Inject constructor(
             val authPayload = tokens?.let {
                 mapOf(
                     "access_token" to it.accessToken,
-                    "refresh_token" to it.refreshToken
+                    "refresh_token" to it.refreshToken,
                 )
             }
 
