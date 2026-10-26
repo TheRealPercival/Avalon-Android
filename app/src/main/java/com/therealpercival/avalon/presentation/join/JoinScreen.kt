@@ -37,13 +37,13 @@ fun JoinScreen(
 @Composable
 internal fun JoinContent(
     state: JoinViewModel.UiState,
-    onJoinClicked: () -> Unit = { }
+    onJoinClicked: () -> Unit = { },
 ) {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         AvalonLogo(
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter),
         )
 
         JoinButton(
@@ -53,7 +53,7 @@ internal fun JoinContent(
                 .align(Alignment.Center)
                 .padding(16.dp),
             onClick = onJoinClicked,
-            placeholder = ColorPainter(Color.LightGray)
+            placeholder = ColorPainter(Color.LightGray),
         )
     }
 }
@@ -65,8 +65,8 @@ private fun JoinScreenPreview1() {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Join game (5 in lobby)",
-                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
-            )
+                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
+            ),
         )
     }
 }
@@ -78,8 +78,8 @@ private fun JoinScreenPreview2() {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Spectate (5 in game)",
-                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
-            )
+                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
+            ),
         )
     }
 }
@@ -91,8 +91,8 @@ private fun JoinScreenPreview3() {
         JoinContent(
             state = JoinViewModel.UiState(
                 joinText = "Spectate (lobby full)",
-                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
-            )
+                imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
+            ),
         )
     }
 }

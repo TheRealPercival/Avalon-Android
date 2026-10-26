@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.therealpercival.avalon.R
-import org.junit.Assert.*
+import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,8 +20,8 @@ class JoinScreenTest {
             JoinContent(
                 state = JoinViewModel.UiState(
                     joinText = "Join game (5 in lobby)",
-                    imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
-                )
+                    imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
+                ),
             )
         }
 
@@ -38,9 +38,9 @@ class JoinScreenTest {
             JoinContent(
                 state = JoinViewModel.UiState(
                     joinText = "Join game (5 in lobby)",
-                    imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
+                    imageModels = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
                 ),
-                onJoinClicked = { clicked = true }
+                onJoinClicked = { clicked = true },
             )
         }
 

@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JoinViewModel @Inject constructor(
-    private val gameRepository: GameRepository
+    private val gameRepository: GameRepository,
 ) : ViewModel() {
     data class UiState(
         val joinText: String = "",
@@ -25,10 +25,10 @@ class JoinViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             gameRepository.getGameSummary().collect { summary ->
-                _uiState.update { 
+                _uiState.update {
                     it.copy(
                         joinText = summary.joinText,
-                        imageModels = summary.playerAvatars
+                        imageModels = summary.playerAvatars,
                     )
                 }
             }

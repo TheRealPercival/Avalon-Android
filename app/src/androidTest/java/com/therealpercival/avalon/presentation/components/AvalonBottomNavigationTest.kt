@@ -17,7 +17,7 @@ class AvalonBottomNavigationTest {
     fun avalonBottomNavigation_displaysAllItems() {
         composeTestRule.setContent {
             AvalonBottomNavigation(
-                currentRoute = Screen.Join.route
+                currentRoute = Screen.Join.route,
             )
         }
 
@@ -31,7 +31,7 @@ class AvalonBottomNavigationTest {
         composeTestRule.setContent {
             AvalonBottomNavigation(
                 currentRoute = Screen.Join.route,
-                onNavBarItemClicked = { clickedScreen = it }
+                onNavBarItemClicked = { clickedScreen = it },
             )
         }
 
@@ -46,7 +46,7 @@ class AvalonBottomNavigationTest {
         composeTestRule.setContent {
             AvalonBottomNavigation(
                 currentRoute = Screen.Join.route,
-                onNavBarItemClicked = { clickedScreen = it }
+                onNavBarItemClicked = { clickedScreen = it },
             )
         }
 

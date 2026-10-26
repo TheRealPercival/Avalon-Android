@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun SetupScreen(
     viewModel: SetupViewModel = hiltViewModel(),
-    onSignInSuccess: () -> Unit = { }
+    onSignInSuccess: () -> Unit = { },
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -51,7 +51,7 @@ fun SetupScreen(
         state = state,
         onServerUrlChange = viewModel::setServerUrl,
         onConnectClicked = viewModel::connectToServer,
-        onSignInClicked = viewModel::signIn
+        onSignInClicked = viewModel::signIn,
     )
 }
 
@@ -60,7 +60,7 @@ internal fun SetupContent(
     state: SetupViewModel.UiState,
     onServerUrlChange: (String) -> Unit = { },
     onConnectClicked: () -> Unit = { },
-    onSignInClicked: () -> Unit = { }
+    onSignInClicked: () -> Unit = { },
 ) {
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
@@ -73,11 +73,11 @@ internal fun SetupContent(
             .imePadding()
             .navigationBarsPadding()
             .clickable(
-                interactionSource = NoRippleInteractionSource()
+                interactionSource = NoRippleInteractionSource(),
             ) {
                 focusManager.clearFocus()
             },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AvalonLogo()
 
@@ -86,7 +86,7 @@ internal fun SetupContent(
         if (state.serverUrlState is SetupViewModel.ServerUrlState.Valid) {
             DiscordSignInSection(
                 serverUrl = state.serverUrl,
-                onSignInClicked = onSignInClicked
+                onSignInClicked = onSignInClicked,
             )
         } else {
             ServerUrlSection(
@@ -94,7 +94,7 @@ internal fun SetupContent(
                 isInputEnabled = state.serverUrlState !is SetupViewModel.ServerUrlState.Fetching,
                 isError = state.serverUrlState is SetupViewModel.ServerUrlState.Error,
                 onServerUrlChange = onServerUrlChange,
-                onDone = onConnectClicked
+                onDone = onConnectClicked,
             )
         }
 
@@ -109,7 +109,7 @@ internal fun SetupContent(
             ) {
                 if (state.serverUrlState in listOf(
                         SetupViewModel.ServerUrlState.Unvalidated,
-                        SetupViewModel.ServerUrlState.Error
+                        SetupViewModel.ServerUrlState.Error,
                     )
                 ) {
                     Text(text = "Connect")
@@ -131,7 +131,7 @@ internal fun SetupContent(
 private fun SetupScreenPreview() {
     DeviceThemePreview {
         SetupContent(
-            state = SetupViewModel.UiState()
+            state = SetupViewModel.UiState(),
         )
     }
 }
@@ -143,8 +143,8 @@ private fun SetupScreenFetchingPreview() {
         SetupContent(
             state = SetupViewModel.UiState(
                 serverUrl = "server.therealpercival.com",
-                serverUrlState = SetupViewModel.ServerUrlState.Fetching
-            )
+                serverUrlState = SetupViewModel.ServerUrlState.Fetching,
+            ),
         )
     }
 }
@@ -156,8 +156,8 @@ private fun SetupScreenErrorPreview() {
         SetupContent(
             state = SetupViewModel.UiState(
                 serverUrl = "server.therealpercival.com",
-                serverUrlState = SetupViewModel.ServerUrlState.Error
-            )
+                serverUrlState = SetupViewModel.ServerUrlState.Error,
+            ),
         )
     }
 }
@@ -169,8 +169,8 @@ private fun SetupScreenDiscordPreview() {
         SetupContent(
             state = SetupViewModel.UiState(
                 serverUrl = "server.therealpercival.com",
-                serverUrlState = SetupViewModel.ServerUrlState.Valid
-            )
+                serverUrlState = SetupViewModel.ServerUrlState.Valid,
+            ),
         )
     }
 }

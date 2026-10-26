@@ -13,11 +13,11 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun AvalonBottomNavigation(
     currentRoute: String?,
-    onNavBarItemClicked: (Screen) -> Unit = { }
+    onNavBarItemClicked: (Screen) -> Unit = { },
 ) {
     val items = listOf(
         Screen.Settings,
-        Screen.Join
+        Screen.Join,
     )
 
     NavigationBar {
@@ -27,13 +27,13 @@ fun AvalonBottomNavigation(
                     screen.icon?.let {
                         Icon(
                             painter = painterResource(id = it),
-                            contentDescription = screen.title
+                            contentDescription = screen.title,
                         )
                     }
                 },
                 label = { Text(screen.title) },
                 selected = currentRoute == screen.route,
-                onClick = { onNavBarItemClicked(screen) }
+                onClick = { onNavBarItemClicked(screen) },
             )
         }
     }
@@ -44,7 +44,7 @@ fun AvalonBottomNavigation(
 private fun AvalonBottomNavigationPreview() {
     ThemePreview {
         AvalonBottomNavigation(
-            currentRoute = Screen.Join.route
+            currentRoute = Screen.Join.route,
         )
     }
 }

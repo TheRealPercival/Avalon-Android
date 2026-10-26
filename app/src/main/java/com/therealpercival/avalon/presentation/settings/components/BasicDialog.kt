@@ -30,12 +30,12 @@ fun BasicDialog(
     confirmText: String,
     dismissText: String,
     onConfirm: () -> Unit = { },
-    onDismiss: () -> Unit = { }
+    onDismiss: () -> Unit = { },
 ) {
     BasicAlertDialog(
         onDismissRequest = {
             onDismiss()
-        }
+        },
     ) {
         Surface(
             modifier = Modifier
@@ -47,16 +47,16 @@ fun BasicDialog(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = body
+                    text = body,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.End,
                 ) {
                     TextButton(
                         onClick = {
@@ -86,7 +86,7 @@ private fun BasicDialogPreview() {
             title = "Are you sure?",
             body = "Changing your current server will also sign you out.",
             confirmText = "Yes",
-            dismissText = "Cancel"
+            dismissText = "Cancel",
         )
     }
 }

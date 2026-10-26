@@ -19,17 +19,17 @@ fun JoinButton(
     imageModels: List<Any>,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
-    placeholder: Painter = ColorPainter(Color.LightGray)
+    placeholder: Painter = ColorPainter(Color.LightGray),
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Text(text = text)
         Spacer(modifier = Modifier.weight(1f))
         AvatarStack(
             models = imageModels,
-            placeholder = placeholder
+            placeholder = placeholder,
         )
     }
 }
@@ -43,8 +43,8 @@ private fun JoinButtonPreview() {
             imageModels = listOf(
                 R.drawable.x,
                 R.drawable.benjson,
-                R.drawable._shoe_
-            )
+                R.drawable._shoe_,
+            ),
         )
     }
 }
@@ -56,8 +56,8 @@ private fun JoinButtonPreview2() {
         JoinButton(
             text = "Join game (1 in lobby)",
             imageModels = listOf(
-                R.drawable.x
-            )
+                R.drawable.x,
+            ),
         )
     }
 }
@@ -70,8 +70,8 @@ private fun JoinButtonPreview3() {
             text = "Join game (2 in lobby)",
             imageModels = listOf(
                 R.drawable.x,
-                R.drawable.benjson
-            )
+                R.drawable.benjson,
+            ),
         )
     }
 }

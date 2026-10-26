@@ -20,17 +20,21 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class SetupViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
     sealed class ServerUrlState {
         object Unvalidated : ServerUrlState()
+
         object Fetching : ServerUrlState()
+
         object Valid : ServerUrlState()
+
         object Error : ServerUrlState()
     }
+
     data class UiState(
         val serverUrl: String = "",
-        val serverUrlState: ServerUrlState = ServerUrlState.Unvalidated
+        val serverUrlState: ServerUrlState = ServerUrlState.Unvalidated,
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -48,11 +52,11 @@ class SetupViewModel @Inject constructor(
     }
 
     fun setServerUrl(url: String) {
-        _uiState.update { 
+        _uiState.update {
             it.copy(
                 serverUrl = url,
-                serverUrlState = ServerUrlState.Unvalidated
-            ) 
+                serverUrlState = ServerUrlState.Unvalidated,
+            )
         }
     }
 

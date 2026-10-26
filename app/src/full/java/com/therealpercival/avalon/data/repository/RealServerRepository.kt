@@ -10,17 +10,16 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RealServerRepository @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : ServerRepository {
     private object PreferencesKeys {
         val SERVER_URL = stringPreferencesKey("server_url")
     }
 
-    override fun getServerUrl(): Flow<String> {
-        return dataStore.data.map { preferences ->
+    override fun getServerUrl(): Flow<String> =
+        dataStore.data.map { preferences ->
             preferences[PreferencesKeys.SERVER_URL] ?: ""
         }
-    }
 
     override suspend fun saveServerUrl(url: String) {
         dataStore.edit { preferences ->
@@ -28,7 +27,5 @@ class RealServerRepository @Inject constructor(
         }
     }
 
-    override suspend fun validateServerUrl(url: String): Boolean {
-        return false
-    }
+    override suspend fun validateServerUrl(url: String): Boolean = false
 }

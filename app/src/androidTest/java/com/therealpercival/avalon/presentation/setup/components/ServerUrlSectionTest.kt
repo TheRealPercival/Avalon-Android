@@ -37,7 +37,7 @@ class ServerUrlSectionTest {
         var serverUrl = ""
         composeTestRule.setContent {
             ServerUrlSection(
-                onServerUrlChange = { serverUrl = it }
+                onServerUrlChange = { serverUrl = it },
             )
         }
 
@@ -54,11 +54,11 @@ class ServerUrlSectionTest {
             var text by remember { mutableStateOf("") }
             ServerUrlSection(
                 serverUrl = text,
-                onServerUrlChange = { 
+                onServerUrlChange = {
                     text = it
                     capturedUrl = it
                 },
-                onDone = { clicked = true }
+                onDone = { clicked = true },
             )
         }
 
@@ -75,7 +75,7 @@ class ServerUrlSectionTest {
         composeTestRule.setContent {
             ServerUrlSection(
                 serverUrl = "server.therealpercival.com",
-                isInputEnabled = false
+                isInputEnabled = false,
             )
         }
 
@@ -87,7 +87,7 @@ class ServerUrlSectionTest {
         composeTestRule.setContent {
             ServerUrlSection(
                 serverUrl = "server.therealpercival.com",
-                isError = true
+                isError = true,
             )
         }
 
