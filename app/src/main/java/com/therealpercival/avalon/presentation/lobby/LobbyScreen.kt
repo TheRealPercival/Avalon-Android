@@ -115,17 +115,17 @@ private fun LobbyContent(
                         selectedAssassin = state.selectedAssassin,
                         onClick = { onAction(LobbyAction.RolesSectionClicked) },
                     )
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
                     SettingsSection(
                         isTrapperEnabled = state.isTrapperEnabled,
                         isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
                         isVoteResetEnabled = state.isVoteResetEnabled,
                         onAction = onAction,
                     )
-                }
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
                     PlayersSection(
                         players = state.players,
                     )
