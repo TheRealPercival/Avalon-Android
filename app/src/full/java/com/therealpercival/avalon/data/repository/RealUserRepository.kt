@@ -36,8 +36,8 @@ class RealUserRepository @Inject constructor(
     private var authStateJob: Job? = null
     private var pendingIntent: Intent? = null
 
-    private val _currentUser = MutableStateFlow<User?>(null)
-    private val _isAuthenticating = MutableStateFlow(false)
+    private val currentUserFlow = MutableStateFlow<User?>(null)
+    private val isAuthenticatingFlow = MutableStateFlow(false)
 
     init {
         serverRepository.getServerInfo()
@@ -70,8 +70,8 @@ class RealUserRepository @Inject constructor(
                 } else {
                     authStateJob?.cancel()
                     supabaseClient = null
-                    _currentUser.value = null
-                    _isAuthenticating.value = false
+                    currentUserFlow.value = null
+                    isAuthenticatingFlow.value = false
                 }
             }
             .launchIn(scope)
@@ -90,13 +90,13 @@ class RealUserRepository @Inject constructor(
                 Log.d(TAG, "Supabase auth status changed: $status")
                 when (status) {
                     is SessionStatus.Authenticated -> {
-                        _isAuthenticating.value = false
+                        isAuthenticatingFlow.value = false
                         val supabaseUser = status.session.user
                         Log.d(TAG, "User authenticated: ${supabaseUser?.email}")
                         if (supabaseUser != null) {
                             val fullName = supabaseUser.userMetadata?.get("full_name")
                                 ?.toString()?.removeSurrounding("\"") ?: "Unknown"
-                            _currentUser.value = User(
+                            currentUserFlow.value = User(
                                 displayName = fullName,
                                 accountName = "@${fullName.lowercase().replace(" ", ".")}",
                                 isAdmin = false,
@@ -105,8 +105,8 @@ class RealUserRepository @Inject constructor(
                     }
 
                     is SessionStatus.NotAuthenticated -> {
-                        _isAuthenticating.value = false
-                        _currentUser.value = null
+                        isAuthenticatingFlow.value = false
+                        currentUserFlow.value = null
                     }
 
                     else -> {}
@@ -115,9 +115,9 @@ class RealUserRepository @Inject constructor(
             .launchIn(scope)
     }
 
-    override fun getCurrentUser(): Flow<User?> = _currentUser.asStateFlow()
+    override fun getCurrentUser(): Flow<User?> = currentUserFlow.asStateFlow()
 
-    override fun isAuthenticating(): Flow<Boolean> = _isAuthenticating.asStateFlow()
+    override fun isAuthenticating(): Flow<Boolean> = isAuthenticatingFlow.asStateFlow()
 
     override fun getSessionTokens(): AuthSession? {
         val status = supabaseClient?.auth?.sessionStatus?.value
@@ -133,7 +133,7 @@ class RealUserRepository @Inject constructor(
 
     override suspend fun signIn() {
         Log.d(TAG, "signIn called")
-        _isAuthenticating.value = true
+        isAuthenticatingFlow.value = true
         supabaseClient?.auth?.signInWith(Discord)
     }
 
@@ -152,7 +152,7 @@ class RealUserRepository @Inject constructor(
         }
 
         if (uri?.scheme == "avalontrp" && uri.host == "setup") {
-            _isAuthenticating.value = true
+            isAuthenticatingFlow.value = true
         }
 
         supabaseClient?.handleDeeplinks(intent)
