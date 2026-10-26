@@ -23,7 +23,10 @@ data class WindowSizeClass(
     val heightSizeClass: WindowHeightSizeClass,
 ) {
     companion object {
-        fun calculateFromSize(widthDp: Dp, heightDp: Dp): WindowSizeClass {
+        fun calculateFromSize(
+            widthDp: Dp,
+            heightDp: Dp,
+        ): WindowSizeClass {
             val widthSizeClass = when {
                 widthDp < 600.dp -> WindowWidthSizeClass.Compact
                 widthDp < 840.dp -> WindowWidthSizeClass.Medium

@@ -17,25 +17,25 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun PlayersSection(
-    players: List<LobbyViewModel.Player>
+    players: List<LobbyViewModel.Player>,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
             text = "Players",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
         )
         players.chunked(5).forEach { rowPlayers ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 rowPlayers.forEach { player ->
                     PlayerIcon(
                         avatarModel = player.avatarModel,
                         displayName = player.displayName,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
                 repeat(5 - rowPlayers.size) {
@@ -54,25 +54,25 @@ private fun PlayersSectionPreview() {
             players = listOf(
                 LobbyViewModel.Player(
                     displayName = "Drew",
-                    avatarModel = R.drawable.x
+                    avatarModel = R.drawable.x,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Ben",
-                    avatarModel = R.drawable.benjson
+                    avatarModel = R.drawable.benjson,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Izzy",
-                    avatarModel = R.drawable.izzyderose
+                    avatarModel = R.drawable.izzyderose,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Thomas",
-                    avatarModel = R.drawable._shoe_
+                    avatarModel = R.drawable._shoe_,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Landon",
-                    avatarModel = R.drawable.landon248
-                )
-            )
+                    avatarModel = R.drawable.landon248,
+                ),
+            ),
         )
     }
 }
@@ -85,37 +85,37 @@ private fun PlayersSectionPreview2() {
             players = listOf(
                 LobbyViewModel.Player(
                     displayName = "Drew",
-                    avatarModel = R.drawable.x
+                    avatarModel = R.drawable.x,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Ben",
-                    avatarModel = R.drawable.benjson
+                    avatarModel = R.drawable.benjson,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Izzy",
-                    avatarModel = R.drawable.izzyderose
+                    avatarModel = R.drawable.izzyderose,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Thomas",
-                    avatarModel = R.drawable._shoe_
+                    avatarModel = R.drawable._shoe_,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Landon",
-                    avatarModel = R.drawable.landon248
+                    avatarModel = R.drawable.landon248,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Drew",
-                    avatarModel = R.drawable.x
+                    avatarModel = R.drawable.x,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Ben",
-                    avatarModel = R.drawable.benjson
+                    avatarModel = R.drawable.benjson,
                 ),
                 LobbyViewModel.Player(
                     displayName = "Izzy",
-                    avatarModel = R.drawable.izzyderose
-                )
-            )
+                    avatarModel = R.drawable.izzyderose,
+                ),
+            ),
         )
     }
 }

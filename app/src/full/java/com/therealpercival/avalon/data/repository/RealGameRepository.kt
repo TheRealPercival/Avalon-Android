@@ -15,14 +15,14 @@ class RealGameRepository @Inject constructor() : GameRepository {
                 playerAvatars = emptyList(),
             ),
         )
-    )
 
-    override fun getLobbyData(): Flow<LobbyData> = flowOf(
-        LobbyData(
-            selectedPreset = "",
-            selectedCharacters = emptyList(),
-            presetOptions = emptyList(),
-            players = emptyList()
+    override fun getLobbyData(): Flow<LobbyData> =
+        flowOf(
+            LobbyData(
+                selectedPreset = "",
+                selectedCharacters = emptyList(),
+                presetOptions = emptyList(),
+                players = emptyList(),
+            ),
         )
-    )
 }

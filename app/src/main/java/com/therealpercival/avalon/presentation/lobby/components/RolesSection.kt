@@ -20,20 +20,20 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun RolesSection(
     selectedCharacters: List<AvalonCharacter>,
     selectedAssassin: AvalonCharacter? = null,
-    onClick: () -> Unit = { }
+    onClick: () -> Unit = { },
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(
                 interactionSource = null,
-                indication = null
+                indication = null,
             ) { onClick() },
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
             text = "Roles",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
         )
 
         val totalSlots = 10
@@ -41,7 +41,7 @@ fun RolesSection(
         (0 until totalSlots).chunked(rowSize).forEach { rowIndices ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 rowIndices.forEach { index ->
                     val character = selectedCharacters.getOrNull(index)
@@ -57,11 +57,11 @@ fun RolesSection(
                         CharacterTile(
                             character = character,
                             modifier = tileModifier,
-                            isAssassin = isAssassin
+                            isAssassin = isAssassin,
                         )
                     } else {
                         AddRoleTile(
-                            modifier = tileModifier
+                            modifier = tileModifier,
                         )
                     }
                 }
@@ -83,8 +83,8 @@ private fun RolesSectionPreview() {
                 AvalonCharacter.LoyalServantOfArthur3,
                 AvalonCharacter.Morgana,
                 AvalonCharacter.Mordred,
-                AvalonCharacter.MinionOfMordred1
-            )
+                AvalonCharacter.MinionOfMordred1,
+            ),
         )
     }
 }
@@ -98,8 +98,8 @@ private fun RolesSectionOneLinePreview() {
                 AvalonCharacter.Merlin,
                 AvalonCharacter.Percival,
                 AvalonCharacter.Morgana,
-                AvalonCharacter.Mordred
-            )
+                AvalonCharacter.Mordred,
+            ),
         )
     }
 }
@@ -109,7 +109,7 @@ private fun RolesSectionOneLinePreview() {
 private fun RolesSectionEmptyPreview() {
     ThemePreview {
         RolesSection(
-            selectedCharacters = emptyList()
+            selectedCharacters = emptyList(),
         )
     }
 }

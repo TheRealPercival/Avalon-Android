@@ -27,14 +27,14 @@ fun DropdownInputField(
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     onExpandedChange: (Boolean) -> Unit = { },
-    label: String? = null
+    label: String? = null,
 ) {
     val focusManager = LocalFocusManager.current
 
     ExposedDropdownMenuBox(
         expanded = isExpanded,
         onExpandedChange = onExpandedChange,
-        modifier = modifier
+        modifier = modifier,
     ) {
         OutlinedTextField(
             value = value,
@@ -49,11 +49,11 @@ fun DropdownInputField(
                     contentDescription = "Dropdown icon",
                     modifier = Modifier.conditional(isExpanded) {
                         rotate(degrees = 180f)
-                    }
+                    },
                 )
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable, true)
+            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable, true),
         )
 
         ExposedDropdownMenu(
@@ -61,7 +61,7 @@ fun DropdownInputField(
             onDismissRequest = {
                 onExpandedChange(false)
                 focusManager.clearFocus()
-            }
+            },
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
@@ -71,7 +71,7 @@ fun DropdownInputField(
                         onExpandedChange(false)
                         focusManager.clearFocus()
                     },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
             }
         }
@@ -85,7 +85,7 @@ private fun DropdownInputFieldPreview() {
         DropdownInputField(
             value = "Test",
             onValueChange = { },
-            options = listOf("Test", "Test 2", "Test 3")
+            options = listOf("Test", "Test 2", "Test 3"),
         )
     }
 }
@@ -99,7 +99,7 @@ private fun DropdownInputFieldExpandedPreview() {
             onValueChange = { },
             options = listOf("Test", "Test 2", "Test 3"),
             isExpanded = true,
-            label = "Test label"
+            label = "Test label",
         )
     }
 }

@@ -19,7 +19,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun TrapperButton(
     onClick: () -> Unit = { },
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
 ) {
     val backgroundColor =
         if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
@@ -34,13 +34,13 @@ fun TrapperButton(
             .clickable {
                 onClick()
             },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.outline_lock_24),
             contentDescription = "Trapper rule",
             tint = tintColor,
-            modifier = Modifier.size(32.dp)
+            modifier = Modifier.size(32.dp),
         )
     }
 }
@@ -58,7 +58,7 @@ private fun TrapperButtonPreview() {
 private fun TrapperButtonSelectedPreview() {
     ThemePreview {
         TrapperButton(
-            isSelected = true
+            isSelected = true,
         )
     }
 }

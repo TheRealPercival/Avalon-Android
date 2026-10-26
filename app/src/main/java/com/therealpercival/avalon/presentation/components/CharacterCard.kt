@@ -20,7 +20,7 @@ fun CharacterCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     onLongClick: (() -> Unit)? = null,
-    isFaded: Boolean = false
+    isFaded: Boolean = false,
 ) {
     AsyncImage(
         model = character.cardImage,
@@ -33,7 +33,7 @@ fun CharacterCard(
             )
             .conditional(isFaded) {
                 alpha(0.5f)
-            }
+            },
     )
 }
 
@@ -42,7 +42,7 @@ fun CharacterCard(
 private fun CharacterCardPreview() {
     ThemePreview {
         CharacterCard(
-            character = AvalonCharacter.Percival
+            character = AvalonCharacter.Percival,
         )
     }
 }

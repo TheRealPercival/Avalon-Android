@@ -21,7 +21,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun VoteResetButton(
     onClick: () -> Unit = { },
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
 ) {
     val backgroundColor =
         if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
@@ -36,13 +36,13 @@ fun VoteResetButton(
             .clickable {
                 onClick()
             },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_thumb_down_24),
             contentDescription = "Vote reset rule",
             tint = tintColor,
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
         Icon(
             painter = painterResource(id = R.drawable.baseline_refresh_24),
@@ -51,7 +51,7 @@ fun VoteResetButton(
             modifier = Modifier
                 .size(40.dp)
                 .scale(scaleX = -1f, scaleY = 1f)
-                .rotate(degrees = 270f)
+                .rotate(degrees = 270f),
         )
     }
 }
@@ -69,7 +69,7 @@ private fun VoteResetButtonPreview() {
 private fun VoteResetButtonSelectedPreview() {
     ThemePreview {
         VoteResetButton(
-            isSelected = true
+            isSelected = true,
         )
     }
 }

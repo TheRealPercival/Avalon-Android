@@ -25,11 +25,11 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun PlayerIcon(
     avatarModel: Any,
     displayName: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AsyncImage(
             model = avatarModel,
@@ -39,16 +39,16 @@ fun PlayerIcon(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .clip(CircleShape)
+                .clip(CircleShape),
         )
         Text(
             text = displayName,
             autoSize = TextAutoSize.StepBased(
                 minFontSize = 8.sp,
-                maxFontSize = 16.sp
+                maxFontSize = 16.sp,
             ),
             overflow = TextOverflow.Ellipsis,
-            maxLines = 1
+            maxLines = 1,
         )
     }
 }
@@ -60,7 +60,7 @@ private fun PlayerIconPreview() {
         PlayerIcon(
             avatarModel = R.drawable.x,
             displayName = "Drew",
-            modifier = Modifier.width(64.dp)
+            modifier = Modifier.width(64.dp),
         )
     }
 }

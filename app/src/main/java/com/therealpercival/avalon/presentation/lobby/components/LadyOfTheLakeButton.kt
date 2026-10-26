@@ -19,7 +19,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun LadyOfTheLakeButton(
     onClick: () -> Unit = { },
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
 ) {
     val backgroundColor =
         if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
@@ -34,13 +34,13 @@ fun LadyOfTheLakeButton(
             .clickable {
                 onClick()
             },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_woman_24),
             contentDescription = "Lady of the Lake rule",
             tint = tintColor,
-            modifier = Modifier.size(32.dp)
+            modifier = Modifier.size(32.dp),
         )
     }
 }
@@ -58,7 +58,7 @@ private fun LadyOfTheLakeButtonPreview() {
 private fun LadyOfTheLakeButtonSelectedPreview() {
     ThemePreview {
         LadyOfTheLakeButton(
-            isSelected = true
+            isSelected = true,
         )
     }
 }

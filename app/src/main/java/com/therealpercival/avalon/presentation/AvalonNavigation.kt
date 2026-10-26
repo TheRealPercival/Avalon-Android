@@ -54,7 +54,7 @@ fun AvalonNavigation() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .consumeWindowInsets(innerPadding)
+                .consumeWindowInsets(innerPadding),
         ) {
             composable(Screen.Setup.route) {
                 SetupScreen(
@@ -71,7 +71,7 @@ fun AvalonNavigation() {
                 JoinScreen(
                     onJoinSuccess = {
                         navController.navigate(Screen.Lobby.route)
-                    }
+                    },
                 )
             }
             composable(Screen.Stats.route) {
@@ -92,7 +92,7 @@ fun AvalonNavigation() {
                 LobbyScreen(
                     onBackClicked = {
                         navController.popBackStack()
-                    }
+                    },
                 )
             }
         }

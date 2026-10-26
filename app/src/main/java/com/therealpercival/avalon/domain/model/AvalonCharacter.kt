@@ -17,7 +17,7 @@ val allCharacters = listOf(
     AvalonCharacter.MinionOfMordred1,
     AvalonCharacter.MinionOfMordred2,
     AvalonCharacter.MinionOfMordred3,
-    AvalonCharacter.MinionOfMordred4
+    AvalonCharacter.MinionOfMordred4,
 )
 
 sealed class AvalonCharacter(
@@ -25,14 +25,14 @@ sealed class AvalonCharacter(
     val isGood: Boolean,
     val order: Int,
     val cardImage: Int,
-    val tileImage: Int
+    val tileImage: Int,
 ) {
     object Merlin : AvalonCharacter(
         name = "Merlin",
         isGood = true,
         order = 1,
         cardImage = R.drawable.merlin_placeholder,
-        tileImage = R.drawable.merlin_tile_placeholder
+        tileImage = R.drawable.merlin_tile_placeholder,
     )
 
     object Percival : AvalonCharacter(
@@ -40,7 +40,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 2,
         cardImage = R.drawable.percival_placeholder,
-        tileImage = R.drawable.percival_tile_placeholder
+        tileImage = R.drawable.percival_tile_placeholder,
     )
 
     object LoyalServantOfArthur1 : AvalonCharacter(
@@ -48,7 +48,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 3,
         cardImage = R.drawable.loyal_servant_of_arthur_1_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_1_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_1_tile_placeholder,
     )
 
     object LoyalServantOfArthur2 : AvalonCharacter(
@@ -56,7 +56,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 4,
         cardImage = R.drawable.loyal_servant_of_arthur_2_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_2_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_2_tile_placeholder,
     )
 
     object LoyalServantOfArthur3 : AvalonCharacter(
@@ -64,7 +64,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 5,
         cardImage = R.drawable.loyal_servant_of_arthur_3_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_3_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_3_tile_placeholder,
     )
 
     object LoyalServantOfArthur4 : AvalonCharacter(
@@ -72,7 +72,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 6,
         cardImage = R.drawable.loyal_servant_of_arthur_4_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_4_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_4_tile_placeholder,
     )
 
     object LoyalServantOfArthur5 : AvalonCharacter(
@@ -80,7 +80,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 7,
         cardImage = R.drawable.loyal_servant_of_arthur_5_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_5_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_5_tile_placeholder,
     )
 
     object LoyalServantOfArthur6 : AvalonCharacter(
@@ -88,7 +88,7 @@ sealed class AvalonCharacter(
         isGood = true,
         order = 8,
         cardImage = R.drawable.loyal_servant_of_arthur_6_placeholder,
-        tileImage = R.drawable.loyal_servant_of_arthur_6_tile_placeholder
+        tileImage = R.drawable.loyal_servant_of_arthur_6_tile_placeholder,
     )
 
     object Assassin : AvalonCharacter(
@@ -96,7 +96,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 9,
         cardImage = R.drawable.assassin_placeholder,
-        tileImage = R.drawable.assassin_tile_placeholder
+        tileImage = R.drawable.assassin_tile_placeholder,
     )
 
     object Morgana : AvalonCharacter(
@@ -104,7 +104,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 10,
         cardImage = R.drawable.morgana_placeholder,
-        tileImage = R.drawable.morgana_tile_placeholder
+        tileImage = R.drawable.morgana_tile_placeholder,
     )
 
     object Mordred : AvalonCharacter(
@@ -112,7 +112,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 11,
         cardImage = R.drawable.mordred_placeholder,
-        tileImage = R.drawable.mordred_tile_placeholder
+        tileImage = R.drawable.mordred_tile_placeholder,
     )
 
     object MinionOfMordred1 : AvalonCharacter(
@@ -120,7 +120,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 12,
         cardImage = R.drawable.minion_of_mordred_1_placeholder,
-        tileImage = R.drawable.minion_of_mordred_1_tile_placeholder
+        tileImage = R.drawable.minion_of_mordred_1_tile_placeholder,
     )
 
     object MinionOfMordred2 : AvalonCharacter(
@@ -128,7 +128,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 13,
         cardImage = R.drawable.minion_of_mordred_2_placeholder,
-        tileImage = R.drawable.minion_of_mordred_2_tile_placeholder
+        tileImage = R.drawable.minion_of_mordred_2_tile_placeholder,
     )
 
     object MinionOfMordred3 : AvalonCharacter(
@@ -136,7 +136,7 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 14,
         cardImage = R.drawable.minion_of_mordred_3_placeholder,
-        tileImage = R.drawable.minion_of_mordred_3_tile_placeholder
+        tileImage = R.drawable.minion_of_mordred_3_tile_placeholder,
     )
 
     object MinionOfMordred4 : AvalonCharacter(
@@ -144,6 +144,6 @@ sealed class AvalonCharacter(
         isGood = false,
         order = 15,
         cardImage = R.drawable.minion_of_mordred_4_placeholder,
-        tileImage = R.drawable.minion_of_mordred_4_tile_placeholder
+        tileImage = R.drawable.minion_of_mordred_4_tile_placeholder,
     )
 }

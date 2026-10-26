@@ -43,7 +43,7 @@ import com.therealpercival.avalon.presentation.ui.theme.LayoutPreviews
 @Composable
 fun LobbyScreen(
     viewModel: LobbyViewModel = hiltViewModel(),
-    onBackClicked: () -> Unit
+    onBackClicked: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     LobbyContent(
@@ -53,7 +53,7 @@ fun LobbyScreen(
                 is LobbyAction.BackClicked -> onBackClicked()
                 else -> viewModel.onAction(action)
             }
-        }
+        },
     )
 }
 
@@ -61,10 +61,10 @@ fun LobbyScreen(
 @Composable
 private fun LobbyContent(
     state: LobbyState,
-    onAction: (LobbyAction) -> Unit = {}
+    onAction: (LobbyAction) -> Unit = {},
 ) {
     val characterSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
+        skipPartiallyExpanded = true,
     )
     val windowSizeClass = rememberWindowSizeClass()
     val isCompactHeight = windowSizeClass.heightSizeClass == WindowHeightSizeClass.Compact
@@ -76,16 +76,16 @@ private fun LobbyContent(
                 title = { Text(text = "Lobby") },
                 navigationIcon = {
                     IconButton(
-                        onClick = { onAction(LobbyAction.BackClicked) }
+                        onClick = { onAction(LobbyAction.BackClicked) },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                            contentDescription = "Back"
+                            contentDescription = "Back",
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         val scrollState = rememberScrollState()
 
@@ -96,11 +96,11 @@ private fun LobbyContent(
                     .padding(paddingValues)
                     .verticalScroll(scrollState)
                     .padding(all = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     DropdownInputField(
                         value = state.selectedPreset,
@@ -108,26 +108,26 @@ private fun LobbyContent(
                         options = state.presetOptions,
                         label = "Preset",
                         isExpanded = state.isPresetDropdownExpanded,
-                        onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) }
+                        onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
                     )
                     RolesSection(
                         selectedCharacters = state.selectedCharacters,
                         selectedAssassin = state.selectedAssassin,
-                        onClick = { onAction(LobbyAction.RolesSectionClicked) }
+                        onClick = { onAction(LobbyAction.RolesSectionClicked) },
                     )
                     SettingsSection(
                         isTrapperEnabled = state.isTrapperEnabled,
                         isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
                         isVoteResetEnabled = state.isVoteResetEnabled,
-                        onAction = onAction
+                        onAction = onAction,
                     )
                 }
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     PlayersSection(
-                        players = state.players
+                        players = state.players,
                     )
                 }
             }
@@ -138,7 +138,7 @@ private fun LobbyContent(
                     .padding(paddingValues)
                     .verticalScroll(scrollState)
                     .padding(all = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 DropdownInputField(
                     value = state.selectedPreset,
@@ -146,25 +146,25 @@ private fun LobbyContent(
                     options = state.presetOptions,
                     label = "Preset",
                     isExpanded = state.isPresetDropdownExpanded,
-                    onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) }
+                    onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
                 )
                 RolesSection(
                     selectedCharacters = state.selectedCharacters,
                     selectedAssassin = state.selectedAssassin,
-                    onClick = { onAction(LobbyAction.RolesSectionClicked) }
+                    onClick = { onAction(LobbyAction.RolesSectionClicked) },
                 )
                 SettingsSection(
                     isTrapperEnabled = state.isTrapperEnabled,
                     isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
                     isVoteResetEnabled = state.isVoteResetEnabled,
-                    onAction = onAction
+                    onAction = onAction,
                 )
                 PlayersSection(
-                    players = state.players
+                    players = state.players,
                 )
                 Button(
                     onClick = { onAction(LobbyAction.StartClicked) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(text = "Start")
                 }
@@ -175,14 +175,14 @@ private fun LobbyContent(
     if (state.isShowingCharacterSheet) {
         ModalBottomSheet(
             onDismissRequest = { onAction(LobbyAction.CharacterSheetDismissed) },
-            sheetState = characterSheetState
+            sheetState = characterSheetState,
         ) {
             EditRolesSheetBody(
                 selectedCharacters = state.selectedCharacters,
                 selectedAssassin = state.selectedAssassin,
                 isAssassinDropdownExpanded = state.isAssassinDropdownExpanded,
                 focusedCharacter = state.focusedCharacter,
-                onAction = onAction
+                onAction = onAction,
             )
         }
     }
@@ -194,30 +194,30 @@ private fun SettingsSection(
     isLadyOfTheLakeEnabled: Boolean,
     isVoteResetEnabled: Boolean,
     onAction: (LobbyAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
             text = "Settings",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
         )
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TrapperButton(
                 onClick = { onAction(LobbyAction.TrapperClicked) },
-                isSelected = isTrapperEnabled
+                isSelected = isTrapperEnabled,
             )
             LadyOfTheLakeButton(
                 onClick = { onAction(LobbyAction.LadyOfTheLakeClicked) },
-                isSelected = isLadyOfTheLakeEnabled
+                isSelected = isLadyOfTheLakeEnabled,
             )
             VoteResetButton(
                 onClick = { onAction(LobbyAction.VoteResetClicked) },
-                isSelected = isVoteResetEnabled
+                isSelected = isVoteResetEnabled,
             )
         }
     }
@@ -239,32 +239,32 @@ private fun LobbyScreenPreview() {
                     AvalonCharacter.LoyalServantOfArthur3,
                     AvalonCharacter.Morgana,
                     AvalonCharacter.Mordred,
-                    AvalonCharacter.MinionOfMordred1
+                    AvalonCharacter.MinionOfMordred1,
                 ),
                 presetOptions = listOf("Classic"),
                 players = listOf(
                     LobbyViewModel.Player(
                         displayName = "Drew",
-                        avatarModel = R.drawable.x
+                        avatarModel = R.drawable.x,
                     ),
                     LobbyViewModel.Player(
                         displayName = "Ben",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     LobbyViewModel.Player(
                         displayName = "Izzy",
-                        avatarModel = R.drawable.izzyderose
+                        avatarModel = R.drawable.izzyderose,
                     ),
                     LobbyViewModel.Player(
                         displayName = "Thomas",
-                        avatarModel = R.drawable._shoe_
+                        avatarModel = R.drawable._shoe_,
                     ),
                     LobbyViewModel.Player(
                         displayName = "Landon",
-                        avatarModel = R.drawable.landon248
-                    )
-                )
-            )
+                        avatarModel = R.drawable.landon248,
+                    ),
+                ),
+            ),
         )
     }
 }

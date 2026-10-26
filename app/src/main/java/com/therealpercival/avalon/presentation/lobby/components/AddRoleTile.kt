@@ -19,7 +19,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun AddRoleTile(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val outlineColor = MaterialTheme.colorScheme.outline
     Box(
@@ -29,18 +29,18 @@ fun AddRoleTile(
                     color = outlineColor,
                     style = Stroke(
                         width = 2.dp.toPx(),
-                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f),
                     ),
-                    cornerRadius = CornerRadius(12.dp.toPx())
+                    cornerRadius = CornerRadius(12.dp.toPx()),
                 )
             },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.baseline_add_24),
             contentDescription = "Add role",
             modifier = Modifier.size(32.dp),
-            tint = MaterialTheme.colorScheme.outline
+            tint = MaterialTheme.colorScheme.outline,
         )
     }
 }
@@ -50,7 +50,7 @@ fun AddRoleTile(
 private fun AddRoleTilePreview() {
     ThemePreview {
         AddRoleTile(
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(64.dp),
         )
     }
 }

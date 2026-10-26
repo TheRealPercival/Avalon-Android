@@ -43,21 +43,21 @@ annotation class DayNightDevicePreviews
     group = "Layouts",
     showBackground = true,
     widthDp = 600,
-    heightDp = 960
+    heightDp = 960,
 )
 @Preview(
     name = "Tablet Landscape",
     group = "Layouts",
     showBackground = true,
     widthDp = 960,
-    heightDp = 600
+    heightDp = 600,
 )
 @Preview(
     name = "Landscape",
     group = "Layouts",
     showBackground = true,
     widthDp = 900,
-    heightDp = 400
+    heightDp = 400,
 )
 annotation class LayoutPreviews
 

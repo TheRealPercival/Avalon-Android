@@ -20,26 +20,26 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun CharacterTile(
     character: AvalonCharacter,
     modifier: Modifier = Modifier,
-    isAssassin: Boolean = false
+    isAssassin: Boolean = false,
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         AsyncImage(
             model = character.tileImage,
             contentDescription = character.name,
             modifier = Modifier
                 .fillMaxSize()
-                .clip(shape = MaterialTheme.shapes.medium)
+                .clip(shape = MaterialTheme.shapes.medium),
         )
         if (isAssassin) {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.TopStart
+                contentAlignment = Alignment.TopStart,
             ) {
                 Text(
                     text = "🗡️",
-                    modifier = Modifier.offset(x = (-6).dp, y = (-6).dp)
+                    modifier = Modifier.offset(x = (-6).dp, y = (-6).dp),
                 )
             }
         }
@@ -52,7 +52,7 @@ private fun CharacterTilePreview() {
     ThemePreview {
         CharacterTile(
             character = AvalonCharacter.Percival,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(64.dp),
         )
     }
 }
@@ -64,7 +64,7 @@ private fun CharacterTileAssassinPreview() {
         CharacterTile(
             character = AvalonCharacter.Morgana,
             isAssassin = true,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(64.dp),
         )
     }
 }

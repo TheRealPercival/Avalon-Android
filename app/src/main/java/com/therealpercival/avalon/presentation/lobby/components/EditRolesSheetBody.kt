@@ -44,18 +44,18 @@ fun EditRolesSheetBody(
     selectedAssassin: AvalonCharacter? = null,
     isAssassinDropdownExpanded: Boolean = false,
     focusedCharacter: AvalonCharacter? = null,
-    onAction: (LobbyAction) -> Unit = { }
+    onAction: (LobbyAction) -> Unit = { },
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Text(
             text = "Edit Roles",
             modifier = Modifier.padding(horizontal = 16.dp),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
         )
 
         TeamSection(
@@ -63,7 +63,7 @@ fun EditRolesSheetBody(
             selectedCharacters = selectedCharacters,
             selectedAssassin = selectedAssassin,
             onCharacterCardLongClicked = { onAction(LobbyAction.CharacterCardLongClicked(it)) },
-            onCharacterCardClicked = { onAction(LobbyAction.CharacterCardClicked(it)) }
+            onCharacterCardClicked = { onAction(LobbyAction.CharacterCardClicked(it)) },
         )
 
         TeamSection(
@@ -71,7 +71,7 @@ fun EditRolesSheetBody(
             selectedCharacters = selectedCharacters,
             selectedAssassin = selectedAssassin,
             onCharacterCardClicked = { onAction(LobbyAction.CharacterCardClicked(it)) },
-            onCharacterCardLongClicked = { onAction(LobbyAction.CharacterCardLongClicked(it)) }
+            onCharacterCardLongClicked = { onAction(LobbyAction.CharacterCardLongClicked(it)) },
         )
 
         if (!selectedCharacters.contains(AvalonCharacter.Assassin)) {
@@ -87,7 +87,7 @@ fun EditRolesSheetBody(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 label = "Assassin",
                 isExpanded = isAssassinDropdownExpanded,
-                onExpandedChange = { onAction(LobbyAction.AssassinDropdownExpandedChange(it)) }
+                onExpandedChange = { onAction(LobbyAction.AssassinDropdownExpandedChange(it)) },
             )
         }
 
@@ -105,7 +105,7 @@ fun EditRolesSheetBody(
                     .background(Color.Black.copy(alpha = 0.7f))
                     .clickable(
                         interactionSource = null,
-                        indication = null
+                        indication = null,
                     ) {
                         onAction(LobbyAction.FocusedCharacterDismissed)
                     },
@@ -117,7 +117,7 @@ fun EditRolesSheetBody(
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .shadow(elevation = 16.dp, shape = MaterialTheme.shapes.large)
-                        .clip(shape = MaterialTheme.shapes.large)
+                        .clip(shape = MaterialTheme.shapes.large),
                 )
             }
         }
@@ -130,7 +130,7 @@ private fun TeamSection(
     selectedCharacters: List<AvalonCharacter>,
     selectedAssassin: AvalonCharacter? = null,
     onCharacterCardClicked: (AvalonCharacter) -> Unit = { },
-    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { }
+    onCharacterCardLongClicked: (AvalonCharacter) -> Unit = { },
 ) {
     val sectionAvailableCharacters = allCharacters.filter { it.isGood == isGood }
     val sectionSelectedCharacters = selectedCharacters.filter { it.isGood == isGood }
@@ -138,21 +138,21 @@ private fun TeamSection(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = if (isGood) "Good Team" else "Evil Team",
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 repeat(6) { index ->
                     val tileModifier = Modifier
@@ -170,11 +170,11 @@ private fun TeamSection(
                             CharacterTile(
                                 character = character,
                                 modifier = tileModifier,
-                                isAssassin = isAssassin
+                                isAssassin = isAssassin,
                             )
                         } else {
                             AddRoleTile(
-                                modifier = tileModifier
+                                modifier = tileModifier,
                             )
                         }
                     } else {
@@ -186,7 +186,7 @@ private fun TeamSection(
 
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(count = 1) {
                 Spacer(modifier = Modifier.width(8.dp))
@@ -197,8 +197,8 @@ private fun TeamSection(
                     modifier = Modifier.width(128.dp),
                     onClick = {
                         if (
-                            (sectionSelectedCharacters.size < maxCharacters && character !in sectionSelectedCharacters)
-                            || character in sectionSelectedCharacters
+                            (sectionSelectedCharacters.size < maxCharacters && character !in sectionSelectedCharacters) ||
+                            character in sectionSelectedCharacters
                         ) {
                             onCharacterCardClicked(character)
                         }
@@ -206,7 +206,7 @@ private fun TeamSection(
                     onLongClick = {
                         onCharacterCardLongClicked(character)
                     },
-                    isFaded = character in sectionSelectedCharacters
+                    isFaded = character in sectionSelectedCharacters,
                 )
             }
             items(count = 1) {
@@ -227,8 +227,8 @@ private fun EditRolesSheetBodyPreview1() {
                     AvalonCharacter.Percival,
                     AvalonCharacter.LoyalServantOfArthur1,
                     AvalonCharacter.Morgana,
-                    AvalonCharacter.Mordred
-                )
+                    AvalonCharacter.Mordred,
+                ),
             )
         }
     }
@@ -249,8 +249,8 @@ private fun EditRolesSheetBodyPreview2() {
                 AvalonCharacter.Morgana,
                 AvalonCharacter.Mordred,
                 AvalonCharacter.MinionOfMordred1,
-                AvalonCharacter.MinionOfMordred2
-            )
+                AvalonCharacter.MinionOfMordred2,
+            ),
         )
     }
 }
@@ -272,7 +272,7 @@ private fun EditRolesSheetBodyPreview3() {
                 AvalonCharacter.MinionOfMordred1,
                 AvalonCharacter.MinionOfMordred2,
             ),
-            focusedCharacter = AvalonCharacter.Merlin
+            focusedCharacter = AvalonCharacter.Merlin,
         )
     }
 }

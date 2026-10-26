@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import org.junit.Assert.*
+import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,7 +22,7 @@ class DropdownInputFieldTest {
             DropdownInputField(
                 value = "Test",
                 onValueChange = { },
-                options = listOf("Test", "Test 2", "Test 3")
+                options = listOf("Test", "Test 2", "Test 3"),
             )
         }
 
@@ -37,7 +37,7 @@ class DropdownInputFieldTest {
                 value = "Test",
                 onValueChange = { },
                 options = listOf("Test", "Test 2", "Test 3"),
-                label = "Test label"
+                label = "Test label",
             )
         }
 
@@ -51,7 +51,7 @@ class DropdownInputFieldTest {
                 value = "Test",
                 onValueChange = { },
                 options = listOf("Test", "Test 2", "Test 3"),
-                isExpanded = true
+                isExpanded = true,
             )
         }
 
@@ -70,7 +70,7 @@ class DropdownInputFieldTest {
                 onValueChange = { },
                 options = listOf("Test", "Test 2", "Test 3"),
                 isExpanded = isExpanded.value,
-                onExpandedChange = { isExpanded.value = it }
+                onExpandedChange = { isExpanded.value = it },
             )
         }
 
@@ -87,7 +87,7 @@ class DropdownInputFieldTest {
                 value = "Test",
                 onValueChange = { capturedValue = it },
                 options = listOf("Test", "Test 2", "Test 3"),
-                isExpanded = true
+                isExpanded = true,
             )
         }
 

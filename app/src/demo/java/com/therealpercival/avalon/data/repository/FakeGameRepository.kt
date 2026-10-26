@@ -20,49 +20,49 @@ class FakeGameRepository @Inject constructor() : GameRepository {
                 playerAvatars = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
             ),
         )
-    )
 
-    override fun getLobbyData(): Flow<LobbyData> = flowOf(
-        LobbyData(
-            selectedPreset = "Classic",
-            selectedCharacters = listOf(
-                AvalonCharacter.Merlin,
-                AvalonCharacter.Percival,
-                AvalonCharacter.LoyalServantOfArthur1,
-                AvalonCharacter.LoyalServantOfArthur2,
-                AvalonCharacter.LoyalServantOfArthur3,
-                AvalonCharacter.Morgana,
-                AvalonCharacter.Mordred,
-                AvalonCharacter.MinionOfMordred1
+    override fun getLobbyData(): Flow<LobbyData> =
+        flowOf(
+            LobbyData(
+                selectedPreset = "Classic",
+                selectedCharacters = listOf(
+                    AvalonCharacter.Merlin,
+                    AvalonCharacter.Percival,
+                    AvalonCharacter.LoyalServantOfArthur1,
+                    AvalonCharacter.LoyalServantOfArthur2,
+                    AvalonCharacter.LoyalServantOfArthur3,
+                    AvalonCharacter.Morgana,
+                    AvalonCharacter.Mordred,
+                    AvalonCharacter.MinionOfMordred1,
+                ),
+                presetOptions = listOf("Classic"),
+                players = listOf(
+                    AllowedProfile(
+                        displayName = "Drew",
+                        accountName = "drew654",
+                        avatarModel = R.drawable.x,
+                    ),
+                    AllowedProfile(
+                        displayName = "Ben",
+                        accountName = "ben.json",
+                        avatarModel = R.drawable.benjson,
+                    ),
+                    AllowedProfile(
+                        displayName = "Izzy",
+                        accountName = "izzyderose",
+                        avatarModel = R.drawable.izzyderose,
+                    ),
+                    AllowedProfile(
+                        displayName = "Thomas",
+                        accountName = "_shoe_",
+                        avatarModel = R.drawable._shoe_,
+                    ),
+                    AllowedProfile(
+                        displayName = "Landon",
+                        accountName = "landon248",
+                        avatarModel = R.drawable.landon248,
+                    ),
+                ),
             ),
-            presetOptions = listOf("Classic"),
-            players = listOf(
-                AllowedProfile(
-                    displayName = "Drew",
-                    accountName = "drew654",
-                    avatarModel = R.drawable.x
-                ),
-                AllowedProfile(
-                    displayName = "Ben",
-                    accountName = "ben.json",
-                    avatarModel = R.drawable.benjson
-                ),
-                AllowedProfile(
-                    displayName = "Izzy",
-                    accountName = "izzyderose",
-                    avatarModel = R.drawable.izzyderose
-                ),
-                AllowedProfile(
-                    displayName = "Thomas",
-                    accountName = "_shoe_",
-                    avatarModel = R.drawable._shoe_
-                ),
-                AllowedProfile(
-                    displayName = "Landon",
-                    accountName = "landon248",
-                    avatarModel = R.drawable.landon248
-                )
-            )
         )
-    )
 }

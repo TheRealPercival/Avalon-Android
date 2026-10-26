@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
     fun getGameSummary(): Flow<GameSummary>
+
     fun getLobbyData(): Flow<LobbyData>
 }

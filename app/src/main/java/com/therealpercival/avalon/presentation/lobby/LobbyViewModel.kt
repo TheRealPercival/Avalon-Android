@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
-    private val gameRepository: GameRepository
+    private val gameRepository: GameRepository,
 ) : ViewModel() {
     data class Player(
         val displayName: String,
-        val avatarModel: Any
+        val avatarModel: Any,
     )
 
     private val _state = MutableStateFlow(LobbyState())
@@ -34,9 +34,9 @@ class LobbyViewModel @Inject constructor(
                         players = lobbyData.players.map { player ->
                             Player(
                                 displayName = player.displayName,
-                                avatarModel = player.avatarModel
+                                avatarModel = player.avatarModel,
                             )
-                        }
+                        },
                     )
                 }
             }
@@ -46,12 +46,14 @@ class LobbyViewModel @Inject constructor(
     fun onAction(action: LobbyAction) {
         when (action) {
             is LobbyAction.BackClicked -> {}
+
             is LobbyAction.StartClicked -> {}
+
             is LobbyAction.PresetSelected -> {
                 _state.update {
                     it.copy(
                         selectedPreset = action.preset,
-                        isPresetDropdownExpanded = false
+                        isPresetDropdownExpanded = false,
                     )
                 }
             }
@@ -70,7 +72,7 @@ class LobbyViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isShowingCharacterSheet = false,
-                        focusedCharacter = null
+                        focusedCharacter = null,
                     )
                 }
             }
@@ -94,7 +96,7 @@ class LobbyViewModel @Inject constructor(
                     }
                     state.copy(
                         selectedCharacters = sortedCharacters,
-                        selectedAssassin = newSelectedAssassin
+                        selectedAssassin = newSelectedAssassin,
                     )
                 }
             }
@@ -111,7 +113,7 @@ class LobbyViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         selectedAssassin = action.character,
-                        isAssassinDropdownExpanded = false
+                        isAssassinDropdownExpanded = false,
                     )
                 }
             }
