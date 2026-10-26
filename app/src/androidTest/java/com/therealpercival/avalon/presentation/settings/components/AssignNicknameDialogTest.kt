@@ -9,7 +9,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import org.junit.Assert.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -54,7 +55,7 @@ class AssignNicknameDialogTest {
         composeTestRule.setContent {
             AssignNicknameDialog(
                 accountName = accountName,
-                onNicknameChange = { text = it }
+                onNicknameChange = { text = it },
             )
         }
 
@@ -72,7 +73,7 @@ class AssignNicknameDialogTest {
             AssignNicknameDialog(
                 accountName = accountName,
                 onConfirm = { clicked = true },
-                nickname = "Drew"
+                nickname = "Drew",
             )
         }
 
@@ -86,7 +87,7 @@ class AssignNicknameDialogTest {
         val accountName = "@drew654"
         composeTestRule.setContent {
             AssignNicknameDialog(
-                accountName = accountName
+                accountName = accountName,
             )
         }
 
@@ -101,7 +102,7 @@ class AssignNicknameDialogTest {
         composeTestRule.setContent {
             AssignNicknameDialog(
                 accountName = accountName,
-                onDismiss = { clicked = true }
+                onDismiss = { clicked = true },
             )
         }
 

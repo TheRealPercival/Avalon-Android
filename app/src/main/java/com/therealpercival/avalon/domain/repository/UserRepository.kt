@@ -10,6 +10,7 @@ interface UserRepository {
     fun isAuthenticating(): Flow<Boolean>
     fun getSessionTokens(): AuthSession?
     suspend fun signIn()
+
     suspend fun signOut()
     fun handleDeepLink(intent: Intent)
 }

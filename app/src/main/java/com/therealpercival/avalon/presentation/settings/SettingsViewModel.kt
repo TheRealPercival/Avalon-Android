@@ -19,24 +19,28 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val serverRepository: ServerRepository,
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) : ViewModel() {
     data class RequestingProfile(
         val accountName: String,
-        val avatarModel: Any
+        val avatarModel: Any,
     )
 
     data class AllowedProfile(
         val displayName: String,
         val accountName: String,
-        val avatarModel: Any
+        val avatarModel: Any,
     )
 
     sealed class DialogType {
         object Server : DialogType()
+
         object SignOut : DialogType()
+
         object AssignNickname : DialogType()
+
         object DenyProfile : DialogType()
+
         object RemoveProfile : DialogType()
     }
 
@@ -51,7 +55,7 @@ class SettingsViewModel @Inject constructor(
         val selectedAllowedProfile: AllowedProfile? = null,
         val selectedRequestingProfile: RequestingProfile? = null,
         val nickname: String = "",
-        val connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED
+        val connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED,
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -63,7 +67,7 @@ class SettingsViewModel @Inject constructor(
             serverRepository.getServerUrl(),
             serverRepository.getConnectionStatus(),
             adminRepository.getRequestingProfiles(),
-            adminRepository.getAllowedProfiles()
+            adminRepository.getAllowedProfiles(),
         ) { user, serverUrl, status, requesting, allowed ->
             _uiState.update { state ->
                 state.copy(
@@ -72,12 +76,12 @@ class SettingsViewModel @Inject constructor(
                     isAdmin = user?.isAdmin ?: false,
                     serverUrl = serverUrl,
                     connectionStatus = status,
-                    requestingProfiles = requesting.map { 
+                    requestingProfiles = requesting.map {
                         RequestingProfile(it.accountName, it.avatarModel) 
                     },
-                    allowedProfiles = allowed.map { 
-                        AllowedProfile(it.displayName, it.accountName, it.avatarModel) 
-                    }
+                    allowedProfiles = allowed.map {
+                        AllowedProfile(it.displayName, it.accountName, it.avatarModel)
+                    },
                 )
             }
         }.launchIn(viewModelScope)
@@ -89,7 +93,7 @@ class SettingsViewModel @Inject constructor(
                 dialogType = null,
                 selectedAllowedProfile = null,
                 selectedRequestingProfile = null,
-                nickname = ""
+                nickname = "",
             )
         }
     }
@@ -126,7 +130,7 @@ class SettingsViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 dialogType = DialogType.AssignNickname,
-                selectedRequestingProfile = profile
+                selectedRequestingProfile = profile,
             )
         }
     }
@@ -148,7 +152,7 @@ class SettingsViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 dialogType = DialogType.DenyProfile,
-                selectedRequestingProfile = profile
+                selectedRequestingProfile = profile,
             )
         }
     }
@@ -165,7 +169,7 @@ class SettingsViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 dialogType = DialogType.RemoveProfile,
-                selectedAllowedProfile = profile
+                selectedAllowedProfile = profile,
             )
         }
     }

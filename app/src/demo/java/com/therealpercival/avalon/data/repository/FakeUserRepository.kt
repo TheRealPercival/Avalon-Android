@@ -24,7 +24,7 @@ class FakeUserRepository @Inject constructor() : UserRepository {
         currentUser.value = User(
             displayName = "Drew",
             accountName = "@drew654",
-            isAdmin = true
+            isAdmin = true,
         )
     }
 

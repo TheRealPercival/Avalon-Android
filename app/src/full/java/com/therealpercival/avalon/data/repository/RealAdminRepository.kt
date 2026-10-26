@@ -9,8 +9,15 @@ import javax.inject.Inject
 
 class RealAdminRepository @Inject constructor() : AdminRepository {
     override fun getRequestingProfiles(): Flow<List<RequestingProfile>> = flowOf(emptyList())
+
     override fun getAllowedProfiles(): Flow<List<AllowedProfile>> = flowOf(emptyList())
-    override suspend fun allowProfile(accountName: String, nickname: String) {}
+
+    override suspend fun allowProfile(
+        accountName: String,
+        nickname: String,
+    ) {}
+
     override suspend fun denyProfile(accountName: String) {}
+
     override suspend fun removeProfile(accountName: String) {}
 }

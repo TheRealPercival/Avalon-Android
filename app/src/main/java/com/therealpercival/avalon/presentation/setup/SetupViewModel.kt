@@ -23,20 +23,24 @@ import javax.inject.Inject
 @HiltViewModel
 class SetupViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
     sealed class ServerUrlState {
         object Unvalidated : ServerUrlState()
+
         object Fetching : ServerUrlState()
+
         object Valid : ServerUrlState()
+
         object Error : ServerUrlState()
     }
+
     data class UiState(
         val serverUrl: String = "",
         val serverUrlState: ServerUrlState = ServerUrlState.Unvalidated,
         val connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED,
         val isServerInfoLoaded: Boolean = false,
-        val isAuthenticating: Boolean = false
+        val isAuthenticating: Boolean = false,
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -49,7 +53,7 @@ class SetupViewModel @Inject constructor(
         serverRepository.getServerUrl()
             .onEach { url -> _uiState.update { it.copy(serverUrl = url) } }
             .launchIn(viewModelScope)
-        
+
         combine(
             serverRepository.getConnectionStatus(),
             serverRepository.getServerInfo()
@@ -74,17 +78,17 @@ class SetupViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-    
+
     companion object {
         const val TAG = "SetupViewModel"
     }
 
     fun setServerUrl(url: String) {
-        _uiState.update { 
+        _uiState.update {
             it.copy(
                 serverUrl = url,
-                serverUrlState = ServerUrlState.Unvalidated
-            ) 
+                serverUrlState = ServerUrlState.Unvalidated,
+            )
         }
     }
 

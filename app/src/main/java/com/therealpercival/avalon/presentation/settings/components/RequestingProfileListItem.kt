@@ -28,13 +28,13 @@ fun RequestingProfileListItem(
     profile: SettingsViewModel.RequestingProfile,
     modifier: Modifier = Modifier,
     onAllowClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
-    onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { }
+    onDenyClicked: (SettingsViewModel.RequestingProfile) -> Unit = { },
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
             model = profile.avatarModel,
@@ -42,31 +42,31 @@ fun RequestingProfileListItem(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
                 .size(32.dp)
-                .clip(CircleShape)
+                .clip(CircleShape),
         )
         Text(
             text = profile.accountName,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp),
         )
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
             onClick = {
                 onAllowClicked(profile)
-            }
+            },
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.outline_check_circle_24),
-                contentDescription = "Allow"
+                contentDescription = "Allow",
             )
         }
         IconButton(
             onClick = {
                 onDenyClicked(profile)
-            }
+            },
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.outline_cancel_24),
-                contentDescription = "Deny"
+                contentDescription = "Deny",
             )
         }
     }
@@ -79,8 +79,8 @@ private fun RequestingProfileListItemPreview() {
         RequestingProfileListItem(
             profile = SettingsViewModel.RequestingProfile(
                 accountName = "@drew654",
-                avatarModel = R.drawable.x
-            )
+                avatarModel = R.drawable.x,
+            ),
         )
     }
 }

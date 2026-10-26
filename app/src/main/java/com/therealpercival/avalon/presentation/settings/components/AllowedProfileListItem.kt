@@ -27,13 +27,13 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun AllowedProfileListItem(
     profile: SettingsViewModel.AllowedProfile,
     modifier: Modifier = Modifier,
-    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { }
+    onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { },
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.extraSmall),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
             model = profile.avatarModel,
@@ -41,26 +41,26 @@ fun AllowedProfileListItem(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
                 .size(32.dp)
-                .clip(CircleShape)
+                .clip(CircleShape),
         )
         Text(
             text = profile.displayName,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp),
         )
         Text(
             text = profile.accountName,
             modifier = Modifier.padding(end = 4.dp, top = 16.dp, bottom = 16.dp),
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
             onClick = {
                 onRemoveClicked(profile)
-            }
+            },
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.outline_cancel_24),
-                contentDescription = "Remove"
+                contentDescription = "Remove",
             )
         }
     }
@@ -74,8 +74,8 @@ private fun AllowedProfileListItemPreview() {
             profile = SettingsViewModel.AllowedProfile(
                 displayName = "Drew",
                 accountName = "@drew654",
-                avatarModel = R.drawable.x
-            )
+                avatarModel = R.drawable.x,
+            ),
         )
     }
 }

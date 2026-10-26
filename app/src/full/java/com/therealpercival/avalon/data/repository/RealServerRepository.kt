@@ -33,7 +33,7 @@ import kotlin.time.Duration.Companion.seconds
 class RealServerRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>,
     private val json: Json,
-    private val userRepositoryProvider: Provider<UserRepository>
+    private val userRepositoryProvider: Provider<UserRepository>,
 ) : ServerRepository {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var socket: Socket? = null
@@ -61,11 +61,10 @@ class RealServerRepository @Inject constructor(
         val SERVER_INFO = stringPreferencesKey("server_info")
     }
 
-    override fun getServerUrl(): Flow<String> {
-        return dataStore.data.map { preferences ->
+    override fun getServerUrl(): Flow<String> =
+        dataStore.data.map { preferences ->
             preferences[PreferencesKeys.SERVER_URL] ?: ""
         }
-    }
 
     override suspend fun saveServerUrl(url: String) {
         dataStore.edit { preferences ->
@@ -91,14 +90,14 @@ class RealServerRepository @Inject constructor(
         return withTimeoutOrNull(5.seconds) {
             val opts = IO.Options.builder()
                 .build()
-            
+
             val tempSocket = IO.socket(formattedUrl, opts)
             var isValid = false
-            
+
             tempSocket.on(Socket.EVENT_CONNECT) {
                 Log.d(TAG, "Temp socket connected to $formattedUrl")
             }
-            
+
             tempSocket.on(Socket.EVENT_CONNECT_ERROR) { args ->
                 Log.e(TAG, "Temp socket connect error: ${args.firstOrNull()}")
             }
@@ -108,13 +107,13 @@ class RealServerRepository @Inject constructor(
                 isValid = true
                 tempSocket.disconnect()
             }
-            
+
             tempSocket.connect()
-            
+
             while (!isValid && (tempSocket.connected() || tempSocket.id() == null)) {
                 delay(100.milliseconds)
             }
-            
+
             Log.d(TAG, "Validation result for $formattedUrl: $isValid")
             isValid
         } ?: run {

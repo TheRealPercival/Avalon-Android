@@ -27,24 +27,24 @@ fun ServerUrlSection(
     isInputEnabled: Boolean = true,
     isError: Boolean = false,
     onServerUrlChange: (String) -> Unit = { },
-    onDone: () -> Unit = { }
+    onDone: () -> Unit = { },
 ) {
     Column(
         modifier = Modifier.padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "You've arrived in Avalon!",
             modifier = Modifier.fillMaxWidth(),
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = "Welcome to an online adaptation of Don Eskridge's Avalon: Big Box Edition. Please enter your group's server URL below to begin.",
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(48.dp))
         OutlinedTextField(
@@ -62,14 +62,14 @@ fun ServerUrlSection(
             maxLines = 1,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Uri,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Done,
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
                     onDone()
-                }
+                },
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -79,7 +79,7 @@ fun ServerUrlSection(
 private fun ServerUrlSectionPreview() {
     ThemePreview {
         ServerUrlSection(
-            serverUrl = "server.therealpercival.com"
+            serverUrl = "server.therealpercival.com",
         )
     }
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.settings.SettingsViewModel
-import org.junit.Assert.*
+import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -18,7 +18,7 @@ class AllowedProfileListItemTest {
     private val profile = SettingsViewModel.AllowedProfile(
         displayName = "Drew",
         accountName = "@drew654",
-        avatarModel = R.drawable.x
+        avatarModel = R.drawable.x,
     )
 
     @Test
@@ -54,7 +54,7 @@ class AllowedProfileListItemTest {
         composeTestRule.setContent {
             AllowedProfileListItem(
                 profile = profile,
-                onRemoveClicked = { clicked = true }
+                onRemoveClicked = { clicked = true },
             )
         }
 

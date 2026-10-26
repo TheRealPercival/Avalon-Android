@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import org.junit.Assert.*
+import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -16,7 +16,7 @@ class DiscordSignInSectionTest {
     fun discordSignInSection_displaysCorrectText() {
         composeTestRule.setContent {
             DiscordSignInSection(
-                serverUrl = "server.therealpercival.com"
+                serverUrl = "server.therealpercival.com",
             )
         }
 
@@ -31,7 +31,7 @@ class DiscordSignInSectionTest {
         composeTestRule.setContent {
             DiscordSignInSection(
                 serverUrl = "server.therealpercival.com",
-                onSignInClicked = { clicked = true }
+                onSignInClicked = { clicked = true },
             )
         }
 

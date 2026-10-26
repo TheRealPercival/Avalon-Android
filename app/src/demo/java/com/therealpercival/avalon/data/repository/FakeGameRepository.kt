@@ -10,10 +10,11 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeGameRepository @Inject constructor() : GameRepository {
-    override fun getGameSummary(): Flow<GameSummary> = flowOf(
-        GameSummary(
-            joinText = "Join game (5 in lobby)",
-            playerAvatars = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_)
+    override fun getGameSummary(): Flow<GameSummary> =
+        flowOf(
+            GameSummary(
+                joinText = "Join game (5 in lobby)",
+                playerAvatars = listOf(R.drawable.x, R.drawable.benjson, R.drawable._shoe_),
+            ),
         )
-    )
 }

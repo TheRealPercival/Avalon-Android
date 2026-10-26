@@ -1,9 +1,13 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 base {
@@ -51,6 +55,27 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+ktlint {
+    android = true
+    version = "1.8.0"
+    verbose = true
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
+        filter {
+            include("src/main/**/*.kt")
+            exclude("**/build.gradle.kts")
+        }
+        ignoreFailures = false
+    }
+}
+
+tasks.withType<GenerateReportsTask>().configureEach {
+    reportsOutputDirectory.set(
+        project.layout.buildDirectory.dir("reports/ktlint/")
+    )
 }
 
 dependencies {

@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class FakeServerRepository @Inject constructor() : ServerRepository {
     private val _serverUrl = MutableStateFlow("")
     private val _serverInfo = MutableStateFlow<ServerInfo?>(null)
-    
+
     override fun getServerUrl(): Flow<String> = _serverUrl.asStateFlow()
 
     override suspend fun saveServerUrl(url: String) {

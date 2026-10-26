@@ -36,20 +36,20 @@ fun DiscordSignInSection(
 ) {
     Column(
         modifier = Modifier.padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "Identify yourself!",
             modifier = Modifier.fillMaxWidth(),
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = "Sign in to your Discord account below so your game history can be saved.",
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(48.dp))
         Button(
@@ -60,23 +60,23 @@ fun DiscordSignInSection(
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Blurple,
-                contentColor = Color.White
-            )
+                contentColor = Color.White,
+            ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.discord_symbol_white),
                     contentDescription = "Discord Logo",
                     modifier = Modifier.size(24.dp),
-                    tint = Color.White
+                    tint = Color.White,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Sign in with Discord",
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
             }
         }
@@ -86,7 +86,7 @@ fun DiscordSignInSection(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
         )
     }
 }
@@ -96,7 +96,7 @@ fun DiscordSignInSection(
 private fun DiscordSignInSectionPreview() {
     ThemePreview {
         DiscordSignInSection(
-            serverUrl = "server.therealpercival.com"
+            serverUrl = "server.therealpercival.com",
         )
     }
 }
