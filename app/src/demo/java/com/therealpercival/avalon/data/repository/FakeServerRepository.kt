@@ -10,14 +10,12 @@ import javax.inject.Singleton
 @Singleton
 class FakeServerRepository @Inject constructor() : ServerRepository {
     private val _serverUrl = MutableStateFlow("")
-    
+
     override fun getServerUrl(): Flow<String> = _serverUrl.asStateFlow()
 
     override suspend fun saveServerUrl(url: String) {
         _serverUrl.value = url
     }
 
-    override suspend fun validateServerUrl(url: String): Boolean {
-        return true
-    }
+    override suspend fun validateServerUrl(url: String): Boolean = true
 }

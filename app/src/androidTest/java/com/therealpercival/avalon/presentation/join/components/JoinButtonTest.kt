@@ -21,8 +21,8 @@ class JoinButtonTest {
                 imageModels = listOf(
                     R.drawable.x,
                     R.drawable.benjson,
-                    R.drawable._shoe_
-                )
+                    R.drawable._shoe_,
+                ),
             )
         }
 
@@ -38,12 +38,11 @@ class JoinButtonTest {
                 imageModels = listOf(
                     R.drawable.x,
                     R.drawable.benjson,
-                    R.drawable._shoe_
+                    R.drawable._shoe_,
                 ),
-                onClick = { clicked = true }
+                onClick = { clicked = true },
             )
         }
-
 
         composeTestRule.onNodeWithText("Join game (5 in lobby)").performClick()
 

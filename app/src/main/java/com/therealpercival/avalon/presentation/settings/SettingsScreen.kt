@@ -30,7 +30,7 @@ import com.therealpercival.avalon.presentation.ui.theme.DayNightDevicePreviews
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
-    onSignOutSuccess: () -> Unit
+    onSignOutSuccess: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     SettingsContent(
@@ -72,7 +72,7 @@ fun SettingsScreen(
         },
         onDismissDialog = {
             viewModel.dismissDialog()
-        }
+        },
     )
 }
 
@@ -90,21 +90,21 @@ internal fun SettingsContent(
     onConfirmDenyProfileClicked: () -> Unit = { },
     onRemoveClicked: (SettingsViewModel.AllowedProfile) -> Unit = { },
     onConfirmRemoveProfileClicked: () -> Unit = { },
-    onDismissDialog: () -> Unit = { }
+    onDismissDialog: () -> Unit = { },
 ) {
     val disabledColors = OutlinedTextFieldDefaults.colors(
         disabledTextColor = MaterialTheme.colorScheme.onSurface,
         disabledBorderColor = MaterialTheme.colorScheme.outline,
         disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
         disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        disabledSuffixColor = MaterialTheme.colorScheme.onSurfaceVariant
+        disabledSuffixColor = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        verticalArrangement = spacedBy(16.dp)
+        verticalArrangement = spacedBy(16.dp),
     ) {
         if (state.isAdmin) {
             AdminSection(
@@ -112,12 +112,12 @@ internal fun SettingsContent(
                 allowedProfiles = state.allowedProfiles,
                 onAllowClicked = onAllowClicked,
                 onDenyClicked = onDenyClicked,
-                onRemoveClicked = onRemoveClicked
+                onRemoveClicked = onRemoveClicked,
             )
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 16.dp),
             )
         }
 
@@ -129,13 +129,13 @@ internal fun SettingsContent(
             trailingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_24),
-                    contentDescription = "Server URL is valid"
+                    contentDescription = "Server URL is valid",
                 )
             },
             singleLine = true,
             maxLines = 1,
             colors = disabledColors,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Button(
             onClick = {
@@ -144,8 +144,8 @@ internal fun SettingsContent(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
-                contentColor = MaterialTheme.colorScheme.onError
-            )
+                contentColor = MaterialTheme.colorScheme.onError,
+            ),
         ) {
             Text(text = "Change Server")
         }
@@ -158,7 +158,7 @@ internal fun SettingsContent(
             singleLine = true,
             maxLines = 1,
             colors = disabledColors,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Button(
             onClick = {
@@ -167,8 +167,8 @@ internal fun SettingsContent(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
-                contentColor = MaterialTheme.colorScheme.onError
-            )
+                contentColor = MaterialTheme.colorScheme.onError,
+            ),
         ) {
             Text(text = "Sign Out")
         }
@@ -186,9 +186,10 @@ internal fun SettingsContent(
                 },
                 onDismiss = {
                     onDismissDialog()
-                }
+                },
             )
         }
+
         is SettingsViewModel.DialogType.SignOut -> {
             BasicDialog(
                 title = "Are you sure?",
@@ -200,9 +201,10 @@ internal fun SettingsContent(
                 },
                 onDismiss = {
                     onDismissDialog()
-                }
+                },
             )
         }
+
         is SettingsViewModel.DialogType.AssignNickname -> {
             AssignNicknameDialog(
                 accountName = state.selectedRequestingProfile!!.accountName,
@@ -215,9 +217,10 @@ internal fun SettingsContent(
                 },
                 onDismiss = {
                     onDismissDialog()
-                }
+                },
             )
         }
+
         is SettingsViewModel.DialogType.DenyProfile -> {
             BasicDialog(
                 title = "Are you sure?",
@@ -229,9 +232,10 @@ internal fun SettingsContent(
                 },
                 onDismiss = {
                     onDismissDialog()
-                }
+                },
             )
         }
+
         is SettingsViewModel.DialogType.RemoveProfile -> {
             BasicDialog(
                 title = "Are you sure?",
@@ -243,9 +247,10 @@ internal fun SettingsContent(
                 },
                 onDismiss = {
                     onDismissDialog()
-                }
+                },
             )
         }
+
         null -> { }
     }
 }
@@ -258,8 +263,8 @@ private fun SettingsScreenPreview() {
             state = SettingsViewModel.UiState(
                 serverUrl = "server.therealpercival.com",
                 displayName = "Drew",
-                accountName = "@drew654"
-            )
+                accountName = "@drew654",
+            ),
         )
     }
 }
@@ -277,26 +282,26 @@ private fun SettingsScreenAdminPreview() {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
                 allowedProfiles = listOf(
                     SettingsViewModel.AllowedProfile(
                         displayName = "Landon",
                         accountName = "@landon248",
-                        avatarModel = R.drawable.landon248
+                        avatarModel = R.drawable.landon248,
                     ),
                     SettingsViewModel.AllowedProfile(
                         displayName = "Izzy",
                         accountName = "@izzyderose",
-                        avatarModel = R.drawable.izzyderose
-                    )
-                )
-            )
+                        avatarModel = R.drawable.izzyderose,
+                    ),
+                ),
+            ),
         )
     }
 }
@@ -310,8 +315,8 @@ private fun SettingsScreenServerDialogPreview() {
                 serverUrl = "server.therealpercival.com",
                 displayName = "Drew",
                 accountName = "@drew654",
-                dialogType = SettingsViewModel.DialogType.Server
-            )
+                dialogType = SettingsViewModel.DialogType.Server,
+            ),
         )
     }
 }
@@ -325,8 +330,8 @@ private fun SettingsScreenSignOutDialogPreview() {
                 serverUrl = "server.therealpercival.com",
                 displayName = "Drew",
                 accountName = "@drew654",
-                dialogType = SettingsViewModel.DialogType.SignOut
-            )
+                dialogType = SettingsViewModel.DialogType.SignOut,
+            ),
         )
     }
 }
@@ -344,15 +349,15 @@ private fun SettingsScreenAssignNicknameDialogPreview() {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
-                    )
+                        avatarModel = R.drawable.benjson,
+                    ),
                 ),
                 dialogType = SettingsViewModel.DialogType.AssignNickname,
                 selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                     accountName = "@ben.json",
-                    avatarModel = R.drawable.benjson
-                )
-            )
+                    avatarModel = R.drawable.benjson,
+                ),
+            ),
         )
     }
 }
@@ -370,19 +375,19 @@ private fun SettingsScreenRejectProfileDialogPreview() {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
                 dialogType = SettingsViewModel.DialogType.DenyProfile,
                 selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                     accountName = "@ben.json",
-                    avatarModel = R.drawable.benjson
-                )
-            )
+                    avatarModel = R.drawable.benjson,
+                ),
+            ),
         )
     }
 }
@@ -401,21 +406,21 @@ private fun SettingsScreenRemoveProfilePreview() {
                     SettingsViewModel.AllowedProfile(
                         displayName = "Landon",
                         accountName = "@landon248",
-                        avatarModel = R.drawable.landon248
+                        avatarModel = R.drawable.landon248,
                     ),
                     SettingsViewModel.AllowedProfile(
                         displayName = "Izzy",
                         accountName = "@izzyderose",
-                        avatarModel = R.drawable.izzyderose
-                    )
+                        avatarModel = R.drawable.izzyderose,
+                    ),
                 ),
                 dialogType = SettingsViewModel.DialogType.RemoveProfile,
                 selectedAllowedProfile = SettingsViewModel.AllowedProfile(
                     displayName = "Landon",
                     accountName = "@landon248",
-                    avatarModel = R.drawable.landon248
-                )
-            )
+                    avatarModel = R.drawable.landon248,
+                ),
+            ),
         )
     }
 }

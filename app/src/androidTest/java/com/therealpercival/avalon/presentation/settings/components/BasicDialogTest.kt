@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import org.junit.Assert.*
+import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class BasicDialogTest {
                 title = "Are you sure?",
                 body = "Changing your current server will also sign you out.",
                 confirmText = "Yes",
-                dismissText = "Cancel"
+                dismissText = "Cancel",
             )
         }
 
@@ -33,7 +33,7 @@ class BasicDialogTest {
                 title = "Are you sure?",
                 body = "Changing your current server will also sign you out.",
                 confirmText = "Yes",
-                dismissText = "Cancel"
+                dismissText = "Cancel",
             )
         }
 
@@ -49,7 +49,7 @@ class BasicDialogTest {
                 body = "Changing your current server will also sign you out.",
                 confirmText = "Yes",
                 dismissText = "Cancel",
-                onConfirm = { clicked = true }
+                onConfirm = { clicked = true },
             )
         }
 
@@ -67,7 +67,7 @@ class BasicDialogTest {
                 body = "Changing your current server will also sign you out.",
                 confirmText = "Yes",
                 dismissText = "Cancel",
-                onDismiss = { clicked = true }
+                onDismiss = { clicked = true },
             )
         }
 

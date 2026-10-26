@@ -14,13 +14,13 @@ import com.therealpercival.avalon.presentation.components.AvalonBottomNavigation
 @Preview(
     name = "Light Mode",
     group = "Themes",
-    showBackground = true
+    showBackground = true,
 )
 @Preview(
     name = "Dark Mode",
     group = "Themes",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 annotation class DayNightPreviews
 
@@ -28,14 +28,14 @@ annotation class DayNightPreviews
     name = "Light Mode",
     group = "Themes",
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
 )
 @Preview(
     name = "Dark Mode",
     group = "Themes",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
 )
 annotation class DayNightDevicePreviews
 
@@ -44,7 +44,7 @@ annotation class DayNightDevicePreviews
     group = "Themes",
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 @Preview(
     name = "Dark Mode",
@@ -52,7 +52,7 @@ annotation class DayNightDevicePreviews
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showSystemUi = true,
     showBackground = true,
-    device = Devices.TABLET
+    device = Devices.TABLET,
 )
 annotation class DayNightTabletPreviews
 
@@ -70,7 +70,7 @@ fun DeviceThemePreview(content: @Composable () -> Unit) {
     AvalonTheme {
         Scaffold { paddingValues ->
             Box(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             ) {
                 content()
             }
@@ -81,18 +81,18 @@ fun DeviceThemePreview(content: @Composable () -> Unit) {
 @Composable
 fun AvalonNavBarThemePreview(
     currentRoute: String,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AvalonTheme {
         Scaffold(
             bottomBar = {
                 AvalonBottomNavigation(
-                    currentRoute = currentRoute
+                    currentRoute = currentRoute,
                 )
-            }
+            },
         ) { paddingValues ->
             Box(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             ) {
                 content()
             }

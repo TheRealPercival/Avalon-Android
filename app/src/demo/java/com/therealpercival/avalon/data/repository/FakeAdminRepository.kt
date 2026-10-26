@@ -15,22 +15,25 @@ class FakeAdminRepository @Inject constructor() : AdminRepository {
     private val requestingProfiles = MutableStateFlow(
         listOf(
             RequestingProfile(accountName = "@ben.json", avatarModel = R.drawable.benjson),
-            RequestingProfile(accountName = "@_shoe_", avatarModel = R.drawable._shoe_)
-        )
+            RequestingProfile(accountName = "@_shoe_", avatarModel = R.drawable._shoe_),
+        ),
     )
 
     private val allowedProfiles = MutableStateFlow(
         listOf(
             AllowedProfile(displayName = "Landon", accountName = "@landon248", avatarModel = R.drawable.landon248),
-            AllowedProfile(displayName = "Izzy", accountName = "@izzyderose", avatarModel = R.drawable.izzyderose)
-        )
+            AllowedProfile(displayName = "Izzy", accountName = "@izzyderose", avatarModel = R.drawable.izzyderose),
+        ),
     )
 
     override fun getRequestingProfiles(): Flow<List<RequestingProfile>> = requestingProfiles
 
     override fun getAllowedProfiles(): Flow<List<AllowedProfile>> = allowedProfiles
 
-    override suspend fun allowProfile(accountName: String, nickname: String) {
+    override suspend fun allowProfile(
+        accountName: String,
+        nickname: String,
+    ) {
         val profile = requestingProfiles.value.find { it.accountName == accountName }
         if (profile != null) {
             requestingProfiles.update { list -> list.filterNot { it.accountName == accountName } }
@@ -38,7 +41,7 @@ class FakeAdminRepository @Inject constructor() : AdminRepository {
                 list + AllowedProfile(
                     displayName = nickname,
                     accountName = accountName,
-                    avatarModel = profile.avatarModel
+                    avatarModel = profile.avatarModel,
                 )
             }
         }

@@ -27,8 +27,8 @@ class SettingsScreenTest {
                 state = SettingsViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
-                    accountName = "@drew654"
-                )
+                    accountName = "@drew654",
+                ),
             )
         }
 
@@ -44,8 +44,8 @@ class SettingsScreenTest {
                 state = SettingsViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
-                    accountName = "@drew654"
-                )
+                    accountName = "@drew654",
+                ),
             )
         }
 
@@ -62,9 +62,9 @@ class SettingsScreenTest {
                 state = SettingsViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
-                    accountName = "@drew654"
+                    accountName = "@drew654",
                 ),
-                onChangeServerClicked = { clicked = true }
+                onChangeServerClicked = { clicked = true },
             )
         }
 
@@ -81,9 +81,9 @@ class SettingsScreenTest {
                 state = SettingsViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
-                    accountName = "@drew654"
+                    accountName = "@drew654",
                 ),
-                onSignOutClicked = { clicked = true }
+                onSignOutClicked = { clicked = true },
             )
         }
 
@@ -99,7 +99,7 @@ class SettingsScreenTest {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -108,14 +108,14 @@ class SettingsScreenTest {
                     displayName = "Drew",
                     accountName = "@drew654",
                     isAdmin = true,
-                    requestingProfiles = listOf(targetProfile)
+                    requestingProfiles = listOf(targetProfile),
                 ),
-                onAllowClicked = { clickedProfile = it }
+                onAllowClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Allow") and hasAnySibling(hasText("@ben.json"))
+            hasContentDescription("Allow") and hasAnySibling(hasText("@ben.json")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
@@ -126,7 +126,7 @@ class SettingsScreenTest {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -135,14 +135,14 @@ class SettingsScreenTest {
                     displayName = "Drew",
                     accountName = "@drew654",
                     isAdmin = true,
-                    requestingProfiles = listOf(targetProfile)
+                    requestingProfiles = listOf(targetProfile),
                 ),
-                onDenyClicked = { clickedProfile = it }
+                onDenyClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Deny") and hasAnySibling(hasText("@ben.json"))
+            hasContentDescription("Deny") and hasAnySibling(hasText("@ben.json")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
@@ -156,7 +156,7 @@ class SettingsScreenTest {
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -165,14 +165,14 @@ class SettingsScreenTest {
                     displayName = "Drew",
                     accountName = "@drew654",
                     isAdmin = true,
-                    allowedProfiles = listOf(targetProfile)
+                    allowedProfiles = listOf(targetProfile),
                 ),
-                onRemoveClicked = { clickedProfile = it }
+                onRemoveClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Remove") and hasAnySibling(hasText("Ben"))
+            hasContentDescription("Remove") and hasAnySibling(hasText("Ben")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
@@ -189,9 +189,9 @@ class SettingsScreenTest {
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
                     accountName = "@drew654",
-                    dialogType = SettingsViewModel.DialogType.Server
+                    dialogType = SettingsViewModel.DialogType.Server,
                 ),
-                onConfirmChangeServerClicked = { clicked = true }
+                onConfirmChangeServerClicked = { clicked = true },
             )
         }
 
@@ -209,9 +209,9 @@ class SettingsScreenTest {
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
                     accountName = "@drew654",
-                    dialogType = SettingsViewModel.DialogType.Server
+                    dialogType = SettingsViewModel.DialogType.Server,
                 ),
-                onDismissDialog = { clicked = true }
+                onDismissDialog = { clicked = true },
             )
         }
 
@@ -231,9 +231,9 @@ class SettingsScreenTest {
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
                     accountName = "@drew654",
-                    dialogType = SettingsViewModel.DialogType.SignOut
+                    dialogType = SettingsViewModel.DialogType.SignOut,
                 ),
-                onConfirmSignOutClicked = { clicked = true }
+                onConfirmSignOutClicked = { clicked = true },
             )
         }
 
@@ -251,9 +251,9 @@ class SettingsScreenTest {
                     serverUrl = "server.therealpercival.com",
                     displayName = "Drew",
                     accountName = "@drew654",
-                    dialogType = SettingsViewModel.DialogType.SignOut
+                    dialogType = SettingsViewModel.DialogType.SignOut,
                 ),
-                onDismissDialog = { clicked = true }
+                onDismissDialog = { clicked = true },
             )
         }
 
@@ -276,15 +276,15 @@ class SettingsScreenTest {
                     requestingProfiles = listOf(
                         SettingsViewModel.RequestingProfile(
                             accountName = "@ben.json",
-                            avatarModel = R.drawable.benjson
-                        )
+                            avatarModel = R.drawable.benjson,
+                        ),
                     ),
                     dialogType = SettingsViewModel.DialogType.AssignNickname,
                     selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
-                    )
-                )
+                        avatarModel = R.drawable.benjson,
+                    ),
+                ),
             )
         }
 
@@ -303,16 +303,16 @@ class SettingsScreenTest {
                     requestingProfiles = listOf(
                         SettingsViewModel.RequestingProfile(
                             accountName = "@ben.json",
-                            avatarModel = R.drawable.benjson
-                        )
+                            avatarModel = R.drawable.benjson,
+                        ),
                     ),
                     dialogType = SettingsViewModel.DialogType.AssignNickname,
                     selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
-                    nickname = "Ben"
-                )
+                    nickname = "Ben",
+                ),
             )
         }
 
@@ -332,17 +332,17 @@ class SettingsScreenTest {
                     requestingProfiles = listOf(
                         SettingsViewModel.RequestingProfile(
                             accountName = "@ben.json",
-                            avatarModel = R.drawable.benjson
-                        )
+                            avatarModel = R.drawable.benjson,
+                        ),
                     ),
                     dialogType = SettingsViewModel.DialogType.AssignNickname,
                     selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
-                    nickname = "Ben"
+                    nickname = "Ben",
                 ),
-                onConfirmAllowClicked = { clicked = true }
+                onConfirmAllowClicked = { clicked = true },
             )
         }
 
@@ -364,17 +364,17 @@ class SettingsScreenTest {
                     requestingProfiles = listOf(
                         SettingsViewModel.RequestingProfile(
                             accountName = "@ben.json",
-                            avatarModel = R.drawable.benjson
-                        )
+                            avatarModel = R.drawable.benjson,
+                        ),
                     ),
                     dialogType = SettingsViewModel.DialogType.AssignNickname,
                     selectedRequestingProfile = SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
-                    nickname = "Ben"
+                    nickname = "Ben",
                 ),
-                onDismissDialog = { clicked = true }
+                onDismissDialog = { clicked = true },
             )
         }
 
@@ -389,7 +389,7 @@ class SettingsScreenTest {
     fun denyProfileDialog_displaysAccountName() {
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -400,8 +400,8 @@ class SettingsScreenTest {
                     isAdmin = true,
                     requestingProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.DenyProfile,
-                    selectedRequestingProfile = targetProfile
-                )
+                    selectedRequestingProfile = targetProfile,
+                ),
             )
         }
 
@@ -413,7 +413,7 @@ class SettingsScreenTest {
         var clicked = false
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -424,9 +424,9 @@ class SettingsScreenTest {
                     isAdmin = true,
                     requestingProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.DenyProfile,
-                    selectedRequestingProfile = targetProfile
+                    selectedRequestingProfile = targetProfile,
                 ),
-                onConfirmDenyProfileClicked = { clicked = true }
+                onConfirmDenyProfileClicked = { clicked = true },
             )
         }
 
@@ -440,7 +440,7 @@ class SettingsScreenTest {
         var clicked = false
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -451,9 +451,9 @@ class SettingsScreenTest {
                     isAdmin = true,
                     requestingProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.DenyProfile,
-                    selectedRequestingProfile = targetProfile
+                    selectedRequestingProfile = targetProfile,
                 ),
-                onDismissDialog = { clicked = true }
+                onDismissDialog = { clicked = true },
             )
         }
 
@@ -469,7 +469,7 @@ class SettingsScreenTest {
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -480,8 +480,8 @@ class SettingsScreenTest {
                     isAdmin = true,
                     allowedProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.RemoveProfile,
-                    selectedAllowedProfile = targetProfile
-                )
+                    selectedAllowedProfile = targetProfile,
+                ),
             )
         }
 
@@ -495,7 +495,7 @@ class SettingsScreenTest {
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -506,9 +506,9 @@ class SettingsScreenTest {
                     isAdmin = true,
                     allowedProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.RemoveProfile,
-                    selectedAllowedProfile = targetProfile
+                    selectedAllowedProfile = targetProfile,
                 ),
-                onConfirmRemoveProfileClicked = { clicked = true }
+                onConfirmRemoveProfileClicked = { clicked = true },
             )
         }
 
@@ -523,7 +523,7 @@ class SettingsScreenTest {
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             SettingsContent(
@@ -534,9 +534,9 @@ class SettingsScreenTest {
                     isAdmin = true,
                     allowedProfiles = listOf(targetProfile),
                     dialogType = SettingsViewModel.DialogType.RemoveProfile,
-                    selectedAllowedProfile = targetProfile
+                    selectedAllowedProfile = targetProfile,
                 ),
-                onDismissDialog = { clicked = true }
+                onDismissDialog = { clicked = true },
             )
         }
 

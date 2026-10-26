@@ -18,11 +18,11 @@ fun StatsScreen() {
 @Composable
 private fun StatsContent() {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Text(
             text = "Stats Screen",
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }

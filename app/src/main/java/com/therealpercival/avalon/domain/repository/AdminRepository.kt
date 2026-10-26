@@ -6,8 +6,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface AdminRepository {
     fun getRequestingProfiles(): Flow<List<RequestingProfile>>
+
     fun getAllowedProfiles(): Flow<List<AllowedProfile>>
-    suspend fun allowProfile(accountName: String, nickname: String)
+
+    suspend fun allowProfile(
+        accountName: String,
+        nickname: String,
+    )
+
     suspend fun denyProfile(accountName: String)
+
     suspend fun removeProfile(accountName: String)
 }

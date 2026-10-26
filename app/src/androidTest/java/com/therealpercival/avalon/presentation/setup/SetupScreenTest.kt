@@ -17,7 +17,7 @@ class SetupScreenTest {
     fun setupScreen_displaysCorrectComponents_whenUnvalidated() {
         composeTestRule.setContent {
             SetupContent(
-                state = SetupViewModel.UiState()
+                state = SetupViewModel.UiState(),
             )
         }
 
@@ -37,8 +37,8 @@ class SetupScreenTest {
             SetupContent(
                 state = SetupViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
-                    serverUrlState = SetupViewModel.ServerUrlState.Fetching
-                )
+                    serverUrlState = SetupViewModel.ServerUrlState.Fetching,
+                ),
             )
         }
 
@@ -60,8 +60,8 @@ class SetupScreenTest {
             SetupContent(
                 state = SetupViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
-                    serverUrlState = SetupViewModel.ServerUrlState.Fetching
-                )
+                    serverUrlState = SetupViewModel.ServerUrlState.Fetching,
+                ),
             )
         }
 
@@ -77,8 +77,8 @@ class SetupScreenTest {
             SetupContent(
                 state = SetupViewModel.UiState(
                     serverUrl = "server.therealpercival.com",
-                    serverUrlState = SetupViewModel.ServerUrlState.Valid
-                )
+                    serverUrlState = SetupViewModel.ServerUrlState.Valid,
+                ),
             )
         }
 

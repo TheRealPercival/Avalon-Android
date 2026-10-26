@@ -8,6 +8,8 @@ import javax.inject.Inject
 
 class RealUserRepository @Inject constructor() : UserRepository {
     override fun getCurrentUser(): Flow<User?> = flowOf(null)
+
     override suspend fun signIn() {}
+
     override suspend fun signOut() {}
 }

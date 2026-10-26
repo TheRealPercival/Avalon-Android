@@ -26,20 +26,20 @@ class AdminSectionTest {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
                 allowedProfiles = listOf(
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
+                        avatarModel = R.drawable.x,
+                    ),
+                ),
             )
         }
 
@@ -54,9 +54,9 @@ class AdminSectionTest {
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
+                        avatarModel = R.drawable.x,
+                    ),
+                ),
             )
         }
 
@@ -70,20 +70,20 @@ class AdminSectionTest {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
                 allowedProfiles = listOf(
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
+                        avatarModel = R.drawable.x,
+                    ),
+                ),
             )
         }
 
@@ -96,7 +96,7 @@ class AdminSectionTest {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             AdminSection(
@@ -104,15 +104,15 @@ class AdminSectionTest {
                     targetProfile,
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
-                onAllowClicked = { clickedProfile = it }
+                onAllowClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Allow") and hasAnySibling(hasText("@ben.json"))
+            hasContentDescription("Allow") and hasAnySibling(hasText("@ben.json")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
@@ -123,23 +123,23 @@ class AdminSectionTest {
         var clickedProfile: SettingsViewModel.RequestingProfile? = null
         val targetProfile = SettingsViewModel.RequestingProfile(
             accountName = "@_shoe_",
-            avatarModel = R.drawable._shoe_
+            avatarModel = R.drawable._shoe_,
         )
         composeTestRule.setContent {
             AdminSection(
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
-                    targetProfile
+                    targetProfile,
                 ),
-                onDenyClicked = { clickedProfile = it }
+                onDenyClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Deny") and hasAnySibling(hasText("@_shoe_"))
+            hasContentDescription("Deny") and hasAnySibling(hasText("@_shoe_")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)
@@ -155,9 +155,9 @@ class AdminSectionTest {
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
+                        avatarModel = R.drawable.x,
+                    ),
+                ),
             )
         }
 
@@ -171,13 +171,13 @@ class AdminSectionTest {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
-                )
+                        avatarModel = R.drawable._shoe_,
+                    ),
+                ),
             )
         }
 
@@ -191,21 +191,21 @@ class AdminSectionTest {
                 requestingProfiles = listOf(
                     SettingsViewModel.RequestingProfile(
                         accountName = "@_shoe_",
-                        avatarModel = R.drawable._shoe_
-                    )
+                        avatarModel = R.drawable._shoe_,
+                    ),
                 ),
                 allowedProfiles = listOf(
                     SettingsViewModel.AllowedProfile(
                         displayName = "Ben",
                         accountName = "@ben.json",
-                        avatarModel = R.drawable.benjson
+                        avatarModel = R.drawable.benjson,
                     ),
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
-                    )
-                )
+                        avatarModel = R.drawable.x,
+                    ),
+                ),
             )
         }
 
@@ -222,7 +222,7 @@ class AdminSectionTest {
         val targetProfile = SettingsViewModel.AllowedProfile(
             displayName = "Ben",
             accountName = "@ben.json",
-            avatarModel = R.drawable.benjson
+            avatarModel = R.drawable.benjson,
         )
         composeTestRule.setContent {
             AdminSection(
@@ -230,16 +230,16 @@ class AdminSectionTest {
                     SettingsViewModel.AllowedProfile(
                         displayName = "Drew",
                         accountName = "@drew654",
-                        avatarModel = R.drawable.x
+                        avatarModel = R.drawable.x,
                     ),
-                    targetProfile
+                    targetProfile,
                 ),
-                onRemoveClicked = { clickedProfile = it }
+                onRemoveClicked = { clickedProfile = it },
             )
         }
 
         composeTestRule.onNode(
-            hasContentDescription("Remove") and hasAnySibling(hasText("Ben"))
+            hasContentDescription("Remove") and hasAnySibling(hasText("Ben")),
         ).performClick()
 
         assertEquals(targetProfile, clickedProfile)

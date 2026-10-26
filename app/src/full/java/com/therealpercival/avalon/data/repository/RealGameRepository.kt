@@ -7,10 +7,11 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class RealGameRepository @Inject constructor() : GameRepository {
-    override fun getGameSummary(): Flow<GameSummary> = flowOf(
-        GameSummary(
-            joinText = "Join game",
-            playerAvatars = emptyList()
+    override fun getGameSummary(): Flow<GameSummary> =
+        flowOf(
+            GameSummary(
+                joinText = "Join game",
+                playerAvatars = emptyList(),
+            ),
         )
-    )
 }
