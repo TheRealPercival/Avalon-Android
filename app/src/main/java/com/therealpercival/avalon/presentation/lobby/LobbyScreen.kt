@@ -90,45 +90,55 @@ private fun LobbyContent(
         val scrollState = rememberScrollState()
 
         if (isCompactHeight) {
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
                     .verticalScroll(scrollState)
+                    .padding(paddingValues)
                     .padding(all = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    DropdownInputField(
-                        value = state.selectedPreset,
-                        onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
-                        options = state.presetOptions,
-                        label = "Preset",
-                        isExpanded = state.isPresetDropdownExpanded,
-                        onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
-                    )
-                    RolesSection(
-                        selectedCharacters = state.selectedCharacters,
-                        selectedAssassin = state.selectedAssassin,
-                        onClick = { onAction(LobbyAction.RolesSectionClicked) },
-                    )
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        DropdownInputField(
+                            value = state.selectedPreset,
+                            onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
+                            options = state.presetOptions,
+                            label = "Preset",
+                            isExpanded = state.isPresetDropdownExpanded,
+                            onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
+                        )
+                        RolesSection(
+                            selectedCharacters = state.selectedCharacters,
+                            selectedAssassin = state.selectedAssassin,
+                            onClick = { onAction(LobbyAction.RolesSectionClicked) },
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        SettingsSection(
+                            isTrapperEnabled = state.isTrapperEnabled,
+                            isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
+                            isVoteResetEnabled = state.isVoteResetEnabled,
+                            onAction = onAction,
+                        )
+                        PlayersSection(
+                            players = state.players,
+                        )
+                    }
                 }
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                Button(
+                    onClick = { onAction(LobbyAction.StartClicked) },
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
-                    SettingsSection(
-                        isTrapperEnabled = state.isTrapperEnabled,
-                        isLadyOfTheLakeEnabled = state.isLadyOfTheLakeEnabled,
-                        isVoteResetEnabled = state.isVoteResetEnabled,
-                        onAction = onAction,
-                    )
-                    PlayersSection(
-                        players = state.players,
-                    )
+                    Text(text = "Start")
                 }
             }
         } else {
