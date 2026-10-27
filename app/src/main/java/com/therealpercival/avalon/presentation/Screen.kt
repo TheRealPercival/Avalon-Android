@@ -14,4 +14,6 @@ sealed class Screen(
     object Settings : Screen("settings", "Settings", R.drawable.baseline_settings_24)
 
     object Stats : Screen("stats", "Stats", R.drawable.baseline_query_stats_24)
+
+    object Lobby : Screen("lobby", "Lobby")
 }

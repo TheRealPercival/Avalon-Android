@@ -7,7 +7,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.therealpercival.avalon.presentation.components.AvalonBottomNavigation
 
@@ -40,21 +39,27 @@ annotation class DayNightPreviews
 annotation class DayNightDevicePreviews
 
 @Preview(
-    name = "Light Mode",
-    group = "Themes",
-    showSystemUi = true,
+    name = "Tablet",
+    group = "Layouts",
     showBackground = true,
-    device = Devices.TABLET,
+    widthDp = 600,
+    heightDp = 960,
 )
 @Preview(
-    name = "Dark Mode",
-    group = "Themes",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showSystemUi = true,
+    name = "Tablet Landscape",
+    group = "Layouts",
     showBackground = true,
-    device = Devices.TABLET,
+    widthDp = 960,
+    heightDp = 600,
 )
-annotation class DayNightTabletPreviews
+@Preview(
+    name = "Landscape",
+    group = "Layouts",
+    showBackground = true,
+    widthDp = 900,
+    heightDp = 400,
+)
+annotation class LayoutPreviews
 
 @Composable
 fun ThemePreview(content: @Composable () -> Unit) {
