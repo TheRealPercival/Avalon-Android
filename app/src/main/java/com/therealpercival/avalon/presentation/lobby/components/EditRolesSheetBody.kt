@@ -79,11 +79,10 @@ fun EditRolesSheetBody(
             DropdownInputField(
                 value = selectedAssassin?.name ?: "None",
                 onValueChange = { selectedName ->
-                    evilCharacters.find { it.name == selectedName }?.let { character ->
-                        onAction(LobbyAction.AssassinSelected(character))
-                    }
+                    val character = evilCharacters.find { it.name == selectedName }
+                    onAction(LobbyAction.AssassinSelected(character))
                 },
-                options = evilCharacters.map { it.name },
+                options = evilCharacters.map { it.name }.plus("None"),
                 modifier = Modifier.padding(horizontal = 16.dp),
                 label = "Assassin",
                 isExpanded = isAssassinDropdownExpanded,

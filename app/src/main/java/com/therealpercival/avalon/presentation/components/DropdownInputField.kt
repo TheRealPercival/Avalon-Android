@@ -71,6 +71,14 @@ fun DropdownInputField(
                         onExpandedChange(false)
                         focusManager.clearFocus()
                     },
+                    trailingIcon = {
+                        if (value == option) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_check_24),
+                                contentDescription = null,
+                            )
+                        }
+                    },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
             }

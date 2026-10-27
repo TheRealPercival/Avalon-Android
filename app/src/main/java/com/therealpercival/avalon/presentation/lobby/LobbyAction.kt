@@ -30,7 +30,7 @@ sealed interface LobbyAction {
     data object FocusedCharacterDismissed : LobbyAction
 
     data class AssassinSelected(
-        val character: AvalonCharacter,
+        val character: AvalonCharacter?,
     ) : LobbyAction
 
     data class AssassinDropdownExpandedChange(
