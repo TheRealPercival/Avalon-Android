@@ -77,6 +77,16 @@ class LobbyViewModel @Inject constructor(
                 }
             }
 
+            is LobbyAction.PlayerSectionClicked -> {
+                _state.update { it.copy(isShowingPlayerSheet = true) }
+            }
+
+            is LobbyAction.PlayerSheetDismissed -> {
+                _state.update {
+                    it.copy(isShowingPlayerSheet = false)
+                }
+            }
+
             is LobbyAction.CharacterCardClicked -> {
                 _state.update { state ->
                     val newSelectedCharacters = state.selectedCharacters.toMutableList()

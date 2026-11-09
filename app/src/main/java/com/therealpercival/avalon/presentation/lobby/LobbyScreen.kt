@@ -29,6 +29,7 @@ import com.therealpercival.avalon.R
 import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.presentation.components.DropdownInputField
 import com.therealpercival.avalon.presentation.lobby.components.EditRolesSheetBody
+import com.therealpercival.avalon.presentation.lobby.components.JoinedPlayersSheetBody
 import com.therealpercival.avalon.presentation.lobby.components.LadyOfTheLakeButton
 import com.therealpercival.avalon.presentation.lobby.components.PlayersSection
 import com.therealpercival.avalon.presentation.lobby.components.RolesSection
@@ -64,6 +65,9 @@ private fun LobbyContent(
     onAction: (LobbyAction) -> Unit = {},
 ) {
     val characterSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+    val playerSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     )
     val windowSizeClass = rememberWindowSizeClass()
@@ -171,6 +175,7 @@ private fun LobbyContent(
                 )
                 PlayersSection(
                     players = state.players,
+                    onClick = { onAction(LobbyAction.PlayerSectionClicked) },
                 )
                 Button(
                     onClick = { onAction(LobbyAction.StartClicked) },
@@ -194,6 +199,15 @@ private fun LobbyContent(
                 focusedCharacter = state.focusedCharacter,
                 onAction = onAction,
             )
+        }
+    }
+
+    if (state.isShowingPlayerSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { onAction(LobbyAction.PlayerSheetDismissed) },
+            sheetState = playerSheetState,
+        ) {
+            JoinedPlayersSheetBody()
         }
     }
 }

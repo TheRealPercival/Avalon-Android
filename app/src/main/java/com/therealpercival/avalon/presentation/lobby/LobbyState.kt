@@ -11,6 +11,7 @@ data class LobbyState(
     val selectedAssassin: AvalonCharacter? = null,
     val isAssassinDropdownExpanded: Boolean = false,
     val isShowingCharacterSheet: Boolean = false,
+    val isShowingPlayerSheet: Boolean = false,
     val focusedCharacter: AvalonCharacter? = null,
     val isTrapperEnabled: Boolean = false,
     val isLadyOfTheLakeEnabled: Boolean = false,

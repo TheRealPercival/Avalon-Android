@@ -19,6 +19,10 @@ sealed interface LobbyAction {
 
     data object CharacterSheetDismissed : LobbyAction
 
+    data object PlayerSectionClicked : LobbyAction
+
+    data object PlayerSheetDismissed : LobbyAction
+
     data class CharacterCardClicked(
         val character: AvalonCharacter,
     ) : LobbyAction
