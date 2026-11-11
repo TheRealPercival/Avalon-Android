@@ -135,6 +135,7 @@ private fun LobbyContent(
                         )
                         PlayersSection(
                             players = state.players,
+                            onClick = { onAction(LobbyAction.PlayerSectionClicked) },
                         )
                     }
                 }
@@ -207,7 +208,9 @@ private fun LobbyContent(
             onDismissRequest = { onAction(LobbyAction.PlayerSheetDismissed) },
             sheetState = playerSheetState,
         ) {
-            JoinedPlayersSheetBody()
+            JoinedPlayersSheetBody(
+                players = state.players,
+            )
         }
     }
 }
@@ -267,23 +270,23 @@ private fun LobbyScreenPreview() {
                 ),
                 presetOptions = listOf("Classic"),
                 players = listOf(
-                    LobbyViewModel.Player(
+                    Player(
                         displayName = "Drew",
                         avatarModel = R.drawable.x,
                     ),
-                    LobbyViewModel.Player(
+                    Player(
                         displayName = "Ben",
                         avatarModel = R.drawable.benjson,
                     ),
-                    LobbyViewModel.Player(
+                    Player(
                         displayName = "Izzy",
                         avatarModel = R.drawable.izzyderose,
                     ),
-                    LobbyViewModel.Player(
+                    Player(
                         displayName = "Thomas",
                         avatarModel = R.drawable._shoe_,
                     ),
-                    LobbyViewModel.Player(
+                    Player(
                         displayName = "Landon",
                         avatarModel = R.drawable.landon248,
                     ),

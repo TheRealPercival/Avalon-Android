@@ -15,11 +15,6 @@ import javax.inject.Inject
 class LobbyViewModel @Inject constructor(
     private val gameRepository: GameRepository,
 ) : ViewModel() {
-    data class Player(
-        val displayName: String,
-        val avatarModel: Any,
-    )
-
     private val _state = MutableStateFlow(LobbyState())
     val state = _state.asStateFlow()
 

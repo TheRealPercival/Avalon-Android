@@ -26,6 +26,7 @@ fun PlayerIcon(
     avatarModel: Any,
     displayName: String,
     modifier: Modifier = Modifier,
+    labelEnabled: Boolean = false,
 ) {
     Column(
         modifier = modifier,
@@ -41,14 +42,29 @@ fun PlayerIcon(
                 .aspectRatio(1f)
                 .clip(CircleShape),
         )
-        Text(
-            text = displayName,
-            autoSize = TextAutoSize.StepBased(
-                minFontSize = 8.sp,
-                maxFontSize = 16.sp,
-            ),
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
+        if (labelEnabled) {
+            Text(
+                text = displayName,
+                autoSize = TextAutoSize.StepBased(
+                    minFontSize = 8.sp,
+                    maxFontSize = 16.sp,
+                ),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
+        }
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun PlayerIconWithLabelPreview() {
+    ThemePreview {
+        PlayerIcon(
+            avatarModel = R.drawable.x,
+            displayName = "Drew",
+            modifier = Modifier.width(64.dp),
+            labelEnabled = true,
         )
     }
 }

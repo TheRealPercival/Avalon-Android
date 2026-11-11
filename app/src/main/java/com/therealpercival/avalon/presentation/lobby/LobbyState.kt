@@ -1,7 +1,6 @@
 package com.therealpercival.avalon.presentation.lobby
 
 import com.therealpercival.avalon.domain.model.AvalonCharacter
-import com.therealpercival.avalon.presentation.lobby.LobbyViewModel.Player
 
 data class LobbyState(
     val selectedPreset: String = "",
@@ -17,4 +16,9 @@ data class LobbyState(
     val isLadyOfTheLakeEnabled: Boolean = false,
     val isVoteResetEnabled: Boolean = false,
     val players: List<Player> = emptyList(),
+)
+
+data class Player(
+    val displayName: String,
+    val avatarModel: Any,
 )

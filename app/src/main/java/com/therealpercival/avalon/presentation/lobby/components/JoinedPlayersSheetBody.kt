@@ -11,22 +11,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.therealpercival.avalon.R
+import com.therealpercival.avalon.presentation.lobby.Player
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
-fun JoinedPlayersSheetBody() {
+fun JoinedPlayersSheetBody(
+    players: List<Player>,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
-            text = "Edit Roles",
-            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Joined Players",
+            modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.titleLarge,
         )
+
+        players.forEach { player ->
+            PlayerItem(player = player)
+        }
     }
 }
 
@@ -34,6 +43,29 @@ fun JoinedPlayersSheetBody() {
 @Composable
 private fun JoinedPlayersSheetBodyPreview() {
     ThemePreview {
-        JoinedPlayersSheetBody()
+        JoinedPlayersSheetBody(
+            players = listOf(
+                Player(
+                    displayName = "Drew",
+                    avatarModel = R.drawable.x,
+                ),
+                Player(
+                    displayName = "Ben",
+                    avatarModel = R.drawable.benjson,
+                ),
+                Player(
+                    displayName = "Izzy",
+                    avatarModel = R.drawable.izzyderose,
+                ),
+                Player(
+                    displayName = "Thomas",
+                    avatarModel = R.drawable._shoe_,
+                ),
+                Player(
+                    displayName = "Landon",
+                    avatarModel = R.drawable.landon248,
+                ),
+            ),
+        )
     }
 }

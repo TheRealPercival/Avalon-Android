@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.therealpercival.avalon.R
-import com.therealpercival.avalon.presentation.lobby.LobbyViewModel
+import com.therealpercival.avalon.presentation.lobby.Player
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
 @Composable
 fun PlayersSection(
-    players: List<LobbyViewModel.Player>,
+    players: List<Player>,
     onClick: () -> Unit = { },
 ) {
     Column(
@@ -44,6 +44,7 @@ fun PlayersSection(
                         avatarModel = player.avatarModel,
                         displayName = player.displayName,
                         modifier = Modifier.weight(1f),
+                        labelEnabled = true,
                     )
                 }
                 repeat(5 - rowPlayers.size) {
@@ -60,23 +61,23 @@ private fun PlayersSectionPreview() {
     ThemePreview {
         PlayersSection(
             players = listOf(
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Drew",
                     avatarModel = R.drawable.x,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Ben",
                     avatarModel = R.drawable.benjson,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Izzy",
                     avatarModel = R.drawable.izzyderose,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Thomas",
                     avatarModel = R.drawable._shoe_,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Landon",
                     avatarModel = R.drawable.landon248,
                 ),
@@ -91,35 +92,35 @@ private fun PlayersSectionPreview2() {
     ThemePreview {
         PlayersSection(
             players = listOf(
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Drew",
                     avatarModel = R.drawable.x,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Ben",
                     avatarModel = R.drawable.benjson,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Izzy",
                     avatarModel = R.drawable.izzyderose,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Thomas",
                     avatarModel = R.drawable._shoe_,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Landon",
                     avatarModel = R.drawable.landon248,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Drew",
                     avatarModel = R.drawable.x,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Ben",
                     avatarModel = R.drawable.benjson,
                 ),
-                LobbyViewModel.Player(
+                Player(
                     displayName = "Izzy",
                     avatarModel = R.drawable.izzyderose,
                 ),
