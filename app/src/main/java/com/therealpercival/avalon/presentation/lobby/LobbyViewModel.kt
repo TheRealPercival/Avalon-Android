@@ -84,9 +84,16 @@ class LobbyViewModel @Inject constructor(
 
             is LobbyAction.PlayerClicked -> {
                 _state.update {
-                    it.copy(
-                        selectedPlayer = action.player,
-                    )
+                    val oldPlayer = it.selectedPlayer
+                    if (oldPlayer == action.player) {
+                        it.copy(
+                            selectedPlayer = null,
+                        )
+                    } else {
+                        it.copy(
+                            selectedPlayer = action.player,
+                        )
+                    }
                 }
             }
 

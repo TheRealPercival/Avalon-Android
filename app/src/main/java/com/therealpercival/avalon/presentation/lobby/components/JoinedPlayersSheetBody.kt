@@ -2,10 +2,14 @@ package com.therealpercival.avalon.presentation.lobby.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +48,31 @@ fun JoinedPlayersSheetBody(
                 },
             )
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        if (selectedPlayer != null) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Button(
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text(text = "Make Host")
+                }
+                Button(
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError,
+                    ),
+                ) {
+                    Text(text = "Kick")
+                }
+            }
+        }
     }
 }
 
@@ -73,6 +102,41 @@ private fun JoinedPlayersSheetBodyPreview() {
                     displayName = "Landon",
                     avatarModel = R.drawable.landon248,
                 ),
+            ),
+        )
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun JoinedPlayersSheetBodySelectedPreview() {
+    ThemePreview {
+        JoinedPlayersSheetBody(
+            players = listOf(
+                Player(
+                    displayName = "Drew",
+                    avatarModel = R.drawable.x,
+                ),
+                Player(
+                    displayName = "Ben",
+                    avatarModel = R.drawable.benjson,
+                ),
+                Player(
+                    displayName = "Izzy",
+                    avatarModel = R.drawable.izzyderose,
+                ),
+                Player(
+                    displayName = "Thomas",
+                    avatarModel = R.drawable._shoe_,
+                ),
+                Player(
+                    displayName = "Landon",
+                    avatarModel = R.drawable.landon248,
+                ),
+            ),
+            selectedPlayer = Player(
+                displayName = "Ben",
+                avatarModel = R.drawable.benjson,
             ),
         )
     }
