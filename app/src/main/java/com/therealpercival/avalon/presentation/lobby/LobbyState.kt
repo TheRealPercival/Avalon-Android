@@ -16,6 +16,7 @@ data class LobbyState(
     val isLadyOfTheLakeEnabled: Boolean = false,
     val isVoteResetEnabled: Boolean = false,
     val players: List<Player> = emptyList(),
+    val selectedPlayer: Player? = null,
 )
 
 data class Player(

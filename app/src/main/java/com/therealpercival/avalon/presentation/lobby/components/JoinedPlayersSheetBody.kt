@@ -19,6 +19,8 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 @Composable
 fun JoinedPlayersSheetBody(
     players: List<Player>,
+    selectedPlayer: Player? = null,
+    onPlayerClick: (Player) -> Unit = { },
 ) {
     Column(
         modifier = Modifier
@@ -34,7 +36,13 @@ fun JoinedPlayersSheetBody(
         )
 
         players.forEach { player ->
-            PlayerItem(player = player)
+            PlayerItem(
+                player = player,
+                selected = player == selectedPlayer,
+                onClick = {
+                    onPlayerClick(player)
+                },
+            )
         }
     }
 }

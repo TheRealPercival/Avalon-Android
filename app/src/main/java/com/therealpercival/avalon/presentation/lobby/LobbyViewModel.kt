@@ -82,6 +82,14 @@ class LobbyViewModel @Inject constructor(
                 }
             }
 
+            is LobbyAction.PlayerClicked -> {
+                _state.update {
+                    it.copy(
+                        selectedPlayer = action.player,
+                    )
+                }
+            }
+
             is LobbyAction.CharacterCardClicked -> {
                 _state.update { state ->
                     val newSelectedCharacters = state.selectedCharacters.toMutableList()

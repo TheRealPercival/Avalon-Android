@@ -210,6 +210,8 @@ private fun LobbyContent(
         ) {
             JoinedPlayersSheetBody(
                 players = state.players,
+                selectedPlayer = state.selectedPlayer,
+                onPlayerClick = { onAction(LobbyAction.PlayerClicked(player = it)) },
             )
         }
     }
