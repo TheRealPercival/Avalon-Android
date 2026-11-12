@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.therealpercival.avalon.R
 import com.therealpercival.avalon.presentation.lobby.Player
+import com.therealpercival.avalon.presentation.ui.conditional
 import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
 import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 
@@ -25,16 +27,20 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun PlayerItem(
     player: Player,
     onClick: () -> Unit = { },
-    selected: Boolean = false,
+    isSelected: Boolean = false,
+    isYou: Boolean = false,
+    isEnabled: Boolean = true,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = MaterialTheme.shapes.medium)
-            .background(color = if (selected) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified, shape = MaterialTheme.shapes.medium)
+            .background(color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified, shape = MaterialTheme.shapes.medium)
             .clip(MaterialTheme.shapes.medium)
-            .clickable {
-                onClick()
+            .conditional(isEnabled) {
+                clickable {
+                    onClick()
+                }
             }
             .padding(all = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -48,8 +54,16 @@ fun PlayerItem(
 
         Text(
             text = player.displayName,
-            color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else Color.Unspecified,
+            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else Color.Unspecified,
         )
+
+        if (isYou) {
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = "(you)",
+            )
+        }
     }
 }
 
@@ -75,7 +89,21 @@ private fun PlayerItemSelectedPreview() {
                 displayName = "Drew",
                 avatarModel = R.drawable.x,
             ),
-            selected = true,
+            isSelected = true,
+        )
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun PlayerItemYouPreview() {
+    ThemePreview {
+        PlayerItem(
+            Player(
+                displayName = "Drew",
+                avatarModel = R.drawable.x,
+            ),
+            isYou = true,
         )
     }
 }

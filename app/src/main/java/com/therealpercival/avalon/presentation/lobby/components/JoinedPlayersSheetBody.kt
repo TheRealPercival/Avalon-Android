@@ -24,6 +24,7 @@ import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
 fun JoinedPlayersSheetBody(
     players: List<Player>,
     selectedPlayer: Player? = null,
+    account: Player? = null,
     onPlayerClick: (Player) -> Unit = { },
 ) {
     Column(
@@ -42,9 +43,13 @@ fun JoinedPlayersSheetBody(
         players.forEach { player ->
             PlayerItem(
                 player = player,
-                selected = player == selectedPlayer,
+                isSelected = player == selectedPlayer,
+                isYou = account == player,
+                isEnabled = account != player,
                 onClick = {
-                    onPlayerClick(player)
+                    if (player != account) {
+                        onPlayerClick(player)
+                    }
                 },
             )
         }
@@ -81,6 +86,10 @@ fun JoinedPlayersSheetBody(
 private fun JoinedPlayersSheetBodyPreview() {
     ThemePreview {
         JoinedPlayersSheetBody(
+            account = Player(
+                displayName = "Drew",
+                avatarModel = R.drawable.x,
+            ),
             players = listOf(
                 Player(
                     displayName = "Drew",
@@ -112,6 +121,10 @@ private fun JoinedPlayersSheetBodyPreview() {
 private fun JoinedPlayersSheetBodySelectedPreview() {
     ThemePreview {
         JoinedPlayersSheetBody(
+            account = Player(
+                displayName = "Drew",
+                avatarModel = R.drawable.x,
+            ),
             players = listOf(
                 Player(
                     displayName = "Drew",

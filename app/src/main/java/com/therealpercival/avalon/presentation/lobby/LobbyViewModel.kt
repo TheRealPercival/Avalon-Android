@@ -26,6 +26,10 @@ class LobbyViewModel @Inject constructor(
                         selectedPreset = lobbyData.selectedPreset,
                         presetOptions = lobbyData.presetOptions,
                         selectedCharacters = lobbyData.selectedCharacters,
+                        account = Player(
+                            displayName = lobbyData.account.displayName,
+                            avatarModel = lobbyData.account.avatarModel,
+                        ),
                         players = lobbyData.players.map { player ->
                             Player(
                                 displayName = player.displayName,

@@ -36,6 +36,11 @@ class FakeGameRepository @Inject constructor() : GameRepository {
                     AvalonCharacter.MinionOfMordred1,
                 ),
                 presetOptions = listOf("Classic"),
+                account = AllowedProfile(
+                    displayName = "Drew",
+                    accountName = "drew654",
+                    avatarModel = R.drawable.x,
+                ),
                 players = listOf(
                     AllowedProfile(
                         displayName = "Drew",

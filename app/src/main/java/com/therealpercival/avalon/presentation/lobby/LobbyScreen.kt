@@ -209,6 +209,7 @@ private fun LobbyContent(
             sheetState = playerSheetState,
         ) {
             JoinedPlayersSheetBody(
+                account = state.account,
                 players = state.players,
                 selectedPlayer = state.selectedPlayer,
                 onPlayerClick = { onAction(LobbyAction.PlayerClicked(player = it)) },
