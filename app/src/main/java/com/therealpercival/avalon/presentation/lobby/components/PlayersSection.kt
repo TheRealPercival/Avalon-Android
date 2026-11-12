@@ -1,0 +1,130 @@
+package com.therealpercival.avalon.presentation.lobby.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.therealpercival.avalon.R
+import com.therealpercival.avalon.presentation.lobby.Player
+import com.therealpercival.avalon.presentation.ui.theme.DayNightPreviews
+import com.therealpercival.avalon.presentation.ui.theme.ThemePreview
+
+@Composable
+fun PlayersSection(
+    players: List<Player>,
+    onClick: () -> Unit = { },
+) {
+    Column(
+        modifier = Modifier.clickable(
+            interactionSource = null,
+            indication = null,
+        ) {
+            onClick()
+        },
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(
+            text = "Players",
+            style = MaterialTheme.typography.labelSmall,
+        )
+        players.chunked(5).forEach { rowPlayers ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                rowPlayers.forEach { player ->
+                    PlayerIcon(
+                        avatarModel = player.avatarModel,
+                        displayName = player.displayName,
+                        modifier = Modifier.weight(1f),
+                        labelEnabled = true,
+                    )
+                }
+                repeat(5 - rowPlayers.size) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun PlayersSectionPreview() {
+    ThemePreview {
+        PlayersSection(
+            players = listOf(
+                Player(
+                    displayName = "Drew",
+                    avatarModel = R.drawable.x,
+                ),
+                Player(
+                    displayName = "Ben",
+                    avatarModel = R.drawable.benjson,
+                ),
+                Player(
+                    displayName = "Izzy",
+                    avatarModel = R.drawable.izzyderose,
+                ),
+                Player(
+                    displayName = "Thomas",
+                    avatarModel = R.drawable._shoe_,
+                ),
+                Player(
+                    displayName = "Landon",
+                    avatarModel = R.drawable.landon248,
+                ),
+            ),
+        )
+    }
+}
+
+@DayNightPreviews
+@Composable
+private fun PlayersSectionPreview2() {
+    ThemePreview {
+        PlayersSection(
+            players = listOf(
+                Player(
+                    displayName = "Drew",
+                    avatarModel = R.drawable.x,
+                ),
+                Player(
+                    displayName = "Ben",
+                    avatarModel = R.drawable.benjson,
+                ),
+                Player(
+                    displayName = "Izzy",
+                    avatarModel = R.drawable.izzyderose,
+                ),
+                Player(
+                    displayName = "Thomas",
+                    avatarModel = R.drawable._shoe_,
+                ),
+                Player(
+                    displayName = "Landon",
+                    avatarModel = R.drawable.landon248,
+                ),
+                Player(
+                    displayName = "Drew",
+                    avatarModel = R.drawable.x,
+                ),
+                Player(
+                    displayName = "Ben",
+                    avatarModel = R.drawable.benjson,
+                ),
+                Player(
+                    displayName = "Izzy",
+                    avatarModel = R.drawable.izzyderose,
+                ),
+            ),
+        )
+    }
+}

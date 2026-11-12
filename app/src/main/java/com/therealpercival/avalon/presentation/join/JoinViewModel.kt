@@ -34,4 +34,8 @@ class JoinViewModel @Inject constructor(
             }
         }
     }
+
+    fun onJoinClicked(onSuccess: () -> Unit) {
+        onSuccess()
+    }
 }
