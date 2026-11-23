@@ -110,9 +110,12 @@ private fun LobbyContent(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         DropdownInputField(
-                            value = state.selectedPreset,
-                            onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
-                            options = state.presetOptions,
+                            value = state.selectedPreset?.name ?: "None",
+                            onValueChange = { selectedName ->
+                                val preset = state.presetOptions.find { it.name == selectedName }
+                                onAction(LobbyAction.PresetSelected(preset))
+                            },
+                            options = state.presetOptions.map { it.name }.plus("None"),
                             label = "Preset",
                             isExpanded = state.isPresetDropdownExpanded,
                             onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
@@ -156,9 +159,12 @@ private fun LobbyContent(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 DropdownInputField(
-                    value = state.selectedPreset,
-                    onValueChange = { onAction(LobbyAction.PresetSelected(it)) },
-                    options = state.presetOptions,
+                    value = state.selectedPreset?.name ?: "None",
+                    onValueChange = { selectedName ->
+                        val preset = state.presetOptions.find { it.name == selectedName }
+                        onAction(LobbyAction.PresetSelected(preset))
+                    },
+                    options = state.presetOptions.map { it.name }.plus("None"),
                     label = "Preset",
                     isExpanded = state.isPresetDropdownExpanded,
                     onExpandedChange = { onAction(LobbyAction.PresetExpandedChange(it)) },
@@ -260,7 +266,7 @@ private fun LobbyScreenPreview() {
     DeviceThemePreview {
         LobbyContent(
             state = LobbyState(
-                selectedPreset = "Classic",
+                selectedPreset = Preset(id = 1, name = "Classic"),
                 selectedCharacters = listOf(
                     AvalonCharacter.Merlin,
                     AvalonCharacter.Percival,
@@ -271,7 +277,7 @@ private fun LobbyScreenPreview() {
                     AvalonCharacter.Mordred,
                     AvalonCharacter.MinionOfMordred1,
                 ),
-                presetOptions = listOf("Classic"),
+                presetOptions = listOf(Preset(id = 1, name = "Classic")),
                 players = listOf(
                     Player(
                         displayName = "Drew",

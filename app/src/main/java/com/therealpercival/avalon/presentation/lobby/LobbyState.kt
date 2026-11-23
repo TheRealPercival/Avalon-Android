@@ -3,8 +3,8 @@ package com.therealpercival.avalon.presentation.lobby
 import com.therealpercival.avalon.domain.model.AvalonCharacter
 
 data class LobbyState(
-    val selectedPreset: String = "",
-    val presetOptions: List<String> = emptyList(),
+    val selectedPreset: Preset? = null,
+    val presetOptions: List<Preset> = emptyList(),
     val isPresetDropdownExpanded: Boolean = false,
     val selectedCharacters: List<AvalonCharacter> = emptyList(),
     val selectedAssassin: AvalonCharacter? = null,
@@ -23,4 +23,9 @@ data class LobbyState(
 data class Player(
     val displayName: String,
     val avatarModel: Any,
+)
+
+data class Preset(
+    val id: Int,
+    val name: String,
 )

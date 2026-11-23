@@ -8,7 +8,7 @@ sealed interface LobbyAction {
     data object StartClicked : LobbyAction
 
     data class PresetSelected(
-        val preset: String,
+        val preset: Preset?,
     ) : LobbyAction
 
     data class PresetExpandedChange(

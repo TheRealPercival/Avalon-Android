@@ -6,6 +6,7 @@ import com.therealpercival.avalon.domain.model.AvalonCharacter
 import com.therealpercival.avalon.domain.model.GameSummary
 import com.therealpercival.avalon.domain.model.LobbyData
 import com.therealpercival.avalon.domain.repository.GameRepository
+import com.therealpercival.avalon.presentation.lobby.Preset
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class FakeGameRepository @Inject constructor() : GameRepository {
     override fun getLobbyData(): Flow<LobbyData> =
         flowOf(
             LobbyData(
-                selectedPreset = "Classic",
+                selectedPreset = Preset(id = 1, name = "Classic"),
                 selectedCharacters = listOf(
                     AvalonCharacter.Merlin,
                     AvalonCharacter.Percival,
@@ -35,7 +36,7 @@ class FakeGameRepository @Inject constructor() : GameRepository {
                     AvalonCharacter.Mordred,
                     AvalonCharacter.MinionOfMordred1,
                 ),
-                presetOptions = listOf("Classic"),
+                presetOptions = listOf(Preset(id = 1, name = "Classic")),
                 account = AllowedProfile(
                     displayName = "Drew",
                     accountName = "drew654",
